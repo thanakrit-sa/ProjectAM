@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="dark" text-center>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content text-center>
+  <ion-card>
+    <ion-card-content>
+      <h2><b>เข้าสู่ระบบ</b></h2>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <form [formGroup]="datauser" (ngSubmit)="login()">
+        <ion-item>
+          <ion-label>ชื่อผู้ใช้</ion-label>
+          <ion-input placeholder="ชื่อผู้ใช้" formControlName="user"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>รหัสผ่าน</ion-label>
+          <ion-input type="password" placeholder="รหัสผ่าน" formControlName="pass"></ion-input>
+        </ion-item><br>
+        <ion-button color="dark" expand="block" type="submit">ตกลง</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
