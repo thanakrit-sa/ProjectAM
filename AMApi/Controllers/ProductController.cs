@@ -34,6 +34,11 @@ namespace AMApi.Controllers
             return DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
         }
 
+     [HttpGet("{data}")]
+        public ActionResult<Product> GetProductBydata(string data)
+        {
+            return DataProduct.First(it => it.NameProduct == data);
+        }
         [HttpPost]
         public Product AddProduct([FromBody] Product Productx)
         {

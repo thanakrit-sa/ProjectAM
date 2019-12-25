@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="order"(ngSubmit)="presentAlertConfirm()">
+  <h1>สั่งซื้อ</h1>
+  <ion-card>
+  <ion-item>
+    <ion-label>ชื่อสินค้า :</ion-label>
+    <ion-select formControlName="nameProduct" [(ngModel)]="data" placeholder="เลือกสินค้า" (ionChange)="onChange(data)" >
+      <ion-select-option *ngFor="let item of dataProduct" value="{{ item.nameProduct }}">{{item.nameProduct}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item >
+    <ion-label>รหัสสินค้า : </ion-label>
+    <ion-input formControlName="idProduct" *ngIf="data1 != null" [(ngModel)]="data1.idProduct" readonly>
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>จำนวนสินค้า :</ion-label>
+    <ion-input formControlName="amountProduct" (ionChange)="amount(amountp)"[(ngModel)]="amountp" >
+    </ion-input>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label>ชื่อลูกค้า :</ion-label>
+    <ion-input placeholder="ชื่อลูกค้า" formControlName="nameUser">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>เบอร์โทรลูกค้า :</ion-label>
+    <ion-input placeholder="เบอร์โทรลูกค้า" formControlName="telUser">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>ที่อยู่ :</ion-label>
+    <ion-input placeholder="ที่อยู่" formControlName="addressUser">
+    </ion-input>
+  </ion-item>
+
+  
+  <ion-item>
+    <ion-label >ราคารวม : </ion-label>
+    <ion-input *ngIf="sum != null" placeholder="ราคารวม" formControlName="priceOrder"[(ngModel)]="sum" readonly></ion-input>
+  </ion-item><br>
+</ion-card>
+  <ion-button type="submit">เพิ่มข้อมูล</ion-button>
+
+
+
+</form>
+
+
+</ion-content>
