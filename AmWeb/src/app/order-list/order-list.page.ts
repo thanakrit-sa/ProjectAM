@@ -15,54 +15,85 @@ import { AlertController, ToastController } from '@ionic/angular';
   styleUrls: ['./order-list.page.scss'],
 })
 export class OrderListPage implements OnInit {
+
   dataOrder: Order;
   dataProduct: product;
   dataUser: user;
-data
+  data
   order: any;
-  constructor(public route: Router,
+  datafilter: Order[] = [];
+  arrayfilter: Order[] = [];
+
+  constructor(
+    public route: Router,
     public productApi: ProductService,
     public navCtrl: NavController,
     public userApi: UserService,
     public orderApi: OrderService,
-    public alertController: AlertController, 
-    public tost: ToastController) { }
+    public alertController: AlertController,
+    public tost: ToastController
+  ) { }
 
+///////////////////////////////////////////////////////////////
   ngOnInit() {
-    
-this.getall();
+    this.getall();
+    this.getdataarray();
     this.userApi.GetUserAll().subscribe(it => {
       console.log(it);
       this.dataUser = it;
       console.log(this.dataUser);
-
     });
   }
 
-  getall(){
+  ionViewDidEnter() {
+    this.getall();
+    this.getdataarray();
+  }
+
+  getall() {
     this.orderApi.GetListAllProduct().subscribe(it => {
       console.log(it);
       this.dataOrder = it;
       console.log(this.dataOrder);
-  });
-}
+    });
+  }
 
-
-  
+  getdataarray() {
+    this.orderApi.GetListAllProduct().subscribe(it => {
+      this.dataOrder = it;
+      console.log(this.dataOrder);
+      for (let index = 0; index < Object.keys(this.dataOrder).length; index++) {
+        this.datafilter[index] = this.dataOrder[index]
+        this.arrayfilter[index] = this.datafilter[index]
+      }
+    });
+  }
+  //////////////////////////////////////////////////////////////
+  ///*/////////////////////// filter///////////////////////////
+  onChange(data) {
+    if (data == "ทั้งหมด") {
+      this.getdataarray()
+    }
+    else this.datafilter = this.arrayfilter.filter(it =>
+      it.status == data)
+  }
 
   ///////////////// แจ้งเตือน/////////////////////////////////////
   async presentToast() {
     const toast = await this.tost.create({
-      message: 'รับ Order Succes',
+      message: ' รับ Order Succes ',
       duration: 2000,
+      color: "success" ,
       position: 'top'
     });
     toast.present();
   }
+
   async presentToast1() {
     const toast = await this.tost.create({
-      message: '่ส่งสินค้า Succes',
+      message: '่ ส่งสินค้า Succes ',
       duration: 2000,
+      color: "secondary" ,
       position: 'top'
     });
     toast.present();
@@ -84,8 +115,7 @@ this.getall();
     this.orderApi.editokorder(id, this.data).subscribe(it => {
       this.data = it;
       console.log(this.data);
-
-      this.getall();
+      this.getdataarray();
     });
   }
   async okorder(id) {
@@ -149,8 +179,11 @@ this.getall();
     this.orderApi.editsendorder(id, this.data).subscribe(it => {
       this.data = it;
       console.log(it);
-      this.getall();
+      this.getdataarray();
     });
   }
 
+
+
 }
+

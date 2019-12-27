@@ -4,7 +4,9 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>รายการสั่งซื้อ</ion-title>
-      <ion-button style="padding-right: 15px" slot="end" type="submit" expand="block" [routerLink]="['/add-product']">สั่งซื้อ</ion-button>
+    
+           
+        <ion-button style="padding-right: 15px" slot='end' [routerLink]="['/order']" >สั่งซื้อ</ion-button>
   </ion-toolbar>
 </ion-header><br>
 
@@ -12,9 +14,13 @@
   <ion-card >
   <ion-item>
     <ion-label>รายการ</ion-label>
-    <ion-select placeholder="เลือกรายการที่ต้องการ">
-      <ion-select-option>สั่งซื้อ</ion-select-option>
-      <ion-select-option>รับOrder</ion-select-option>
+    <ion-select placeholder="เลือกรายการที่ต้องการ" (ionChange)="onChange(data)" [(ngModel)]="data">
+      <ion-select-option value ="สั่งซื้อ">สั่งซื้อ</ion-select-option>
+      <ion-select-option value ="รับสั่งซื้อ">รับ Order แล้ว</ion-select-option>
+      <ion-select-option value ="ส่งสินค้า">ส่งสินค้าแล้ว</ion-select-option>
+      <ion-select-option value ="ยกเลิก">ยกเลิก</ion-select-option>
+      <ion-select-option value ="ได้รับแล้ว">ได้รับสินค้าแล้ว</ion-select-option>
+      <ion-select-option >ทั้งหมด</ion-select-option>
     </ion-select>
   </ion-item>
 </ion-card>
@@ -71,7 +77,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-row  *ngFor="let a of dataOrder" text-center style="border-bottom: groove">
+  <ion-row  *ngFor="let a of datafilter" text-center style="border-bottom: groove">
     <ion-col  class="co">
       <ion-label>{{a.idOrder}}</ion-label>
     </ion-col >
@@ -91,21 +97,21 @@
       <ion-label>{{a.nameUser}} </ion-label>
     </ion-col>
     <ion-col class="co">
-      <ion-label></ion-label>
+      <ion-label>{{a.telUser}}</ion-label>
     </ion-col>
     <ion-col class="co">
-      <ion-label></ion-label>
+      <ion-label>{{a.addressUser}}</ion-label>
     </ion-col>
     <ion-col class="co">
-      <ion-label>{{a.dateOrder | date}}{{a.dateOrder | date : 'shortTime'}}</ion-label>
+      <ion-label>{{a.dateOrder | date}} {{a.dateOrder | date : 'shortTime'}}</ion-label>
     </ion-col>
     <ion-col  class="co">
-      <ion-label>{{a.sendDate | date}}{{a.sendDate | date : 'shortTime'}}</ion-label>
+      <ion-label>{{a.sendDate | date}} {{a.sendDate | date : 'shortTime'}}</ion-label>
     </ion-col >
     <ion-col class="co">
       <ion-label>{{a.status}} </ion-label>
     </ion-col>
-    <ion-col >
+    <ion-col class="co" >
         <ion-button color="secondary" (click)="okorder(a.idOrder)" *ngIf="a.status == 'สั่งซื้อ'" size="small">รับ order</ion-button>
         <ion-button color="success" (click)="sendorder(a.idOrder)" *ngIf="a.status == 'รับสั่งซื้อ'" size="small">ส่งสินค้า</ion-button>
     </ion-col>

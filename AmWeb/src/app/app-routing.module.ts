@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: 'order-list', loadChildren: './order-list/order-list.module#OrderListPageModule' },
   { path: 'order-cancel', loadChildren: './order-cancel/order-cancel.module#OrderCancelPageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'dashbroad', loadChildren: './dashbroad/dashbroad.module#DashbroadPageModule' }
+  { path: 'dashbroad', loadChildren: './dashbroad/dashbroad.module#DashbroadPageModule' },  { path: 'add-order', loadChildren: './add-order/add-order.module#AddOrderPageModule' }
+
 ];
 
 @NgModule({
