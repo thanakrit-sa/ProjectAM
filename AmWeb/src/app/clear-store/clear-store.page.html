@@ -52,9 +52,16 @@
       </ion-row>
       <ion-row style="border-bottom:groove;" text-center *ngFor="let s of dataStoreAll">
 
+
+        <ion-col size="1">
+          <ion-label>
+            <ion-checkbox slot="end" ></ion-checkbox>
+          </ion-label>
+        </ion-col>
+
         <ion-col class="a">
           <ion-label>
-            {{s.idStore}}
+            {{s.idProduct}}
           </ion-label>
         </ion-col>
 

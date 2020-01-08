@@ -26,7 +26,8 @@ export class AppComponent {
       title: 'ShowMe',
       url: '/showme',
       icon: 'list'
-    }
+    },
+
   ];
   
   constructor(

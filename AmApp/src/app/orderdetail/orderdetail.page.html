@@ -15,6 +15,7 @@
 
   <h1>รายละเอียดการสั่งซื้อ</h1>
   <div *ngIf="dataOrder != null">
+    <ion-card>
     <ion-item>
       <ion-label>รหัสสั่งซื้อ : {{dataOrder.idOrder}}</ion-label>
     </ion-item>
@@ -59,7 +60,7 @@
       <ion-label>สถานะ :{{dataOrder.status}}</ion-label>
     </ion-item>
 
-  
+  </ion-card>
   </div>
  
   

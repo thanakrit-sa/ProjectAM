@@ -1,11 +1,15 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>
       List
     </ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <ion-button (click)="gotoOrder()" color="primary" slot="end" size="small" >
+      <ion-icon name="add-circle"></ion-icon>
+      สั่งซื้อ
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -15,19 +19,15 @@
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h4>รายการสั่งซื้อ</h4>
-        <ion-button (click)="gotoOrder()" color="primary">
-          <ion-icon name="add-circle"></ion-icon>
-          สั่งซื้อ
-        </ion-button>
       </div>
     </div>
   </div>
 
-  <ion-searchbar placeholder="ค้นหาสินค้า" (ionChange)="setFilteredItems($event)" ></ion-searchbar>
+  <ion-searchbar placeholder="ค้นหาสินค้า" (ionChange)="setFilteredItems($event)"></ion-searchbar>
 
   <ion-row>
 
-    <ion-col>
+    <ion-col size="5">
       <ion-label>สินค้า</ion-label>
     </ion-col>
 
@@ -35,61 +35,107 @@
       <ion-label>จำนวน</ion-label>
     </ion-col>
 
-    <ion-col >
+    <ion-col size="2">
       <ion-label>วันที่</ion-label>
     </ion-col>
 
-    <ion-col  style="background-color: aqua">
+    <ion-col style="background-color: aqua" size="3">
       <ion-label>สถานะ</ion-label>
     </ion-col>
 
-    <ion-col  style="background-color: blueviolet" size="3" >
+   
+
+  </ion-row>
+
+  <ion-row *ngFor="let a of datasearch2 | paginate: { itemsPerPage: 3, currentPage: p }">
+    <ion-item-sliding>
+
+      <ion-item (click)="gotoOrderdetail(a.idOrder)">
+        <ion-col size="5">
+          <ion-label>{{a.nameProduct}}</ion-label>
+        </ion-col>
+
+        <ion-col size="2" text-center>
+          <ion-label>{{a.amountProduct}}</ion-label>
+        </ion-col>
+
+        <ion-col size="2">
+          <ion-label>{{a.dateOrder | date}}</ion-label>
+        </ion-col>
+
+        <ion-col size="3" text-left>
+          <ion-label>{{a.status}}</ion-label>
+
+        </ion-col>
+      </ion-item>
+      <div *ngIf="a.status != 'null'">
+        <ion-item-options side="end" #slidingItem>
+          <ion-item-option expandable (click)="gotoOrderdetail(a.idOrder)">
+            <ion-icon name="eye"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </div>
+      <div *ngIf="a.status == 'สั่งซื้อ'">
+        <ion-item-options side="end">
+          <ion-item-option color="danger" expandable (click)="cancelorder(a.idOrder)">
+            ยกเลิกสินค้า
+          </ion-item-option>
+          <ion-item-option expandable (click)="gotoOrderdetail(a.idOrder)">
+            <ion-icon name="eye"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </div>
+      <div *ngIf="a.status == 'รับสั่งซื้อ'">
+        <ion-item-options side="end">
+          <ion-item-option color="danger" expandable (click)="cancelorder(a.idOrder)">
+            ยกเลิกสินค้า
+          </ion-item-option>
+          <ion-item-option expandable (click)="gotoOrderdetail(a.idOrder)">
+            <ion-icon name="eye"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </div>
+      <div *ngIf="a.status == 'ส่งสินค้า'">
+        <ion-item-options side="end">
+          <ion-item-option color="success" expandable (click)="sendorder(a.idOrder)">
+            รับสินค้า
+          </ion-item-option>
+          <ion-item-option expandable (click)="gotoOrderdetail(a.idOrder)">
+            <ion-icon name="eye"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </div>
+
+    </ion-item-sliding>
+
+  </ion-row>
+
+
+</ion-content> -->
+
+
+
+<!-- <ion-col size="3" >
+        <ion-button size="small" (click)="gotoOrderdetail(a.idOrder)">
+          <ion-icon name="eye"></ion-icon>
+        </ion-button>
+        <div *ngIf ="a.status == 'สั่งซื้อ'">
+        <ion-button size="small" (click)="cancelorder(a.idOrder)">
+          ยกเลิก
+        </ion-button>
+      </div>
+      <div *ngIf ="a.status == 'รับสั่งซื้อ'">
+        <ion-button size="small" (click)="cancelorder(a.idOrder)">
+          ยกเลิก
+        </ion-button>
+      </div>
+      <div *ngIf ="a.status == 'ส่งสินค้า'">
+        <ion-button size="small" (click)="sendorder(a.idOrder)">
+          OK
+        </ion-button>
+      </div> -->
+<!-- </ion-col> -->
+
+<!-- <ion-col  style="background-color: blueviolet" size="3" >
       <ion-label>ดู</ion-label>
-    </ion-col>
- 
-  </ion-row>
-
-  <ion-row *ngFor="let a of datasearch2" >
-
-    <ion-col    >
-      <ion-label>{{a.nameProduct}}</ion-label>
-    </ion-col>
-
-    <ion-col size="2" text-center>
-      <ion-label>{{a.amountProduct}}</ion-label>
-    </ion-col>
-
-    <ion-col >
-      <ion-label>{{a.dateOrder | date}}</ion-label>
-    </ion-col>
-
-    <ion-col >
-      <ion-label>{{a.status}}</ion-label>
-    </ion-col>
-
-    <ion-col size="3" >
-      <ion-button size="small" (click)="gotoOrderdetail(a.idOrder)">
-        <ion-icon name="eye"></ion-icon>
-      </ion-button>
-      <div *ngIf ="a.status == 'สั่งซื้อ'">
-      <ion-button size="small" (click)="cancelorder(a.idOrder)">
-        ยกเลิก
-      </ion-button>
-    </div>
-    <div *ngIf ="a.status == 'รับสั่งซื้อ'">
-      <ion-button size="small" (click)="cancelorder(a.idOrder)">
-        ยกเลิก
-      </ion-button>
-    </div>
-    <div *ngIf ="a.status == 'ส่งสินค้า'">
-      <ion-button size="small" (click)="sendorder(a.idOrder)">
-        OK
-      </ion-button>
-    </div>
-    </ion-col>
-  
-  </ion-row>
- 
- 
-
-</ion-content>
+    </ion-col> -->

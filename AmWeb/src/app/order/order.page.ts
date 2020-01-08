@@ -66,7 +66,7 @@ datasum :any;
     console.log(q);
     this.sum = q * this.datasum.priceProduct
     console.log(this.sum);
-    
+        
 
   }
 

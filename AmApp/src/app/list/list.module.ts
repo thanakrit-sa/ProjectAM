@@ -2,11 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
 import { IonicModule } from '@ionic/angular';
-
 import { ListPage } from './list.page';
-
+import {NgxPaginationModule} from 'ngx-pagination';
+import{ Ng2SearchPipeModule } from 'ng2-search-filter'
 const routes: Routes = [
   {
     path: '',
@@ -20,6 +19,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
     RouterModule.forChild(routes)
   ],
   declarations: [ListPage]
