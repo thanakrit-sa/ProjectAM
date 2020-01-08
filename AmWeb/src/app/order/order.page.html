@@ -1,50 +1,69 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>order</ion-title>
+  <ion-toolbar color="dark" text-center >
+    <ion-button slot="start" style="padding-left: 20px" [routerLink]="['/order-list']">
+ ย้อนกลับ
+    </ion-button>
+    <ion-title>Order</ion-title>
+    
   </ion-toolbar>
-</ion-header>
+</ion-header><br>
 
 <ion-content>
-  <h1>สั่งซื้อ</h1>
+  <form [formGroup]="order"(ngSubmit)="presentAlertConfirm()">
+  <h2 class="header">สั่งซื้อ</h2>
+  <ion-card>
+    <ion-item>
+      <ion-label>ชื่อสินค้า :</ion-label>
+      <ion-select formControlName="nameProduct" [(ngModel)]="data" placeholder="เลือกสินค้า" (ionChange)="onChange(data)" >
+        <ion-select-option *ngFor="let item of dataProduct" value="{{ item.nameProduct }}">{{item.nameProduct}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  
   <ion-item>
-    <ion-label>รหัสสินค้า</ion-label>
-    <ion-input placeholder="รหัสสินค้า">
+    <ion-label>รหัสสินค้า :</ion-label>
+    <ion-input placeholder="รหัสสินค้า" [(ngModel)]="data1.idProduct" readonly formControlName="idProduct" *ngIf="data1 != null">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label>ชนิดสินค้า :</ion-label>
+    <ion-input placeholder="ชนิดสินค้า"[(ngModel)]="data1.typeProduct" readonly formControlName="type" *ngIf="data1 != null">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label>ราคาสินค้า :</ion-label>
+    <ion-input placeholder="ราคาสินค้า"[(ngModel)]="data1.priceProduct" readonly formControlName="price" *ngIf="data1 != null">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label>จำนวนสินค้า :</ion-label>
+    <ion-input placeholder="จำนวนสินค้า" formControlName="amountProduct" (ionChange)=amount(q) [(ngModel)]="q">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label>ราคารวม :</ion-label>
+    <ion-input placeholder="ราคารวม" formControlName="priceOrder" readonly  [(ngModel)]="sum">
     </ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label>ชื่อสินค้า</ion-label>
-    <ion-input placeholder="ชื่อสินค้า">
-    </ion-input>
+    <ion-label>ชื่อลูกค้า :</ion-label>
+    <ion-input placeholder="ชื่อลูกค้า" formControlName="nameUser"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label>ชนิดสินค้า</ion-label>
-    <ion-input placeholder="ชนิดสินค้า">
-    </ion-input>
+    <ion-label>เบอร์โทร :</ion-label>
+    <ion-input placeholder="เบอร์โทร" formControlName="telUser"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label>ราคาสินค้า</ion-label>
-    <ion-input placeholder="ราคาสินค้า">
-    </ion-input>
+    <ion-label>ที่อยู่ :</ion-label>
+    <ion-input placeholder="ที่อยู่" formControlName="addressUser"></ion-input>
   </ion-item>
-
-  <ion-item>
-    <ion-label>จำนวนสินค้า</ion-label>
-    <ion-input placeholder="จำนวนสินค้า">
-    </ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label>ราคารวม</ion-label>
-    <ion-input placeholder="ราคารวม">
-    </ion-input>
-  </ion-item>
-
-  <ion-button type="submit">เพิ่มข้อมูล</ion-button>
-
+</ion-card>
+  <ion-button type="submit" expand="full" class="button">เพิ่มข้อมูล</ion-button>
+</form>
 </ion-content>

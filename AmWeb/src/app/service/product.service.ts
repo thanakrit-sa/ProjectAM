@@ -35,6 +35,8 @@ export class ProductService {
   public DeleteDataPeoduct(Id: string) {
     return this.http.delete<product>(ProductService.host + 'Product/DeleteProduct/' + Id);
   }
-  
+  public GetProductBydata(data:string ){
+    return this.http.get<product>(ProductService.host+'Product/GetProductBydata/'+ data);
+   }
   
 }
