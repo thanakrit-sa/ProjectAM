@@ -26,10 +26,16 @@ export class StoreService {
     return this.http.put<store>(StoreService.host + 'Store/EditStore/' + Id, data);
   }
 
+  public EditDataStore2(Id: string, data) {
+    return this.http.put<store>(StoreService.host + 'Store/EditStore2/' + Id, data);
+  }
+
   public ClearDataStore(Id: string, data) {
-
     return this.http.put<store>(StoreService.host + 'Store/ClearStore/' + Id, data);
+  }
 
+  public SellTotalStore(Id: string, data) {
+    return this.http.put<store>(StoreService.host + 'Store/SellTotalStore/' + Id, data);
   }
 }
 

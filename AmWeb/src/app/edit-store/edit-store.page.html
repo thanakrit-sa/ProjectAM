@@ -23,14 +23,15 @@
       <ion-card-content>     
         <form [formGroup]="dataStore" (ngSubmit)="editlog()">
         
-        <ion-item>
-          <ion-label>ชื่อสินค้า</ion-label>
-          <ion-select placeholder="{{ aa }}" formControlName="nameProduct"  [(ngModel)]="dataIdProduct">
-            <ion-select-option *ngFor="let p of dataProductAll" value="{{ p.nameProduct }}">{{p.nameProduct}}</ion-select-option>
-          </ion-select>
+        <ion-item >
+          <ion-label>ชื่อสินค้า : </ion-label>
+          <ion-input disabled readonly placeholder="{{ aa }}" formControlName="nameProduct"  [(ngModel)]="dataIdProduct">            
+          </ion-input>
         </ion-item>
+        
         <ion-item *ngIf="dataIdProduct != null">
-          <ion-label >รหัสสินค้า : {{ a }}</ion-label>
+          <ion-label>รหัสสินค้า :</ion-label>
+          <ion-input disabled readonly placeholder="{{ a }}"></ion-input>
           
         </ion-item>
         <ion-item *ngIf="dataIdProduct == null">
@@ -38,7 +39,7 @@
         </ion-item>
         <ion-item>
           <ion-label>จำนวน</ion-label>
-          <ion-input placeholder="จำนวนสินค้า" formControlName="unitProduct">
+          <ion-input placeholder="จำนวนสินค้า" formControlName="unitTotal">
           </ion-input>
         </ion-item>
         <ion-button expand="full" color="dark" type="submit">แก้ไข</ion-button>

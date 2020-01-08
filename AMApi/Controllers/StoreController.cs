@@ -15,8 +15,8 @@ namespace AMApi.Controllers
 
         public static List<Store> DataStore = new List<Store>
         {
-            new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",UnitProduct="20"}
-            
+            new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="20",AddProductStore = DateTime.Now}
+
 
         };
 
@@ -36,17 +36,19 @@ namespace AMApi.Controllers
         [HttpPost]
         public Store AddStore([FromBody] Store Storex)
         {
-            
+
             var addDate = DateTime.Now;
-            var item = new Store 
+            var item = new Store
             {
-                
+
                 IdUser = Storex.IdStore,
                 NameUser = Storex.NameUser,
                 IdProduct = Storex.IdProduct,
                 NameProduct = Storex.NameProduct,
+                TotalProduct = Storex.TotalProduct,
                 UnitProduct = Storex.UnitProduct,
                 AddProductStore = addDate
+
             };
 
             DataStore.Add(item);
@@ -65,6 +67,8 @@ namespace AMApi.Controllers
                 NameUser = Storex.NameUser,
                 IdProduct = Storex.IdProduct,
                 NameProduct = Storex.NameProduct,
+                statusclear = Storex.statusclear,
+                TotalProduct = Storex.TotalProduct,
                 UnitProduct = Storex.UnitProduct,
                 EditProductStore = editDate
             };
@@ -75,6 +79,26 @@ namespace AMApi.Controllers
         }
 
         [HttpPut("{id}")]
+
+        public Store EditStore2(string id, [FromBody] Store Storex)
+        {
+            var idx = DataStore.FirstOrDefault(it => it.IdProduct == id.ToString());
+            var editDate = DateTime.Now;
+            var item = new Store
+            {
+                NameProduct = idx.NameProduct,
+                IdProduct = idx.IdProduct,
+                TotalProduct = idx.TotalProduct,
+                statusclear = Storex.statusclear
+            };
+            DataStore.Remove(idx);
+            DataStore.Add(item);
+            return item;
+
+        }
+
+        [HttpPut("{id}")]
+
 
         public Store ClearStore(string id, [FromBody] Store Storex)
 
@@ -87,22 +111,37 @@ namespace AMApi.Controllers
             var item = new Store
 
             {
-
                 IdStore = id.ToString(),
-
                 ClearProductStore = clearDate
-
             };
-
-
             DataStore.Remove(idx);
-
             return item;
-
-
-
         }
 
+        [HttpPut("{id}")]
+        public Store SellTotalStore(string id, [FromBody] Store Productx)
+        {
+            var _id = DataStore.FirstOrDefault(it => it.IdProduct == id.ToString());
+            var getcheck = DataStore.FirstOrDefault(it => it.IdProduct == id.ToString());
+            int Total = int.Parse(getcheck.TotalProduct);
+            int Sell = int.Parse(Productx.TotalProduct);
+            int Totals = 0;
+
+            if (getcheck.TotalProduct != "0")
+            {                
+                Totals = Total - Sell;
+            }
+            var item = new Store
+            {
+                IdProduct = _id.IdProduct,
+                NameProduct = _id.NameProduct,                
+                TotalProduct = Totals.ToString(),               
+            };
+            DataStore.Remove(_id);
+            DataStore.Add(item);
+            return item;
+
+        }
 
 
     }

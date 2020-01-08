@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>เคลียร์สินค้า</ion-title>
-    <ion-button expand="block" type="submit" style="padding-right: 15px" slot="end">ล้างสินค้า</ion-button>
+    <ion-button expand="block" type="submit" style="padding-right: 15px" slot="end" [routerLink]="['/edit-clear']">ล้างสินค้า</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -40,6 +40,11 @@
         </ion-col>
         <ion-col>
           <ion-label>
+            <b>คงเหลือทั้งหมด</b>
+          </ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label>
             <b>สถานะ</b>
           </ion-label>
         </ion-col>
@@ -52,13 +57,6 @@
       </ion-row>
       <ion-row style="border-bottom:groove;" text-center *ngFor="let s of dataStoreAll">
 
-
-        <ion-col size="1">
-          <ion-label>
-            <ion-checkbox slot="end" ></ion-checkbox>
-          </ion-label>
-        </ion-col>
-
         <ion-col class="a">
           <ion-label>
             {{s.idProduct}}
@@ -67,7 +65,13 @@
 
         <ion-col class="a">
           <ion-label>
+            {{s.nameProduct}}
+          </ion-label>
+        </ion-col>
 
+        <ion-col class="a">
+          <ion-label>
+            {{s.totalProduct}}
           </ion-label>
         </ion-col>
 
@@ -91,12 +95,12 @@
 
         <ion-col class="a">
           <ion-label>
-
+            {{s.statusclear}}
           </ion-label>
         </ion-col>
 
         <ion-col>
-          <ion-button color="warning" [routerLink]="['/edit-clear']">แก้ไข</ion-button>
+          <ion-button color="warning" (click)="get(s.idProduct)">แก้ไข</ion-button>
         </ion-col>
 
       </ion-row>

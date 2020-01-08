@@ -9,13 +9,17 @@ namespace AMApi.Models
         public string NameUser { get; set; }
         public string IdProduct { get; set; }
         public string NameProduct { get; set; }
-        
-
+        public string statusclear { get; set; }
+        public string TotalProduct { get; set; }
         public string UnitProduct { get; set; }
         public string StatusProduct { get; set; }
+        public string SellProduct { get; set; }
+        public string Total { get; set; }
+        public string TotalAll { get; set; }
         public DateTime? AddProductStore { get; set; }
         public DateTime? EditProductStore { get; set; }
-        public DateTime? ClearProductStore { get; set; }
+        public DateTime? ClearProductStore { get; set; }        
+        public string unitTotal { get; set; }
        
     }
 }

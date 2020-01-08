@@ -11,12 +11,9 @@
 </ion-header>
 
 <ion-content><br>
+ 
   <ion-card>
     <ion-card-content>
-
-      
-
-
       <ion-row text-center style="border-bottom: groove">
         <ion-col>
           <ion-label>
@@ -51,7 +48,7 @@
 
 
       </ion-row>
-      <ion-row  *ngFor="let p of dataProductAll" text-center style="border-bottom: groove">
+      <ion-row  *ngFor="let p of datafilter" text-center style="border-bottom: groove">
 
         <ion-col class="pad">
           <ion-label>
@@ -81,6 +78,12 @@
         <ion-col class="pad">
           <ion-label>
             {{p.costProduct}}
+          </ion-label>
+        </ion-col>
+
+        <ion-col class="pad">
+          <ion-label>
+            {{p.totalProduct}}
           </ion-label>
         </ion-col>
 

@@ -14,12 +14,12 @@ namespace AMApi.Controllers
     {
         public static List<Product> DataProduct = new List<Product>
         {
-            new Product {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TypeProduct = "เครื่องราง",PriceProduct = "5999",CostProduct = "2999" ,TotalProduct = "30"},
-            new Product {IdProduct = "B7784",NameProduct = "น้ำยาล้างจานปู่เค็ม",TypeProduct = "ของใช้",PriceProduct = "299",CostProduct = "199" ,TotalProduct = "350"},
-            new Product {IdProduct = "R5596",NameProduct = "ไข่แดงเค็มปู่เค็ม",TypeProduct = "อาหาร",PriceProduct = "9",CostProduct = "1" ,TotalProduct = "3000"},
-            new Product {IdProduct = "H8897",NameProduct = "ขนมปู่เค็ม",TypeProduct = "ขนม",PriceProduct = "99",CostProduct = "29" ,TotalProduct = "500"},
-            new Product {IdProduct = "S0015",NameProduct = "ครีมหลวงปู่เค็ม",TypeProduct = "เครื่องสำอาง",PriceProduct = "999",CostProduct = "499" ,TotalProduct = "90"},
-            new Product {IdProduct = "A8895",NameProduct = "เสื้อยืดหลวงปู่เค็ม",TypeProduct = "เสื้อผ้า",PriceProduct = "999",CostProduct = "299" ,TotalProduct = "130"}
+            new Product {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TypeProduct = "เครื่องราง",PriceProduct = "5999",CostProduct = "2999" ,TotalProduct = "20"},
+            new Product {IdProduct = "B7784",NameProduct = "น้ำยาล้างจานปู่เค็ม",TypeProduct = "ของใช้",PriceProduct = "299",CostProduct = "199" ,TotalProduct = "0"},
+            new Product {IdProduct = "R5596",NameProduct = "ไข่แดงเค็มปู่เค็ม",TypeProduct = "อาหาร",PriceProduct = "9",CostProduct = "1" ,TotalProduct = "0"},
+            new Product {IdProduct = "H8897",NameProduct = "ขนมปู่เค็ม",TypeProduct = "ขนม",PriceProduct = "99",CostProduct = "29" ,TotalProduct = "0"},
+            new Product {IdProduct = "S0015",NameProduct = "ครีมหลวงปู่เค็ม",TypeProduct = "เครื่องสำอาง",PriceProduct = "999",CostProduct = "499" ,TotalProduct = "0"},
+            new Product {IdProduct = "A8895",NameProduct = "เสื้อยืดหลวงปู่เค็ม",TypeProduct = "เสื้อผ้า",PriceProduct = "999",CostProduct = "299" ,TotalProduct = "0"}
         };
 
         [HttpGet]
@@ -34,11 +34,6 @@ namespace AMApi.Controllers
             return DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
         }
 
-     [HttpGet("{data}")]
-        public ActionResult<Product> GetProductBydata(string data)
-        {
-            return DataProduct.First(it => it.NameProduct == data);
-        }
         [HttpPost]
         public Product AddProduct([FromBody] Product Productx)
         {
@@ -50,6 +45,8 @@ namespace AMApi.Controllers
                 TypeProduct = Productx.TypeProduct,
                 PriceProduct = Productx.PriceProduct,
                 TotalProduct = "0",
+                SellTotalProduct = Productx.SellTotalProduct,
+                statusclear = Productx.statusclear,
                 CostProduct = Productx.CostProduct
             };
 
@@ -68,11 +65,12 @@ namespace AMApi.Controllers
             var item = new Product
             {
                 IdProduct = id,
-                NameProduct = Productx.NameProduct,
-                TypeProduct = Productx.TypeProduct,
-                PriceProduct = Productx.PriceProduct,
-                TotalProduct = Productx.TotalProduct,
-                CostProduct = Productx.CostProduct
+                NameProduct = _id.NameProduct,
+                TypeProduct = _id.TypeProduct,
+                PriceProduct = _id.PriceProduct,
+                TotalProduct = _id.TotalProduct,
+                unitProduct = Productx.unitProduct,
+                CostProduct = _id.CostProduct
             };
             DataProduct.Remove(_id);
             DataProduct.Add(item);
@@ -80,6 +78,7 @@ namespace AMApi.Controllers
 
         }
 
+        
         [HttpDelete("{id}")]
         public void DeleteProduct(string id)
         {
@@ -109,17 +108,46 @@ namespace AMApi.Controllers
             var item = new Product
             {
                 IdProduct = id,
-                NameProduct = Productx.NameProduct,
-                TypeProduct = Productx.TypeProduct,
-                PriceProduct = Productx.PriceProduct,
+                NameProduct = _id.NameProduct,
+                TypeProduct = _id.TypeProduct,
+                PriceProduct = _id.PriceProduct,
                 TotalProduct = Totals.ToString(),
-                CostProduct = Productx.CostProduct
+                CostProduct = _id.CostProduct
+            };
+            DataProduct.Remove(_id);
+            DataProduct.Add(item);
+            return item;
+        }
+
+        [HttpPut("{id}")]
+        public Product SellTotalProduct(string id, [FromBody] Product Productx)
+        {
+            var _id = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
+            var getcheck = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
+            int Total = int.Parse(getcheck.TotalProduct);
+            int Sell = int.Parse(Productx.SellTotalProduct);
+            int Totals = 0;
+
+            
+                Totals = Total - Sell;
+            
+
+            var item = new Product
+            {
+                IdProduct = id,
+                NameProduct = _id.NameProduct,
+                TypeProduct = _id.TypeProduct,
+                PriceProduct = _id.PriceProduct,
+                TotalProduct = Totals.ToString(),
+                CostProduct = _id.CostProduct
             };
             DataProduct.Remove(_id);
             DataProduct.Add(item);
             return item;
 
         }
+
+       
 
     }
 }

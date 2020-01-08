@@ -12,8 +12,14 @@ export class store{
 
     idProduct:string;
 
+    totalProduct:string;
+
     nameProduct:string;
 
     unitProduct:string;
+
+    statusclear:string;
+
+    sellProduct:string;
     
 }

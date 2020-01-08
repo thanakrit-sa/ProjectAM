@@ -13,6 +13,9 @@ import { UserService } from '../service/user.service';
 export class ProductPage implements OnInit {
 
   public dataProductAll :product;
+  datafilter:product[] = [];
+  filtertype:product[] = [];
+
   constructor(public activate: ActivatedRoute,public userApi:UserService, public productApi: ProductService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     console.log(this.userApi.statusUser);
     console.log(this.userApi.nameUser);
@@ -23,7 +26,17 @@ export class ProductPage implements OnInit {
     this.productApi.GetProductAll().subscribe((it) => {
       console.log(it);
       this.dataProductAll = it;
+      for (let index = 0; index < Object.keys(this.dataProductAll).length; index++) {
+        this.datafilter[index] = this.dataProductAll[index];
+      }
+      this.filtertype = this.datafilter;
+      console.log(this.filtertype);
       console.log(this.dataProductAll);
+      console.log(this.datafilter);
+      
+      
+      
+      
     });
   }
 
@@ -50,5 +63,10 @@ export class ProductPage implements OnInit {
 
   public EditDataProduct(id) {
     this.route.navigate(['/edit-product', { _id: id }]);
+  }
+
+  filter(){
+    this.datafilter = this.filtertype.filter(it => it.typeProduct == "อาหาร");
+    
   }
 }

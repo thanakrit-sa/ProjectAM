@@ -16,7 +16,8 @@ export class EditStorePage implements OnInit {
   IdeditStore: any;
   dataProductMd: store;
   submit: boolean = false;
-a;aa;
+  a; aa;
+  unittotal;
   dataProductAll: product;
   dataIdProduct: any;
 
@@ -28,16 +29,22 @@ a;aa;
       'idStore': [null, Validators.required],
       'idProduct': [null, Validators.required],
       'nameProduct': [null, Validators.required],
-      'unitProduct': [null, Validators.required]
+      'unitProduct': [null, Validators.required],
+      'unitTotal': [null, Validators.required]
     });
     this.storeApi.GetProductStoreByid(this.IdeditStore).subscribe((item) => {
       console.log(item);
       this.dataStore.patchValue(item)
       console.log(this.dataStore.value);
-      console.log(this.dataStore.value.idProduct);
-      console.log(this.dataStore.value.nameProduct);
       this.a = this.dataStore.value.idProduct;
       this.aa = this.dataStore.value.nameProduct;
+      console.log(this.a);
+      this.dataStore.value.unitTotal = this.dataStore.value.unitProduct+1;
+      console.log(this.dataStore.value.unitTotal);
+      
+      
+
+
 
 
     });

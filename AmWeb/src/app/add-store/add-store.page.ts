@@ -38,6 +38,7 @@ export class AddStorePage implements OnInit {
       'idProduct':[null, Validators.required],
       'nameProduct':[null, Validators.required],
       'unitProduct':[null, Validators.required],
+      'totalProduct':[null, Validators.required],
       'addProductStore': [null, Validators.required]
     });
     // this.productApi.GetProductByid(this.getDataProduct).subscribe(it => {
@@ -62,27 +63,29 @@ export class AddStorePage implements OnInit {
 
   get f() { return this.dataStore.controls; }
 
-  async log() {
-    this.submit = true;
-    console.log(this.dataStore.value);
-    console.log(this.dataStore);
-    this.dataSt = this.dataStore.value;
-    this.storeApi.AddStore(this.dataSt).subscribe(it => {
-      console.log(it);
-    });
-  }
+  // async log() {
+  //   this.submit = true;
+  //   console.log(this.dataStore.value);
+  //   console.log(this.dataStore);
+  //   this.dataSt = this.dataStore.value;
+  //   this.storeApi.AddStore(this.dataSt).subscribe(it => {
+  //     console.log(it);
+  //   });
+  // }
 
-  public EditStore(id) {
-    this.route.navigate(['/edit-store', { _id: id }]);
-  }
+  
 
   insert(){
-    var data = this.dataPd.filter(it => it.idProduct == this.dataStore.value.nameProduct);
+    var data = this.dataPd.filter(it => it.idProduct == this.dataStore.value.nameProduct );
     console.log(data[0]);
     this.dataStore.value.idProduct = data[0].idProduct;
-    this.dataStore.value.nameProduct = data[0].nameProduct;
+    this.dataStore.value.nameProduct = data[0].nameProduct;    
     console.log(this.dataStore.value);
     this.storeApi.AddStore(this.dataStore.value).subscribe(it =>{
+    });
+    console.log(this.dataStore);
+  
+    this.productApi.EditAddTotalProduct(this.dataStore.value.idProduct,this.dataStore.value).subscribe(it =>{
     });
     this.route.navigate(['/store']);
   }

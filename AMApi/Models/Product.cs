@@ -1,3 +1,5 @@
+using System;
+
 namespace AMApi.Models
 {
     public class Product
@@ -7,7 +9,13 @@ namespace AMApi.Models
         public string TypeProduct { get; set; }
         public string PriceProduct { get; set; }
         public string CostProduct { get; set; }
+        public string statusclear { get; set; }
         public string TotalProduct { get; set; }
+        public string SellTotalProduct { get; set; }
+        public string unitProduct { get; set; }
+        public string unitTotal { get; set; }
+
         
+
     }
 }

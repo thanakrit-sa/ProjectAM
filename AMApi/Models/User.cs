@@ -9,5 +9,7 @@ namespace AMApi.Models
         public string TelUser { get; set; }
         public string LevelUser { get; set; }
         public string AddressUser { get; set; }
+
+        public string unitTotal { get; set; }
     }
 }
