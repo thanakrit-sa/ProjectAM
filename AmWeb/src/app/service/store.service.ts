@@ -34,8 +34,14 @@ export class StoreService {
     return this.http.put<store>(StoreService.host + 'Store/ClearStore/' + Id, data);
   }
 
-  public SellTotalStore(Id: string, data) {
-    return this.http.put<store>(StoreService.host + 'Store/SellTotalStore/' + Id, data);
+  public TotalStore(Id: string, data) {
+    return this.http.put<store>(StoreService.host + 'Store/TotalStore/' + Id, data);
+  }
+
+  public addclear(data: store) {
+    console.log(data);
+    return this.http.post<store>(StoreService.host + 'Store/AddClear', data);
+
   }
 }
 

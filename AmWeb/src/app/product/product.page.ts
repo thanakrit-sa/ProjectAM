@@ -46,7 +46,17 @@ export class ProductPage implements OnInit {
     this.productApi.GetProductAll().subscribe((it) => {
       console.log(it);
       this.dataProductAll = it;
+      for (let index = 0; index < Object.keys(this.dataProductAll).length; index++) {
+        this.datafilter[index] = this.dataProductAll[index];
+      }
+      this.filtertype = this.datafilter;
+      console.log(this.filtertype);
       console.log(this.dataProductAll);
+      console.log(this.datafilter);
+      
+      
+      
+      
     });
   }
   

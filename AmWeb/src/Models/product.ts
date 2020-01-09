@@ -14,6 +14,10 @@ export class product{
     unitProduct:string;
 
     statusclear:String;
+    
+    total:String;
+
+    amountProduct:String;
 
     
 }

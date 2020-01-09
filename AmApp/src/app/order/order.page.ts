@@ -5,6 +5,7 @@ import { CallApiService } from '../call-api.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Order } from '../Models/Order';
 import { Product } from '../Models/Product';
+import { ProductService } from '../product.service';
 
 
 
@@ -23,7 +24,7 @@ export class OrderPage implements OnInit {
   data1: {};
   sum: any
   datasum :any
-  constructor(public alertController: AlertController, public route: Router, public callApi: CallApiService, public navCtrl: NavController, public formbuilder: FormBuilder) {
+  constructor(public productapi:ProductService, public alertController: AlertController, public route: Router, public callApi: CallApiService, public navCtrl: NavController, public formbuilder: FormBuilder) {
 
     this.order = this.formbuilder.group({
       'idOrder': [null],
@@ -64,8 +65,14 @@ export class OrderPage implements OnInit {
             this.dataorder = this.order.value;
             this.callApi.AddOrder(this.dataorder).subscribe(it => {
               console.log(it);
-
+              console.log(this.order.value.idProduct);
+              console.log(this.order.value);
+              
             });
+            this.productapi.AddSellTotalProduct(this.order.value.idProduct,this.order.value).subscribe(it => {
+              console.log(it);
+            });
+            
 
 
 

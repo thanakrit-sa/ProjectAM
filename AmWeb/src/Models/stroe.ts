@@ -21,5 +21,7 @@ export class store{
     statusclear:string;
 
     sellProduct:string;
+
+    total:string;
     
 }

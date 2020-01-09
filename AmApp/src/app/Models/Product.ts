@@ -5,4 +5,14 @@ export class Product {
     priceProduct: string;
     costProduct: string;
     totalProduct: string;
-}
+   
+     
+    
+        unitProduct:string;
+    
+        statusclear:String;
+        
+        total:String;
+    
+        
+    }

@@ -119,23 +119,23 @@ namespace AMApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public Store SellTotalStore(string id, [FromBody] Store Productx)
+        public Store SellTotalStore(string id, [FromBody] Store Storex)
         {
             var _id = DataStore.FirstOrDefault(it => it.IdProduct == id.ToString());
             var getcheck = DataStore.FirstOrDefault(it => it.IdProduct == id.ToString());
             int Total = int.Parse(getcheck.TotalProduct);
-            int Sell = int.Parse(Productx.TotalProduct);
+            int Sell = int.Parse(Storex.TotalProduct);
             int Totals = 0;
 
             if (getcheck.TotalProduct != "0")
-            {                
+            {
                 Totals = Total - Sell;
             }
             var item = new Store
             {
                 IdProduct = _id.IdProduct,
-                NameProduct = _id.NameProduct,                
-                TotalProduct = Totals.ToString(),               
+                NameProduct = _id.NameProduct,
+                TotalProduct = Totals.ToString(),
             };
             DataStore.Remove(_id);
             DataStore.Add(item);
@@ -143,7 +143,42 @@ namespace AMApi.Controllers
 
         }
 
+        [HttpPut("{id}")]
+        public Store TotalStore(string id, [FromBody] Store Storex)
+        {
+            var _id = DataStore.FirstOrDefault(it => it.IdProduct == id.ToString());
+            var getcheck = DataStore.FirstOrDefault(it => it.IdProduct == id.ToString());
+            int Total = int.Parse(getcheck.TotalProduct);
+            int Add = int.Parse(Storex.TotalProduct);
+            int Totals = 0;
 
+            if (getcheck.Total == "0")
+            {
+                Total = 0;
+                Totals = Total + Add;
+            }
+            else
+            {
+                Totals = Total + Add;
+            }
+
+            var item = new Store
+            {
+                IdUser = Storex.IdStore,
+                NameUser = Storex.NameUser,
+                IdProduct = Storex.IdProduct,
+                NameProduct = Storex.NameProduct,
+                TotalProduct = Storex.TotalProduct,
+                UnitProduct = Storex.UnitProduct,
+                Total = Totals.ToString(),
+
+
+
+            };
+            DataStore.Remove(_id);
+            DataStore.Add(item);
+            return item;
+        }
     }
 
 

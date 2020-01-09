@@ -14,7 +14,7 @@ namespace AMApi.Controllers
     {
         public static List<Clear> DataProduct = new List<Clear>
         {
-            new Clear {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม"}           
+            new Clear {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="0"}           
         };
 
         [HttpGet]
@@ -30,24 +30,23 @@ namespace AMApi.Controllers
         }
 
         [HttpPost]
-        public Clear AddProductClear([FromBody] Clear Productx)
-        {
-            // Guid g = Guid.NewGuid();            
+        public Clear AddProductClear([FromBody] Clear Productx)        {
+                     
+                     
             var item = new Clear
             {
                 IdProduct = Productx.IdProduct,
                 NameProduct = Productx.NameProduct,                
-                TotalProduct = Productx.TotalProduct,                
+                TotalProduct = Productx.TotalProduct,                          
                 statusclear = Productx.statusclear,                
             };
             DataProduct.Add(item);
-            // User.Id = id;
-            // data.Add(Userx);
+            
             return item;
         }
 
         [HttpPut("{id}")]
-        public Clear EditAddTotalProduct(string id, [FromBody] Clear Productx)
+        public Clear AddTotalClear(string id, [FromBody] Clear Productx)
         {
             var _id = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
             var getcheck = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
@@ -55,28 +54,33 @@ namespace AMApi.Controllers
             int Add = int.Parse(Productx.TotalProduct);
             int Totals = 0;
 
-            if (getcheck.TotalProduct != "0")
+            if (getcheck.Total == null)
             {
-                
-                Totals = Total - Add;
+                Total = 0;
+                Totals = Total + Add;
             }
             else
             {
-                Totals = Total - Add;
+                Totals = Total + Add;
             }
 
             var item = new Clear
             {
-                IdProduct = Productx.IdProduct,
+                
+                IdProduct = id,            
+                TotalProduct = Productx.TotalProduct,                          
+                statusclear = Productx.statusclear,                  
                 NameProduct = _id.NameProduct,                
-                TotalProduct = Totals.ToString(),
+                Total = Totals.ToString(),
                 
             };
+            
             DataProduct.Remove(_id);
             DataProduct.Add(item);
             return item;
-
         }
+
+        
     }
 
         

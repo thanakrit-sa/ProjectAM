@@ -40,7 +40,8 @@ export class StorePage implements OnInit {
       'nameProduct': [null, Validators.required],
       'unitProduct': [null, Validators.required],
       'unitTotal': [null, Validators.required],
-      'sellProduct': [null, Validators.required]
+      'sellProduct': [null, Validators.required],
+      'total': [null, Validators.required]
     });
   }
 
@@ -82,6 +83,8 @@ export class StorePage implements OnInit {
         this.datass[index] = this.datas[index];
         this.datasss = this.datass;        
         console.log(this.datasss[index]);
+        console.log(this.datasss[index].total);
+        
         
       }     
     });

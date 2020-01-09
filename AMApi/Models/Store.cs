@@ -16,6 +16,8 @@ namespace AMApi.Models
         public string SellProduct { get; set; }
         public string Total { get; set; }
         public string TotalAll { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
         public DateTime? AddProductStore { get; set; }
         public DateTime? EditProductStore { get; set; }
         public DateTime? ClearProductStore { get; set; }        

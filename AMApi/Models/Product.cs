@@ -14,6 +14,8 @@ namespace AMApi.Models
         public string SellTotalProduct { get; set; }
         public string unitProduct { get; set; }
         public string unitTotal { get; set; }
+        public string Total { get; set; }
+        public string AmountProduct { get; set; }
 
         
 

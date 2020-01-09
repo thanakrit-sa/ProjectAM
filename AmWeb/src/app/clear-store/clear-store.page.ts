@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { StoreService } from "src/app/service/store.service";
+import { ClearService } from "src/app/service/clear.service";
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductService } from '../service/product.service';
 
 
 @Component({
@@ -12,7 +13,7 @@ export class ClearStorePage implements OnInit {
 
   public dataStoreAll:any;
 
-  constructor(public route: Router,public storeApi:StoreService) { }
+  constructor(public productApi: ProductService,public route: Router,public clearApi:ClearService) { }
 
   ngOnInit() {
     this.showall()
@@ -24,7 +25,7 @@ export class ClearStorePage implements OnInit {
   }
 
   showall(){
-    this.storeApi.GetProductStore().subscribe((it) => {
+    this.productApi.GetProductAll().subscribe((it) => {
       console.log(it);
       this.dataStoreAll = it;
       console.log(this.dataStoreAll);  
