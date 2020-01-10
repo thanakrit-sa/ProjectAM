@@ -133,9 +133,9 @@ export class OrderPage implements OnInit {
 
   listdata() {
     this.callApi.getallproduct().subscribe(it => {
-      // console.log(it);
+     
       this.dataProduct = it;
-      // console.log(this.dataProduct);
+
     })
   }
   getbydata(data) {
