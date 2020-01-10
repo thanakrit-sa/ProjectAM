@@ -33,7 +33,7 @@ namespace AMApi.Controllers
         {
             return DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
         }
-  [HttpGet("{data}")]
+        [HttpGet("{data}")]
         public ActionResult<Product> GetProductBydata(string data)
         {
             return DataProduct.First(it => it.NameProduct == data);
@@ -83,7 +83,7 @@ namespace AMApi.Controllers
 
         }
 
-        
+
         [HttpDelete("{id}")]
         public void DeleteProduct(string id)
         {
@@ -97,17 +97,22 @@ namespace AMApi.Controllers
             var _id = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
             var getcheck = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
             int Total = int.Parse(getcheck.TotalProduct);
-            int Add = int.Parse(Productx.TotalProduct);
-            int Totals = 0;
+            int TotalProduct = int.Parse(getcheck.Total);
+            int Add = int.Parse(Productx.TotalProduct);             
+            int Totals;
+            
+            int Totals1 = 0;
 
-            if (getcheck.TotalProduct == "0")
+            if (getcheck.Total == "0" && getcheck.TotalProduct == "0")
             {
-                Total = 0;
-                Totals = Total + Add;
+                Total = 0;                         
+                Totals = TotalProduct + Add;                
+                Totals1 = Total + Add;
             }
             else
-            {
-                Totals = Total + Add;
+            {                                
+                Totals = TotalProduct+Add;
+                Totals1 = Total + Add;
             }
 
             var item = new Product
@@ -116,7 +121,7 @@ namespace AMApi.Controllers
                 NameProduct = _id.NameProduct,
                 TypeProduct = _id.TypeProduct,
                 PriceProduct = _id.PriceProduct,
-                TotalProduct = Productx.TotalProduct,
+                TotalProduct = Totals1.ToString(),
                 Total = Totals.ToString(),
                 AmountProduct = _id.AmountProduct,
                 CostProduct = _id.CostProduct
@@ -133,14 +138,14 @@ namespace AMApi.Controllers
             var getcheck = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
             // จำนวนขาย
             int SellTotal = int.Parse(getcheck.AmountProduct);
-            int Sell = int.Parse(Productx.AmountProduct);     
-            int SellTotals = 0; 
+            int Sell = int.Parse(Productx.AmountProduct);
+            int SellTotals = 0;
 
             // จำนวนทั้งหมด      
-            int AllTotal = int.Parse(getcheck.Total);
+            int AllTotal = int.Parse(getcheck.TotalProduct);
             int All = int.Parse(Productx.AmountProduct);
             int AllTotals = 0;
-            
+
 
             if (getcheck.AmountProduct == "0")
             {
@@ -174,8 +179,8 @@ namespace AMApi.Controllers
                 NameProduct = _id.NameProduct,
                 TypeProduct = _id.TypeProduct,
                 PriceProduct = _id.PriceProduct,
-                TotalProduct = _id.TotalProduct,
-                Total = AllTotals.ToString(),
+                TotalProduct = AllTotals.ToString(),
+                Total = _id.Total,
                 AmountProduct = SellTotals.ToString(),
                 CostProduct = _id.CostProduct
             };
@@ -184,10 +189,10 @@ namespace AMApi.Controllers
             return item;
         }
 
-        
 
-        
-       
+
+
+
 
     }
 }
