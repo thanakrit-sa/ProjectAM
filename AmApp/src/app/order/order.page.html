@@ -28,10 +28,15 @@
     <ion-input formControlName="idProduct" *ngIf="data1 != null" [(ngModel)]="data1.idProduct" readonly>
     </ion-input>
   </ion-item>
+  <ion-item>
+    <ion-label>จำนวนสินค้าคงเหลือ :</ion-label>
+    <ion-input *ngIf="data1 != null"  [(ngModel)]="data1.total" formControlName="total" readonly >
+    </ion-input>
+  </ion-item>
 
   <ion-item>
     <ion-label>จำนวนสินค้า :</ion-label>
-    <ion-input formControlName="amountProduct" (ionChange)="amount(amountp)"[(ngModel)]="amountp" >
+    <ion-input formControlName="amountProduct" (ionChange)="amount(amountp)"[(ngModel)]="amountp"placeholder="กรอกจำนวนสินค้า" >
     </ion-input>
   </ion-item>
 
@@ -61,7 +66,6 @@
   </ion-item><br>
 </ion-card>
   <ion-button type="submit">เพิ่มข้อมูล</ion-button>
-
 
 
 </form>
