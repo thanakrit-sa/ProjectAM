@@ -19,5 +19,7 @@ export class product{
 
     amountProduct:String;
 
+    statusProduct:String;
+
     
 }

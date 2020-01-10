@@ -12,6 +12,21 @@
   <br>
   <ion-card>
     <ion-card-content>
+      
+        <ion-item>
+          <ion-label>สถานะ</ion-label>
+          <ion-select placeholder="- กรุณาเลือกสถานะ -" (ionChange)="onChange(data)" [(ngModel)]="data">
+            <ion-select-option value="ทั้งหมด">ทั้งหมด</ion-select-option>
+            <ion-select-option value="สินค้าครบ">สินค้าครบ</ion-select-option>
+            <ion-select-option value="สินค้าตกหล่น">สินค้าตกหล่น</ion-select-option>
+            <ion-select-option value="สินค้าเกิน">สินค้าเกิน</ion-select-option>
+          </ion-select>
+        </ion-item>
+     
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
       <ion-row text-center style="border-bottom:groove;">
         <ion-col>
           <ion-label>
@@ -51,7 +66,7 @@
         </ion-col>
 
       </ion-row>
-      <ion-row style="border-bottom:groove;" text-center *ngFor="let s of dataStoreAll">
+      <ion-row style="border-bottom:groove;" text-center *ngFor="let s of datafilter">
 
         <ion-col class="a">
           <ion-label>
@@ -83,10 +98,8 @@
           </ion-label>
         </ion-col>
 
-        <ion-col class="a">
-          <ion-label>
-            {{s.statusclear}}
-          </ion-label>
+        <ion-col>
+          <ion-input readonly placeholder="{{s.statusProduct}}"></ion-input>
         </ion-col>
 
         <ion-col>

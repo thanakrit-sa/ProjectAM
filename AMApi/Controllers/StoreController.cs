@@ -47,6 +47,7 @@ namespace AMApi.Controllers
                 NameProduct = Storex.NameProduct,
                 TotalProduct = Storex.TotalProduct,
                 UnitProduct = Storex.UnitProduct,
+                StatusProduct = Storex.StatusProduct,
                 AddProductStore = addDate
 
             };

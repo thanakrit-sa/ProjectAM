@@ -5,6 +5,7 @@ import { Product } from '../Models/Product';
 import { Order } from '../Models/Order';
 import { log } from 'util';
 import { AlertController, ToastController } from '@ionic/angular';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-list',
@@ -145,7 +146,7 @@ pp :any;
 
   // serarch :any;
   // serarch2 :Order[] = [];
-  constructor(public route: Router, public callApi: CallApiService, public alertController: AlertController, public tost: ToastController) {
+  constructor(public productapi:ProductService,public route: Router, public callApi: CallApiService, public alertController: AlertController, public tost: ToastController) {
     this.getall();
   }
 
@@ -214,9 +215,18 @@ pp :any;
     console.log(id);
     this.callApi.editokorder(id, this.data).subscribe(it => {
       this.data = it;
-      console.log(this.data);
-      this.getdataarray();
+      console.log(this.data);      
+      console.log(id);
+      console.log(this.data);   
+      
+      
     });
+    // this.productapi.AddSellTotalProduct(id, this.data).subscribe(it => {
+    //   this.data = it;
+    //   console.log(this.data);
+    //   this.getdataarray();
+    // });
+
   }
   async cancelorder(id) {
     const alert = await this.alertController.create({

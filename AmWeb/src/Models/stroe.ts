@@ -18,7 +18,7 @@ export class store{
 
     unitProduct:string;
 
-    statusclear:string;
+    statusproduct:string;
 
     sellProduct:string;
 

@@ -25,7 +25,7 @@ export class EditClearPage implements OnInit {
     this.dataClear = this.formbuilder.group({
       'idProduct': [null, Validators.required],
       'nameProduct': [null, Validators.required],
-      'statusclear': [null, Validators.required]
+      'statusProduct': [null, Validators.required]
     });
   }
 
@@ -62,7 +62,7 @@ export class EditClearPage implements OnInit {
     
     
 
-    this.storeApi.EditDataStore2(this.clear,this.datapro).subscribe(it => {
+    this.productapi.EditDataProduct(this.clear,this.datapro).subscribe(it => {
       console.log(it);
 
       this.route.navigate(['/clear-store']);

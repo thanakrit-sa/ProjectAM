@@ -16,6 +16,7 @@ namespace AMApi.Models
         public string unitTotal { get; set; }
         public string Total { get; set; }
         public string AmountProduct { get; set; }
+        public string StatusProduct { get; set; }
 
         
 
