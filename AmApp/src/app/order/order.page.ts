@@ -71,6 +71,16 @@ export class OrderPage implements OnInit {
 
     await alert.present();
   }
+  async presentAlert2() {
+    const alert = await this.alertController1.create({
+      header: 'เตือน',
+
+      message: 'กรุณากรอกจำนวนสินค้าให้ถูกต้อง',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
       header: '',
@@ -89,7 +99,7 @@ export class OrderPage implements OnInit {
             // console.log(this.order.value);
             this.dataorder = this.order.value;
             this.callApi.GetProductid(this.dataorder.idProduct).subscribe(it => {
-              this.tt = it.total
+              this.tt = it.totalProduct
               this.aa = this.dataorder.amountProduct
               this.a = parseInt(this.aa, this.a)
               this.t = parseInt(this.tt, this.t)
@@ -97,7 +107,7 @@ export class OrderPage implements OnInit {
               // console.log("จำนวน " + this.a);
               // console.log("คงเหลือ " + this.t);
 
-              if (this.a <= this.t) {
+              if (this.a <= this.t && this.a != 0) {
                 // console.log('dai');
                 this.t = 0;
                 this.a = 0;
@@ -110,8 +120,13 @@ export class OrderPage implements OnInit {
                 this.productapi.AddSellTotalProduct(this.order.value.idProduct, this.order.value).subscribe(it => {
                   // console.log(it);
                 });
-              this.presentToast1();
+                this.presentToast1();
                 this.route.navigate(['/list']);
+              } 
+              else if (this.a == 0) {
+                this.presentAlert2();
+                this.t = 0;
+                this.a = 0;
               }
               else {
                 // console.log("maidai");
@@ -133,7 +148,7 @@ export class OrderPage implements OnInit {
 
   listdata() {
     this.callApi.getallproduct().subscribe(it => {
-     
+
       this.dataProduct = it;
 
     })
@@ -144,7 +159,7 @@ export class OrderPage implements OnInit {
       this.data1 = it
       this.datasum = it
 
-      // console.log(this.data1)
+      console.log(this.data1)
 
     });
   }
