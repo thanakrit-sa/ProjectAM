@@ -9,10 +9,142 @@ import { UserService } from '../service/user.service';
 import { Order } from 'src/Models/order';
 import { OrderService } from '../service/order.service';
 import { AlertController, ToastController } from '@ionic/angular';
+
 @Component({
   selector: 'app-order-list',
   templateUrl: './order-list.page.html',
   styleUrls: ['./order-list.page.scss'],
+  template:` <ion-header>
+  <ion-toolbar color="dark" text-center>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>รายการสั่งซื้อ</ion-title>
+    
+           
+        <ion-button style="padding-right: 15px" slot='end' [routerLink]="['/order']" >สั่งซื้อ</ion-button>
+  </ion-toolbar>
+</ion-header><br>
+
+<ion-content >
+  <ion-card >
+  <ion-item>
+    <ion-label>รายการ</ion-label>
+    <ion-select placeholder="เลือกรายการที่ต้องการ" (ionChange)="onChange(data)" [(ngModel)]="data">
+      <ion-select-option >ทั้งหมด</ion-select-option>
+      <ion-select-option value ="สั่งซื้อ">สั่งซื้อ</ion-select-option>
+      <ion-select-option value ="รับสั่งซื้อ">รับ Order แล้ว</ion-select-option>
+      <ion-select-option value ="ส่งสินค้า">ส่งสินค้าแล้ว</ion-select-option>
+      <ion-select-option value ="ยกเลิก">ยกเลิก</ion-select-option>
+      <ion-select-option value ="ได้รับแล้ว">ได้รับสินค้าแล้ว</ion-select-option>
+     
+    </ion-select>
+  </ion-item>
+</ion-card>
+
+  <ion-card>
+    <ion-card-content>
+  <ion-row text-center style="border-bottom:groove;" >
+    <ion-col>
+      <ion-label>รหัสสั่งซื้อ</ion-label>
+    </ion-col>
+
+    <ion-col>
+      <ion-label>รหัสสินค้า</ion-label>
+    </ion-col>
+
+    <ion-col>
+      <ion-label>ชื่อสินค้า</ion-label>
+    </ion-col>
+
+    <ion-col>
+      <ion-label>จำนวนสินค้า</ion-label>
+    </ion-col>
+
+    <ion-col>
+      <ion-label>ราคาสินค้า</ion-label>
+    </ion-col>
+
+    <ion-col>
+      <ion-label>ชื่อลูกค้า</ion-label>
+    </ion-col>
+
+    <ion-col>
+      <ion-label>เบอร์โทร</ion-label>
+    </ion-col>
+
+    <ion-col>
+      <ion-label>ที่อยู่</ion-label>
+    </ion-col>
+
+    <ion-col>
+      <ion-label>วันที่สั่งซื้อ</ion-label>
+    </ion-col>
+
+
+    <ion-col>
+      <ion-label>วันที่ส่ง</ion-label>
+    </ion-col>
+
+    <ion-col colspan="2">
+      <ion-label>สถานะ</ion-label>
+    </ion-col>
+    <ion-col>
+      <ion-label></ion-label>
+    </ion-col>
+  </ion-row>
+
+  <ion-row  *ngFor="let a of datafilter | paginate: { itemsPerPage: 8, currentPage: p }" text-center style="border-bottom: groove">
+    <ion-col  class="co">
+      <ion-label>{{a.idOrder}}</ion-label>
+    </ion-col >
+    <ion-col class="co">
+      <ion-label>{{a.idProduct}}</ion-label>
+    </ion-col>
+    <ion-col class="co">
+      <ion-label>{{a.nameProduct}}</ion-label>
+    </ion-col>
+    <ion-col class="co">
+      <ion-label>{{a.amountProduct}} </ion-label>
+    </ion-col>
+    <ion-col class="co">
+      <ion-label>{{a.priceOrder}} </ion-label>
+    </ion-col>
+    <ion-col class="co">
+      <ion-label>{{a.nameUser}} </ion-label>
+    </ion-col>
+    <ion-col class="co">
+      <ion-label>{{a.telUser}}</ion-label>
+    </ion-col>
+    <ion-col class="co">
+      <ion-label>{{a.addressUser}}</ion-label>
+    </ion-col>
+    <ion-col class="co">
+      <ion-label>{{a.dateOrder | date}} {{a.dateOrder | date : 'shortTime'}}</ion-label>
+    </ion-col>
+    <ion-col  class="co">
+      <ion-label>{{a.sendDate | date}} {{a.sendDate | date : 'shortTime'}}</ion-label>
+    </ion-col >
+    <ion-col class="co">
+      <ion-label>{{a.status}} </ion-label>
+    </ion-col>
+    <ion-col class="co" >
+        <ion-button color="secondary" (click)="okorder(a.idOrder)" *ngIf="a.status == 'สั่งซื้อ'" size="small">รับ order</ion-button>
+        <ion-button color="success" (click)="sendorder(a.idOrder)" *ngIf="a.status == 'รับสั่งซื้อ'" size="small">ส่งสินค้า</ion-button>
+    </ion-col>
+ 
+  </ion-row>
+  </ion-card-content>
+</ion-card>
+
+<pagination-controls (pageChange)="p = $event"   
+  previousLabel="ย้อนกลับ"
+  maxSize="5"
+  nextLabel="ถัดไป"
+
+  class="my-pagination"
+  ></pagination-controls>
+</ion-content> `
 })
 export class OrderListPage implements OnInit {
 

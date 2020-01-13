@@ -6,7 +6,7 @@ export class Product {
     costProduct: string;
     totalProduct: string;
    
-     
+    amountProduct : string;
     
         unitProduct:string;
     

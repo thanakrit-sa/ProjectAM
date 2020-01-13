@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color="dark" text-center>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -78,7 +78,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-row  *ngFor="let a of datafilter" text-center style="border-bottom: groove">
+  <ion-row  *ngFor="let a of datafilter | paginate: { itemsPerPage: 5, currentPage: p }" text-center style="border-bottom: groove">
     <ion-col  class="co">
       <ion-label>{{a.idOrder}}</ion-label>
     </ion-col >
@@ -121,4 +121,11 @@
   </ion-card-content>
 </ion-card>
 
-</ion-content>
+<pagination-controls (pageChange)="p = $event"   
+  previousLabel="ย้อนกลับ"
+  maxSize="5"
+  nextLabel="ถัดไป"
+
+  class="my-pagination"
+  ></pagination-controls>
+</ion-content> -->

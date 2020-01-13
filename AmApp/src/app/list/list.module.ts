@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ListPage } from './list.page';
 import {NgxPaginationModule} from 'ngx-pagination';
-import{ Ng2SearchPipeModule } from 'ng2-search-filter'
+import{ Ng2SearchPipeModule } from 'ng2-search-filter';
 const routes: Routes = [
   {
     path: '',

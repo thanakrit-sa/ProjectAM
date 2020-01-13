@@ -140,13 +140,13 @@ export class ListPage implements OnInit {
   p: number = 1
   dataOrder: Order;
   data
-pp :any;
+  pp: any;
   datasearch: any = [];
   datasearch2: Order[] = [];
 
   // serarch :any;
   // serarch2 :Order[] = [];
-  constructor(public productapi:ProductService,public route: Router, public callApi: CallApiService, public alertController: AlertController, public tost: ToastController) {
+  constructor(public productapi: ProductService, public route: Router, public callApi: CallApiService, public alertController: AlertController, public tost: ToastController) {
     this.getall();
   }
 
@@ -177,7 +177,7 @@ pp :any;
       this.datasearch = it;
       for (var i in it) {
         this.datasearch2[i] = this.datasearch[i]
-        console.log(this.datasearch2);
+        // console.log(this.datasearch2);
       }
     });
   }
@@ -204,30 +204,36 @@ pp :any;
   /////////////////////////////ยกเลิก Order////////////////////////
   getid(id) {
     this.callApi.GetProductById(id).subscribe(it => {
-      console.log(it);
+      console.log(it.idProduct);
       this.data = it
       console.log(this.data);
-      this.cancelmorder(id)
+      // this.cancelmorder(id)
+    
+        this.productapi.CancelSellTotalProduct(this.data.idProduct, this.data.amountProduct).subscribe(it => {
+          // this.data = it;
+          console.log(it);
+          // this.getdataarray();
+      
+      });
+
     });
 
   }
-  cancelmorder(id) {
-    console.log(id);
-    this.callApi.editokorder(id, this.data).subscribe(it => {
-      this.data = it;
-      console.log(this.data);      
-      console.log(id);
-      console.log(this.data);   
-      
-      
-    });
-    // this.productapi.AddSellTotalProduct(id, this.data).subscribe(it => {
-    //   this.data = it;
-    //   console.log(this.data);
-    //   this.getdataarray();
-    // });
+  // cancelmorder(id) {
+  //   console.log(id);
+  //   this.callApi.editokorder(id, this.data).subscribe(it => {
+  //     this.data = it;
+  //     console.log(this.data);      
+  //     console.log(id);
+  //     console.log(this.data);   
+  //   });
+  // this.productapi.AddSellTotalProduct(id, this.data).subscribe(it => {
+  //   this.data = it;
+  //   console.log(this.data);
+  //   this.getdataarray();
+  // });
 
-  }
+  // }
   async cancelorder(id) {
     const alert = await this.alertController.create({
       header: 'ยกเลิกการสั่งซื้อ',

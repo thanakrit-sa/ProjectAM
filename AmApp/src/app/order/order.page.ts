@@ -103,6 +103,7 @@ export class OrderPage implements OnInit {
               this.aa = this.dataorder.amountProduct
               this.a = parseInt(this.aa, this.a)
               this.t = parseInt(this.tt, this.t)
+console.log(it);
 
               // console.log("จำนวน " + this.a);
               // console.log("คงเหลือ " + this.t);
@@ -121,7 +122,7 @@ export class OrderPage implements OnInit {
                   // console.log(it);
                 });
                 this.presentToast1();
-                this.route.navigate(['/list']);
+                // this.route.navigate(['/list']);
               } 
               else if (this.a == 0) {
                 this.presentAlert2();
