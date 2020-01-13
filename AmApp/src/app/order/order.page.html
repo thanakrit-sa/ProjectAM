@@ -16,12 +16,6 @@
   <form [formGroup]="order"(ngSubmit)="presentAlertConfirm()">
   <h1>สั่งซื้อ</h1>
   <ion-card>
-
-    <ion-item>
-      <ion-label>จำนวนสินค้า :</ion-label>
-      <ion-input formControlName="idOrder" placeholder="กรอกจำนวนสินค้า" >
-      </ion-input>
-    </ion-item>
   
 
   <ion-item>
@@ -44,26 +38,26 @@
 
   <ion-item>
     <ion-label>จำนวนสินค้า :</ion-label>
-    <ion-input formControlName="amountProduct" (ionChange)="amount(amountp)"[(ngModel)]="amountp"placeholder="กรอกจำนวนสินค้า" >
+    <ion-input formControlName="amountProduct" (ionChange)="amount(amountp)"[(ngModel)]="amountp"placeholder="กรอกจำนวนสินค้า"*ngIf="data != null" clearInput >
     </ion-input>
   </ion-item>
 
 
   <ion-item>
     <ion-label>ชื่อลูกค้า :</ion-label>
-    <ion-input placeholder="ชื่อลูกค้า" formControlName="nameUser">
+    <ion-input placeholder="ชื่อลูกค้า" formControlName="nameUser" clearInput>
     </ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label>เบอร์โทรลูกค้า :</ion-label>
-    <ion-input placeholder="เบอร์โทรลูกค้า" formControlName="telUser">
+    <ion-input placeholder="เบอร์โทรลูกค้า" formControlName="telUser" clearInput>
     </ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label>ที่อยู่ :</ion-label>
-    <ion-input placeholder="ที่อยู่" formControlName="addressUser">
+    <ion-input placeholder="ที่อยู่" formControlName="addressUser" clearInput>
     </ion-input>
   </ion-item>
 

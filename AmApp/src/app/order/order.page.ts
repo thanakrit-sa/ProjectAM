@@ -27,6 +27,7 @@ export class OrderPage implements OnInit {
   id: any;
   check: any;
   t: number;
+  amountp:number;
   a: number;
   aa: any
   tt: any
@@ -165,14 +166,16 @@ console.log(it);
     });
   }
   onChange(data) {
-
+    this.amountp = null
+    this.sum = 0
     this.getbydata(data)
     // console.log(data);
   }
-  amount(q) {
+  amount(qs) {
+    this.amountp = qs
     // console.log(this.datasum);
     // console.log(q);
-    this.sum = q * this.datasum.priceProduct
+    this.sum = qs * this.datasum.priceProduct
     // console.log(this.sum);
 
   }
