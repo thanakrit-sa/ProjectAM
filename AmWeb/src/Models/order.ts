@@ -2,7 +2,7 @@ export class Order {
     idOrder :string;
       idProduct :string;
       nameProduct :string;
-      AmountProduct :string;
+      amountProduct :string;
       priceOrder :string;
       nameuser :string;
       teluser :string;

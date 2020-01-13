@@ -40,25 +40,22 @@ namespace AMApi.Controllers
         [HttpPost]
         public Order AddOrder([FromBody] Order Orderx )
         {
-            
-            var id = Guid.NewGuid().ToString();
-            
+           var number = 1;
+            var textid = DataOrder.Max(it => it.IdOrder.Max()).ToString();
+            var id = int.Parse(textid) + number;
+            var kk =id.ToString();
             var item = new Order
             {
-                IdOrder = id,
-                IdProduct = Orderx.IdProduct,
-                NameProduct = Orderx.NameProduct,
-                AmountProduct = Orderx.AmountProduct,
-                PriceOrder = Orderx.PriceOrder,
-                NameUser = Orderx.NameUser,
-                AddressUser = Orderx.AddressUser,
-                TelUser = Orderx.TelUser,
-                DateOrder = DateTime.Now,
-                Status = "สั่งซื้อ",
-                TotalProduct = "0",
-                Total = "0",
-
-
+               IdOrder = kk,
+               IdProduct = Orderx.IdProduct,
+               NameProduct = Orderx.NameProduct,
+               AmountProduct = Orderx.AmountProduct,
+               PriceOrder = Orderx.PriceOrder,
+               NameUser = Orderx.NameUser,
+               AddressUser = Orderx.AddressUser,
+               TelUser = Orderx.TelUser,
+               DateOrder = DateTime.Now,
+               Status = "สั่งซื้อ"
             };
 
             DataOrder.Add(item);

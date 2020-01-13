@@ -38,5 +38,11 @@ export class ProductService {
   public GetProductBydata(data:string ){
     return this.http.get<product>(ProductService.host+'Product/GetProductBydata/'+ data);
    }
+   public AddSellTotalProduct(Id: string, data){
+    return this.http.put<product>(ProductService.host+'Product/AddSellTotalProduct/'+ Id, data);
+   }
+   public GetProductid(Id:string ){
+    return this.http.get<product>(ProductService.host+'Product/GetProductById/'+Id);
+   }
   
 }
