@@ -16,6 +16,14 @@
   <form [formGroup]="order"(ngSubmit)="presentAlertConfirm()">
   <h1>สั่งซื้อ</h1>
   <ion-card>
+
+    <ion-item>
+      <ion-label>จำนวนสินค้า :</ion-label>
+      <ion-input formControlName="idOrder" placeholder="กรอกจำนวนสินค้า" >
+      </ion-input>
+    </ion-item>
+  
+
   <ion-item>
     <ion-label>ชื่อสินค้า :</ion-label>
     <ion-select formControlName="nameProduct" [(ngModel)]="data" placeholder="เลือกสินค้า" (ionChange)="onChange(data)" >

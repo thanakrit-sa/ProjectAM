@@ -217,15 +217,17 @@ pp :any;
       this.data = it;
       console.log(this.data);      
       console.log(id);
-      console.log(this.data);   
+      this.getdataarray();
       
       
     });
-    // this.productapi.AddSellTotalProduct(id, this.data).subscribe(it => {
-    //   this.data = it;
-    //   console.log(this.data);
-    //   this.getdataarray();
-    // });
+    this.productapi.CancelSellTotalProduct(this.data.idProduct, this.data.amountProduct).subscribe(it => {
+      this.data = it;
+      console.log(this.data);
+      console.log(this.data.amountProduct);
+      this.getdataarray();
+      
+    });
 
   }
   async cancelorder(id) {

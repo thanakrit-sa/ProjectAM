@@ -17,6 +17,8 @@ namespace AMApi.Models
         public string Total { get; set; }
         public string AmountProduct { get; set; }
         public string StatusProduct { get; set; }
+        public string IdOrder { get; set; }
+        public string Status { get; set; }   
 
         
 

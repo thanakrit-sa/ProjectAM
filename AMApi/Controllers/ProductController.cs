@@ -14,8 +14,8 @@ namespace AMApi.Controllers
     {
         public static List<Product> DataProduct = new List<Product>
         {
-            new Product {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TypeProduct = "เครื่องราง",PriceProduct = "5999",CostProduct = "2999" ,TotalProduct = "20",Total="20",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ"},
-            new Product {IdProduct = "B7784",NameProduct = "น้ำยาล้างจานปู่เค็ม",TypeProduct = "ของใช้",PriceProduct = "299",CostProduct = "199" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ"},
+            new Product {IdOrder = "100101",IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TypeProduct = "เครื่องราง",PriceProduct = "5999",CostProduct = "2999" ,TotalProduct = "20",Total="20",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ"},
+            new Product {IdOrder = "100102",IdProduct = "B7784",NameProduct = "น้ำยาล้างจานปู่เค็ม",TypeProduct = "ของใช้",PriceProduct = "299",CostProduct = "199" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ"},
             new Product {IdProduct = "R5596",NameProduct = "ไข่แดงเค็มปู่เค็ม",TypeProduct = "อาหาร",PriceProduct = "9",CostProduct = "1" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ"},
             new Product {IdProduct = "H8897",NameProduct = "ขนมปู่เค็ม",TypeProduct = "ขนม",PriceProduct = "99",CostProduct = "29" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ"},
             new Product {IdProduct = "S0015",NameProduct = "ครีมหลวงปู่เค็ม",TypeProduct = "เครื่องสำอาง",PriceProduct = "999",CostProduct = "499" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ"},
@@ -103,20 +103,20 @@ namespace AMApi.Controllers
             var getcheck = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
             int Total = int.Parse(getcheck.TotalProduct);
             int TotalProduct = int.Parse(getcheck.Total);
-            int Add = int.Parse(Productx.TotalProduct);             
+            int Add = int.Parse(Productx.TotalProduct);
             int Totals;
-            
+
             int Totals1 = 0;
 
             if (getcheck.Total == "0" && getcheck.TotalProduct == "0")
             {
-                Total = 0;                         
-                Totals = TotalProduct + Add;                
+                Total = 0;
+                Totals = TotalProduct + Add;
                 Totals1 = Total + Add;
             }
             else
-            {                                
-                Totals = TotalProduct+Add;
+            {
+                Totals = TotalProduct + Add;
                 Totals1 = Total + Add;
             }
 
@@ -164,21 +164,7 @@ namespace AMApi.Controllers
                 SellTotals = SellTotal + Sell;
                 AllTotals = AllTotal - All;
             }
-            // var getsell = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
-            // int AllTotal = int.Parse(getsell.TotalProduct);
-            // int All = int.Parse(Productx.AmountProduct);
-            // int AllTotals = 0;
-
-            // if (getcheck.AmountProduct != "0")
-            // {
-            //     AllTotal = 0;
-            //     AllTotals = AllTotal - All;
-            // }
-            // else
-            // {
-            //     AllTotals = AllTotal - All;
-            // }
-
+            
             var item = new Product
             {
                 IdProduct = id,
@@ -196,33 +182,66 @@ namespace AMApi.Controllers
             return item;
         }
 
-        [HttpPut("{id}")]
-        public Product CancelSellTotalProduct(string id, [FromBody] Product Productx)
+        [HttpGet("{id}/{amount}")]
+        public Product CancelSellTotalProduct(string id, string amount)
         {
             var _id = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
+            var amountall = int.Parse(_id.AmountProduct) - int.Parse(amount);
+            var totalall = int.Parse(_id.TotalProduct) + int.Parse(amount);
             var item = new Product
             {
                 IdProduct = id,
                 NameProduct = _id.NameProduct,
                 TypeProduct = _id.TypeProduct,
                 PriceProduct = _id.PriceProduct,
-                TotalProduct = _id.TotalProduct,
-                unitProduct = Productx.unitProduct,
-                StatusProduct = Productx.StatusProduct,
+                TotalProduct = totalall.ToString(),
+                unitProduct = _id.unitProduct,
+                StatusProduct = _id.StatusProduct,
                 CostProduct = _id.CostProduct,
-                AmountProduct = _id.AmountProduct,
+                AmountProduct = amountall.ToString(),
                 // TotalProduct = _id.TotalProduct,
-                Total = _id.Total
+                Total = _id.Total,
+                
             };
             DataProduct.Remove(_id);
             DataProduct.Add(item);
             return item;
+            // var _id = DataProduct.FirstOrDefault(it => it.IdOrder == id.ToString());
+            // var getcheck = DataProduct.FirstOrDefault(it => it.IdOrder == id.ToString());
+            // // จำนวนขาย
+            // int SellTotal = int.Parse(getcheck.AmountProduct);
+            // int Sell = int.Parse(AmountProduct);
+            // int SellTotals = 0;
+
+            // // จำนวนทั้งหมด      
+            // int AllTotal = int.Parse(getcheck.TotalProduct);
+            // int All = int.Parse(AmountProduct);
+            // int AllTotals = 0;
+
+
+            // if (AmountProduct != null)
+            // {
+            //     SellTotals = SellTotal - SellTotal;
+            //     AllTotals = AllTotal + SellTotal;
+            // }         
+          
+            // var item = new Product
+            // {
+            //     IdOrder = _id.IdOrder,
+            //     IdProduct = id,
+            //     NameProduct = _id.NameProduct,
+            //     TypeProduct = _id.TypeProduct,
+            //     PriceProduct = _id.PriceProduct,
+            //     TotalProduct = AllTotals.ToString(),
+            //     Total = _id.Total,
+            //     StatusProduct = _id.StatusProduct,
+            //     AmountProduct = SellTotals.ToString(),
+            //     CostProduct = _id.CostProduct,
+                
+            // };
+            // DataProduct.Remove(_id);
+            // DataProduct.Add(item);
+            // return item;
         }
-
-
-
-
-
-
     }
 }

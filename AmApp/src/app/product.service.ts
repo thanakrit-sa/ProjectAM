@@ -41,7 +41,7 @@ export class ProductService {
   public AddSellTotalProduct(Id: string, data){
     return this.http.put<Product>(ProductService.host+'Product/AddSellTotalProduct/'+ Id, data);
    }
-   public CancelSellTotalProduct(id: string, data){
-    return this.http.put<Product>(ProductService.host+'Product/CancelSellTotalProduct/'+ id,data);
+   public CancelSellTotalProduct(id: string, amountProduct: string ){
+    return this.http.get<Product>(ProductService.host+'Product/CancelSellTotalProduct/'+ id +'/'+ amountProduct);
    }
 }

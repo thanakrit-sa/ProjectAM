@@ -20,7 +20,12 @@ namespace AMApi.Controllers
             new Order {IdOrder = "100105" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="3",DateOrder = DateTime.Now, SendDate = DateTime.Now, Status = "ได้รับแล้ว"},
         };
 
-         [HttpGet]
+
+        public static List<Product> DataProduct = new List<Product>
+        {
+
+        };
+        [HttpGet]
         public ActionResult<IEnumerable<Order>> GetOrderAll()
         {
             return DataOrder.ToList();
@@ -32,22 +37,28 @@ namespace AMApi.Controllers
             return DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
         }
 
-         [HttpPost]
-        public Order AddOrder([FromBody] Order Orderx)
+        [HttpPost]
+        public Order AddOrder([FromBody] Order Orderx )
         {
+            
             var id = Guid.NewGuid().ToString();
+            
             var item = new Order
             {
-               IdOrder = id,
-               IdProduct = Orderx.IdProduct,
-               NameProduct = Orderx.NameProduct,
-               AmountProduct = Orderx.AmountProduct,
-               PriceOrder = Orderx.PriceOrder,
-               NameUser = Orderx.NameUser,
-               AddressUser = Orderx.AddressUser,
-               TelUser = Orderx.TelUser,
-               DateOrder = DateTime.Now,
-               Status = "สั่งซื้อ"
+                IdOrder = id,
+                IdProduct = Orderx.IdProduct,
+                NameProduct = Orderx.NameProduct,
+                AmountProduct = Orderx.AmountProduct,
+                PriceOrder = Orderx.PriceOrder,
+                NameUser = Orderx.NameUser,
+                AddressUser = Orderx.AddressUser,
+                TelUser = Orderx.TelUser,
+                DateOrder = DateTime.Now,
+                Status = "สั่งซื้อ",
+                TotalProduct = "0",
+                Total = "0",
+
+
             };
 
             DataOrder.Add(item);
@@ -60,16 +71,16 @@ namespace AMApi.Controllers
             var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
             var item = new Order
             {
-               IdOrder = id,
-               IdProduct = Orderx.IdProduct,
-               NameProduct = Orderx.NameProduct,
-               AmountProduct = Orderx.AmountProduct,
-               PriceOrder = Orderx.PriceOrder,
-               NameUser = Orderx.NameUser,
-               AddressUser = Orderx.AddressUser,
-               TelUser = Orderx.TelUser,
-               DateOrder = Orderx.DateOrder,
-               Status = "รับสั่งซื้อ"
+                IdOrder = id,
+                IdProduct = Orderx.IdProduct,
+                NameProduct = Orderx.NameProduct,
+                AmountProduct = Orderx.AmountProduct,
+                PriceOrder = Orderx.PriceOrder,
+                NameUser = Orderx.NameUser,
+                AddressUser = Orderx.AddressUser,
+                TelUser = Orderx.TelUser,
+                DateOrder = Orderx.DateOrder,
+                Status = "รับสั่งซื้อ"
             };
             DataOrder.Remove(_id);
             DataOrder.Add(item);
@@ -83,17 +94,17 @@ namespace AMApi.Controllers
             var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
             var item = new Order
             {
-               IdOrder = id,
-               IdProduct = Orderx.IdProduct,
-               NameProduct = Orderx.NameProduct,
-               AmountProduct = Orderx.AmountProduct,
-               PriceOrder = Orderx.PriceOrder,
-               NameUser = Orderx.NameUser,
-               AddressUser = Orderx.AddressUser,
-               TelUser = Orderx.TelUser,
-               DateOrder = Orderx.DateOrder,
-               SendDate = DateTime.Now,
-               Status = "ส่งสินค้า"
+                IdOrder = id,
+                IdProduct = Orderx.IdProduct,
+                NameProduct = Orderx.NameProduct,
+                AmountProduct = Orderx.AmountProduct,
+                PriceOrder = Orderx.PriceOrder,
+                NameUser = Orderx.NameUser,
+                AddressUser = Orderx.AddressUser,
+                TelUser = Orderx.TelUser,
+                DateOrder = Orderx.DateOrder,
+                SendDate = DateTime.Now,
+                Status = "ส่งสินค้า"
             };
             DataOrder.Remove(_id);
             DataOrder.Add(item);
@@ -106,16 +117,16 @@ namespace AMApi.Controllers
             var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
             var item = new Order
             {
-               IdOrder = id,
-               IdProduct = Orderx.IdProduct,
-               NameProduct = Orderx.NameProduct,
-               AmountProduct = Orderx.AmountProduct,
-               PriceOrder = Orderx.PriceOrder,
-               NameUser = Orderx.NameUser,
-               AddressUser = Orderx.AddressUser,
-               TelUser = Orderx.TelUser,
-               DateOrder = Orderx.DateOrder,
-               Status = "ยกเลิก"
+                IdOrder = id,
+                IdProduct = Orderx.IdProduct,
+                NameProduct = Orderx.NameProduct,
+                AmountProduct = Orderx.AmountProduct,
+                PriceOrder = Orderx.PriceOrder,
+                NameUser = Orderx.NameUser,
+                AddressUser = Orderx.AddressUser,
+                TelUser = Orderx.TelUser,
+                DateOrder = Orderx.DateOrder,
+                Status = "ยกเลิก"
             };
             DataOrder.Remove(_id);
             DataOrder.Add(item);
@@ -128,17 +139,62 @@ namespace AMApi.Controllers
             var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
             var item = new Order
             {
-               IdOrder = id,
-               IdProduct = Orderx.IdProduct,
-               NameProduct = Orderx.NameProduct,
-               AmountProduct = Orderx.AmountProduct,
-               PriceOrder = Orderx.PriceOrder,
-               NameUser = Orderx.NameUser,
-               AddressUser = Orderx.AddressUser,
-               TelUser = Orderx.TelUser,
-               DateOrder = Orderx.DateOrder,
-               SendDate = Orderx.SendDate,
-               Status = "ได้รับแล้ว"
+                IdOrder = id,
+                IdProduct = Orderx.IdProduct,
+                NameProduct = Orderx.NameProduct,
+                AmountProduct = Orderx.AmountProduct,
+                PriceOrder = Orderx.PriceOrder,
+                NameUser = Orderx.NameUser,
+                AddressUser = Orderx.AddressUser,
+                TelUser = Orderx.TelUser,
+                DateOrder = Orderx.DateOrder,
+                SendDate = Orderx.SendDate,
+                Status = "ได้รับแล้ว"
+            };
+            DataOrder.Remove(_id);
+            DataOrder.Add(item);
+            return item;
+        }
+
+        [HttpPut("{id}")]
+        public Order CancelSellTotalProduct(string id, [FromBody] Order Orderx)
+        {
+            var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
+            var getcheck = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
+            // จำนวนขาย
+            int SellTotal = int.Parse(getcheck.AmountProduct);
+            int Sell = int.Parse(Orderx.AmountProduct);
+            int SellTotals = 0;
+
+            // จำนวนทั้งหมด      
+            int AllTotal = int.Parse(getcheck.TotalProduct);
+            int All = int.Parse(Orderx.AmountProduct);
+            int AllTotals = 0;
+
+
+            if (getcheck.AmountProduct != "0")
+            {
+                SellTotals = SellTotal - SellTotal;
+                AllTotals = AllTotal + SellTotal;
+            }
+            else {
+                SellTotals = SellTotal - SellTotal;
+                AllTotals = AllTotal + AllTotal;
+            }
+
+            var item = new Order
+            {
+                IdOrder = id,
+                IdProduct = Orderx.IdProduct,
+                NameProduct = _id.NameProduct,
+                TypeProduct = _id.TypeProduct,
+                PriceProduct = _id.PriceProduct,
+                TotalProduct = getcheck.AmountProduct,
+                Total = AllTotals.ToString(),
+                StatusProduct = _id.StatusProduct,
+                AmountProduct = SellTotals.ToString(),
+                CostProduct = _id.CostProduct,
+
             };
             DataOrder.Remove(_id);
             DataOrder.Add(item);

@@ -15,7 +15,12 @@ namespace AMApi.Models
         public DateTime? DateOrder { get; set; }
         public DateTime? SendDate { get; set; }
         public string Status { get; set; }
-        
+        public string TotalProduct { get; set; }
+        public string TypeProduct { get; set; }
+        public string PriceProduct { get; set; }
+        public string Total { get; set; }
+        public string StatusProduct { get; set; }
+        public string CostProduct { get; set; }
 
     }
 }

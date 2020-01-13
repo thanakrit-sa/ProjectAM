@@ -58,9 +58,7 @@ export class EditClearPage implements OnInit {
    log() {
     console.log(this.dataClear.value);
     this.datapro = this.dataClear.value
-    console.log(this.datapro);
-    
-    
+    console.log(this.datapro);   
 
     this.productapi.EditDataProduct(this.clear,this.datapro).subscribe(it => {
       console.log(it);
