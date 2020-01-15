@@ -21,5 +21,7 @@ export class product{
 
     statusProduct:String;
 
+    statusCheck:Boolean;
     
+    buttonCheck :Boolean;
 }

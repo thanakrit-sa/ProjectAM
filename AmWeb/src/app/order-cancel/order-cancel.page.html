@@ -1,57 +1,24 @@
 <ion-header>
-  <ion-toolbar>
-      <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-    <ion-title>orderCancel</ion-title>
+  <ion-toolbar color="dark" text-center>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>เคลียร์สินค้า</ion-title>
+    <ion-button expand="block" type="submit" style="padding-right: 15px" slot="end" [routerLink]="['/edit-clear']">
+      ล้างสินค้า</ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
- <!--  <form [formGroup]="form">
-    <ion-item>
-      <ion-label><strong>Select All</strong></ion-label>
-      <ion-checkbox slot="start" 
-      value="masterCheck"
-      [indeterminate]="isIndeterminate"
-      (ionChange)="checkMaster($evnet)"></ion-checkbox>
-    </ion-item>
-    <ion-list>
+
+
+<ion-item>
   
-      <ion-item *ngFor="let player of allPlayers">
-        <ion-label>{{player.name}}</ion-label>
-        
-        <ion-checkbox [formControlName]="player.id" slot="start"></ion-checkbox>
-      </ion-item>
-  
-    </ion-list>
-    <ion-item>
-      <button ion-button type="button" (click)="makeTeam()">make team</button>
-    </ion-item> 
-    <ion-item *ngFor="let player of teamPlayers">
-      <ion-label>{{player}}</ion-label>
-    </ion-item>
-    </form> -->
-    
-    <ion-list>
-      <ion-item>
-       <ion-label><strong>Select All</strong></ion-label>
-       <ion-checkbox slot="start" 
-       [(ngModel)]="masterCheck"
-       [indeterminate]="isIndeterminate"
-       (ionChange)="checkMaster()"></ion-checkbox>
-     </ion-item>
-   </ion-list>
-   <ion-list>
-     <ion-item *ngFor="let item of checkBoxList">
-       <ion-label>{{item.value}}</ion-label>
-       <ion-checkbox slot="start" 
-       [(ngModel)]="item.isChecked" 
-       (ionChange)="checkEvent()"></ion-checkbox>
-     </ion-item>
-   </ion-list>
+  <ion-select placeholder="- กรุณาเลือกสถานะ -" (ionChange)="onChange1(data)" [(ngModel)]="data">
+    <ion-select-option value="ทั้งหมด">ทั้งหมด</ion-select-option>
+    <ion-select-option value="แขน">แขนน</ion-select-option>
+  </ion-select>
+  </ion-item>
+  <ion-button (click)="addasd()"></ion-button>
 
-   <ion-button (click)=filter()></ion-button> 
-  </ion-content>
-
-
+</ion-content>

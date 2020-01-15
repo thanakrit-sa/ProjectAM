@@ -123,7 +123,7 @@ console.log(it);
                   // console.log(it);
                 });
                 this.presentToast1();
-                // this.route.navigate(['/list']);
+                this.route.navigate(['/list']);
               } 
               else if (this.a == 0) {
                 this.presentAlert2();
