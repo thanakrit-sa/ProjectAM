@@ -19,6 +19,8 @@ namespace AMApi.Models
         public string StatusProduct { get; set; }
         public string IdOrder { get; set; }
         public Boolean StatusCheck { get; set; }   
+        public string Status { get; set; }   
+        public int ShowTotal { get; set; }
 
         public Boolean ButtonCheck { get; set; }  
 

@@ -22,6 +22,7 @@ export class product{
     statusProduct:String;
 
     statusCheck:Boolean;
+    showTotal:number;
     
     buttonCheck :Boolean;
 }

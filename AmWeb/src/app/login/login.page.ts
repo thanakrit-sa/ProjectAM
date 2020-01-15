@@ -42,7 +42,7 @@ export class LoginPage implements OnInit {
         this.usertApi.nameUser = this.data[index].nameUser;
         console.log(this.usertApi.statusUser);
         console.log(this.usertApi.nameUser);
-        this.route.navigate(['/product']);
+        this.route.navigate(['/dashbroad']);
         
       }else{
         console.log("false");
