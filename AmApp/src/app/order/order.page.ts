@@ -166,8 +166,8 @@ console.log(it);
     });
   }
   onChange(data) {
-    this.amountp = null
-    this.sum = 0
+    this.amountp = 0
+    this.sum = null
     this.getbydata(data)
     // console.log(data);
   }

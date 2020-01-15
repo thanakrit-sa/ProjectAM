@@ -14,12 +14,12 @@ namespace AMApi.Controllers
     {
         public static List<Product> DataProduct = new List<Product>
         {
-            new Product {IdOrder = "100101",IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TypeProduct = "เครื่องราง",PriceProduct = "5999",CostProduct = "2999" ,TotalProduct = "20",Total="20",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ"},
-            new Product {IdOrder = "100102",IdProduct = "B7784",NameProduct = "น้ำยาล้างจานปู่เค็ม",TypeProduct = "ของใช้",PriceProduct = "299",CostProduct = "199" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ"},
-            new Product {IdProduct = "R5596",NameProduct = "ไข่แดงเค็มปู่เค็ม",TypeProduct = "อาหาร",PriceProduct = "9",CostProduct = "1" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ"},
-            new Product {IdProduct = "H8897",NameProduct = "ขนมปู่เค็ม",TypeProduct = "ขนม",PriceProduct = "99",CostProduct = "29" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ"},
-            new Product {IdProduct = "S0015",NameProduct = "ครีมหลวงปู่เค็ม",TypeProduct = "เครื่องสำอาง",PriceProduct = "999",CostProduct = "499" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ"},
-            new Product {IdProduct = "A8895",NameProduct = "เสื้อยืดหลวงปู่เค็ม",TypeProduct = "เสื้อผ้า",PriceProduct = "999",CostProduct = "299" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ"}
+            new Product {IdOrder = "100101",IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TypeProduct = "เครื่องราง",PriceProduct = "5999",CostProduct = "2999" ,TotalProduct = "20",Total="20",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0},
+            new Product {IdOrder = "100102",IdProduct = "B7784",NameProduct = "น้ำยาล้างจานปู่เค็ม",TypeProduct = "ของใช้",PriceProduct = "299",CostProduct = "199" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0},
+            new Product {IdProduct = "R5596",NameProduct = "ไข่แดงเค็มปู่เค็ม",TypeProduct = "อาหาร",PriceProduct = "9",CostProduct = "1" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0},
+            new Product {IdProduct = "H8897",NameProduct = "ขนมปู่เค็ม",TypeProduct = "ขนม",PriceProduct = "99",CostProduct = "29" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0},
+            new Product {IdProduct = "S0015",NameProduct = "ครีมหลวงปู่เค็ม",TypeProduct = "เครื่องสำอาง",PriceProduct = "999",CostProduct = "499" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0},
+            new Product {IdProduct = "A8895",NameProduct = "เสื้อยืดหลวงปู่เค็ม",TypeProduct = "เสื้อผ้า",PriceProduct = "999",CostProduct = "299" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0}
         };
 
         [HttpGet]
@@ -53,7 +53,8 @@ namespace AMApi.Controllers
                 AmountProduct = "0",
                 SellTotalProduct = Productx.SellTotalProduct,
                 StatusProduct = "กรุณาเลือกสถานะ",
-                CostProduct = Productx.CostProduct
+                CostProduct = Productx.CostProduct,
+                ShowTotal = Productx.ShowTotal
             };
 
             DataProduct.Add(item);
@@ -80,6 +81,7 @@ namespace AMApi.Controllers
                 CostProduct = _id.CostProduct,
                 AmountProduct = _id.AmountProduct,
                 // TotalProduct = _id.TotalProduct,
+                // ShowTotal = Productx.TotalProduct,
                 Total = _id.Total
             };
             DataProduct.Remove(_id);
@@ -101,23 +103,38 @@ namespace AMApi.Controllers
         {
             var _id = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
             var getcheck = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
+            var ff = DataProduct.Find(it => it.IdProduct == id.ToString());
             int Total = int.Parse(getcheck.TotalProduct);
             int TotalProduct = int.Parse(getcheck.Total);
             int Add = int.Parse(Productx.TotalProduct);
-            int Totals;
-
+            // // int sum = DataProduct.AsEnumerable().Sum(r => r.Field<int>("ShowTotal"));
+            // int ss = DataProduct.AsEnumerable().Sum(r => r.ShowTotal);           
+            // var alldata = DataProduct.ToArray();
+             
+            
+            // for (int i = 0; i < alldata.Length; i++)
+            // {
+            //     ss = ss + alldata[i].ShowTotal;
+            // };
+            int Totals = 0;
+            // int showtotal = 0;
             int Totals1 = 0;
+            // int allshowtotal = 0;
 
             if (getcheck.Total == "0" && getcheck.TotalProduct == "0")
             {
                 Total = 0;
+                
                 Totals = TotalProduct + Add;
                 Totals1 = Total + Add;
+                // showtotal = stotal + Add;
             }
             else
             {
                 Totals = TotalProduct + Add;
                 Totals1 = Total + Add;
+                // showtotal = TotalProduct += TotalProduct;
+
             }
 
             var item = new Product
@@ -130,7 +147,9 @@ namespace AMApi.Controllers
                 Total = Totals.ToString(),
                 StatusProduct = _id.StatusProduct,
                 AmountProduct = _id.AmountProduct,
-                CostProduct = _id.CostProduct
+                CostProduct = _id.CostProduct,
+                ShowTotal = getcheck.ShowTotal
+                // ShowTotal = ss
             };
             DataProduct.Remove(_id);
             DataProduct.Add(item);
@@ -164,7 +183,7 @@ namespace AMApi.Controllers
                 SellTotals = SellTotal + Sell;
                 AllTotals = AllTotal - All;
             }
-            
+
             var item = new Product
             {
                 IdProduct = id,
@@ -201,7 +220,7 @@ namespace AMApi.Controllers
                 AmountProduct = amountall.ToString(),
                 // TotalProduct = _id.TotalProduct,
                 Total = _id.Total,
-                
+
             };
             DataProduct.Remove(_id);
             DataProduct.Add(item);
@@ -224,7 +243,7 @@ namespace AMApi.Controllers
             //     SellTotals = SellTotal - SellTotal;
             //     AllTotals = AllTotal + SellTotal;
             // }         
-          
+
             // var item = new Product
             // {
             //     IdOrder = _id.IdOrder,
@@ -237,7 +256,7 @@ namespace AMApi.Controllers
             //     StatusProduct = _id.StatusProduct,
             //     AmountProduct = SellTotals.ToString(),
             //     CostProduct = _id.CostProduct,
-                
+
             // };
             // DataProduct.Remove(_id);
             // DataProduct.Add(item);

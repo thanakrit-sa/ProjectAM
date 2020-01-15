@@ -1,12 +1,192 @@
 <ion-header>
   <ion-toolbar color="dark" text-center>
-      <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>แผงควบคุม</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <br>
+  <ion-card>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>เลือกรายการแสดง</ion-label>
+        <ion-select>
+        </ion-select>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <br>
+  <ion-card>
+    <ion-card-content>
+      <ion-row>        
+        <ion-col>
+          <ion-card>
+            <ion-card-header text-center class="ResultProductGet">
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h2><b>จำนวนสินค้านำเข้า</b></h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>            
+            <ion-card-content>              
+              <ion-row>
+                <ion-col text-center>
+                  <br>
+                  <ion-label>
+                    <h2>{{sumAmountProductInStore | number}}</h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header text-center class="ResultProductSell">
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h2><b>จำนวนสินค้าที่ขาย</b></h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>            
+            <ion-card-content>              
+              <ion-row>
+                <ion-col text-center>
+                  <br>
+                  <ion-label>
+                    <h2>{{sumAmountProductSellInStore | number}}</h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header text-center class="ResultProductTotal">
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h2><b>จำนวนสินค้าคงเหลือ</b></h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>            
+            <ion-card-content>              
+              <ion-row>
+                <ion-col text-center>
+                  <br>
+                  <ion-label>
+                    <h2>{{sumAmountProductTotalInStore | number}}</h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header text-center class="Total">
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h2><b>รายรับ</b></h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>            
+            <ion-card-content>              
+              <ion-row>
+                <ion-col text-center>
+                  <br>
+                  <ion-label>
+                    <h2>{{sumSell | number}} THB</h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header text-center class="Sell">
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h2><b>รายจ่าย</b></h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>            
+            <ion-card-content>              
+              <ion-row>
+                <ion-col text-center>
+                  <br>
+                  <ion-label>
+                    <h2>{{sumCost | number}} THB</h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header text-center class="Result">
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h2><b>กำไรสุทธิ</b></h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>            
+            <ion-card-content>              
+              <ion-row>
+                <ion-col text-center>
+                  <br>
+                  <ion-label>
+                    <h2>{{sumTotal | number}} THB</h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>        
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <br>  
+  <ion-row>
+    <ion-col>
+      <ion-card>
+        <ion-card-content>
+          <ion-row>        
+            <ion-col>
+              <canvas id="mychart"></canvas>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col>
+      <ion-card>
+        <ion-card-content>
+          <ion-row>        
+            <ion-col>
+              <canvas id="mychart2"></canvas>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>  
+  <br>
 </ion-content>

@@ -21,5 +21,6 @@ export class product{
 
     statusProduct:String;
 
+    showTotal:number;
     
 }

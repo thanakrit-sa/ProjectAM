@@ -80,7 +80,7 @@ export class StorePage implements OnInit {
       console.log(it);
       this.datas = it;
       for (let index = 0; index < Object.keys(this.datas).length; index++) {
-        this.datass[index] = this.datas[index];
+        this.datass[index] = this.datas[index];        
         this.datasss = this.datass;        
         console.log(this.datasss[index]);
         console.log(this.datasss[index].total);
