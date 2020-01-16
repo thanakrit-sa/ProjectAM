@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../service/product.service';
 import { Router } from '@angular/router';
-import { ClearService } from '../service/clear.service';
+
 import { product } from 'src/Models/product';
 @Component({
   selector: 'app-order-cancel',

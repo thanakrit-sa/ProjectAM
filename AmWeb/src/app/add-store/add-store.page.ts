@@ -9,7 +9,6 @@ import { ProductService } from '../service/product.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { filter } from 'minimatch';
 import { AlertController } from '@ionic/angular';
-import { ClearService } from "src/app/service/clear.service";
 
 
 @Component({
@@ -33,7 +32,7 @@ export class AddStorePage implements OnInit {
 
 
   public dataStoreAll: store;
-  constructor(public clearApi:ClearService,public alertController: AlertController,public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder, public productApi: ProductService,public activate:ActivatedRoute) {
+  constructor(public alertController: AlertController,public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder, public productApi: ProductService,public activate:ActivatedRoute) {
     this.dataStore = this.formbuilder.group({
       'idStore': [null, Validators.required],
       'idProduct':[null, Validators.required],
@@ -84,9 +83,9 @@ export class AddStorePage implements OnInit {
     console.log(this.dataStore.value);
     this.storeApi.AddStore(this.dataStore.value).subscribe(it =>{
     });
-    this.clearApi.AddClear(this.dataStore.value).subscribe(it =>{
-      console.log("2");
-    });
+    // this.clearApi.AddClear(this.dataStore.value).subscribe(it =>{
+    //   console.log("2");
+    // });
     
     
     console.log(this.dataStore);  
