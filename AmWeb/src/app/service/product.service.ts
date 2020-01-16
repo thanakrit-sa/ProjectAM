@@ -44,5 +44,8 @@ export class ProductService {
    public GetProductid(Id:string ){
     return this.http.get<product>(ProductService.host+'Product/GetProductById/'+Id);
    }
+   public EditProductstatus(Id:string,data){
+    return this.http.put<product>(ProductService.host + 'Product/EditProductstatus/' + Id, data);
+   }
   
 }

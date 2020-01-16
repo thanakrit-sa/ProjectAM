@@ -64,7 +64,32 @@ namespace AMApi.Controllers
             // data.Add(Userx);
             return item;
         }
+        [HttpPut("{id}")]
+        public Product EditProductstatus(string id, [FromBody] Product Productx)
+        {
+            var _id = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
+            var item = new Product
+            {
+                IdProduct = id,
+                NameProduct = _id.NameProduct,
+                TypeProduct = _id.TypeProduct,
+                PriceProduct = _id.PriceProduct,
+                TotalProduct = _id.TotalProduct,
+                unitProduct = _id.unitProduct,
+                StatusProduct = Productx.StatusProduct,
+                CostProduct = _id.CostProduct,
+                AmountProduct = _id.AmountProduct,
+                StatusCheck = _id.StatusCheck,
+                ButtonCheck = _id.ButtonCheck,
+                // TotalProduct = _id.TotalProduct,
+                // ShowTotal = Productx.TotalProduct,
+                Total = _id.Total
+            };
+            DataProduct.Remove(_id);
+            DataProduct.Add(item);
+            return item;
 
+        }
         [HttpPut("{id}")]
         public Product EditProduct(string id, [FromBody] Product Productx)
         {

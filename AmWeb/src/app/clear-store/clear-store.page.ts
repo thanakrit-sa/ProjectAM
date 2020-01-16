@@ -16,22 +16,22 @@ export class ClearStorePage implements OnInit {
   public dataStoreAll: product;
   datafilter: product[] = [];
   filtertype: product[] = [];
-  filterData:any[] =[]
+  filterData: any[] = []
+idproducteditstatus:any
 
+  constructor(public productApi: ProductService, public route: Router, public clearApi: ClearService ) {
 
-  constructor(public productApi: ProductService, public route: Router, public clearApi: ClearService){
-  
   }
-  isIndeterminate:boolean;
-  masterCheck:boolean;
-  checkBoxList:any;
-ss:any =[]
+  dataproduct :product
+  inputcheck: boolean
+  isIndeterminate: boolean;
+  masterCheck: boolean;
+  checkBoxList: any;
+  ss: any = []
   checkMaster() {
-    setTimeout(()=>{
+    setTimeout(() => {
       this.datafilter.forEach(obj => {
-        // console.log(obj);
         obj.statusCheck = this.masterCheck;
-
       });
     });
   }
@@ -39,9 +39,7 @@ ss:any =[]
   checkEvent() {
     const totalItems = this.datafilter.length;
     let checked = 0;
-    this.datafilter.map(obj => {console.log(obj);
-    
-      {}
+    this.datafilter.map(obj => {
       if (obj.statusCheck) checked++;
     });
     if (checked > 0 && checked < totalItems) {
@@ -58,23 +56,21 @@ ss:any =[]
       this.masterCheck = false;
     }
   }
-  num:any[]=[]
- 
-  sss(){
-  this.num = this.checkBoxList.forEach(it => {
+  num: any[] = []
+
+  sss() {
+    this.num = this.checkBoxList.forEach(it => {
       (it.checkBoxList) == true
       console.log(this.num);
-  
+
     });
- 
+
 
   }
-  filter(){
+  filter() {
     this.filterData = this.datafilter.filter(it => it.statusCheck == true)
     console.log(this.filterData);
     // console.log("a");
-    
-    
   }
   ////////////////////////////////////////////////////////////////*//////////////////////
   showall() {
@@ -85,20 +81,20 @@ ss:any =[]
         this.datafilter[index] = this.dataStoreAll[index];
         this.filtertype[index] = this.datafilter[index];
         console.log(this.filtertype[index]);
-        console.log(this.datafilter[index]);           
-      }      
+        console.log(this.datafilter[index]);
+      }
     });
   }
 
   onChange(data) {
     if (data == "ทั้งหมด") {
       this.showall()
-      console.log(this.dataStoreAll);      
+      console.log(this.dataStoreAll);
     }
     else {
       this.datafilter = this.filtertype.filter(it =>
-      it.statusProduct == data)
-      console.log(this.dataStoreAll);    
+        it.statusProduct == data)
+      console.log(this.dataStoreAll);
     }
   }
 
@@ -111,23 +107,48 @@ ss:any =[]
     this.showall();
     console.log(this.datafilter);
     console.log(this.filterData);
-    this.check= 0;
+    this.check = 0;
+
+
+  }
+  check = 0
+
+  show() {
+    this.check = 1
+
+  }
+  return() {
+    this.check = 0
+  }
+
+
+  showinput(statusinput) {
+    console.log(statusinput);
+    this.dataproduct = statusinput
+    statusinput.buttonCheck = "check";
+
+  }
+
+
+  dropdown(data) {
+    console.log(data);
+    this.dataproduct.statusProduct = data
+    
     
 
   }
-  check= 0
 
-  show(){
-this.check = 1
-
-  }
-  return( ){  
-    this.check =0
-  }
-
-
-  showinput(s){
-    console.log(s)
+  updateinput(data) {
+    data.buttonCheck = null
+    this.idproducteditstatus=this.dataproduct.idProduct
+    console.log(this.dataproduct);
+    console.log(this.idproducteditstatus);
     
+    this.productApi.EditProductstatus(this.idproducteditstatus,this.dataproduct).subscribe(it=>{
+      console.log(it);
+    
+    })
+
+  
   }
 }

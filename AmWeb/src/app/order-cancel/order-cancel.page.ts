@@ -9,36 +9,48 @@ import { product } from 'src/Models/product';
   styleUrls: ['./order-cancel.page.scss'],
 })
 export class OrderCancelPage implements OnInit {
-  public dataStoreAll: product;
-  datafilter: product[] = [];
-  filtertype: product[] = [];
-  filterData:any[] =[]
-asd:any;
 
-  constructor(public productApi: ProductService, public route: Router, public clearApi: ClearService){
-  
-  }
+
   isIndeterminate:boolean;
   masterCheck:boolean;
   checkBoxList:any;
-ss:any =[]
+ 
+ 
+  constructor(){
+    this.checkBoxList = [
+      {
+        value:"Esteban Gutmann IV",
+        isChecked:false
+      },{
+        value:"Bernardo Prosacco Jr.",
+        isChecked:false
+      },{
+        value:"Nicholaus Kulas PhD",
+        isChecked:false
+      },{
+        value:"Jennie Feeney",
+        isChecked:false
+      },{
+        value:"Shanon Heaney",
+        isChecked:false
+      }
+    ];
+  }
+ 
+ 
   checkMaster() {
     setTimeout(()=>{
-      this.datafilter.forEach(obj => {
-        // console.log(obj);
-        obj.statusCheck = this.masterCheck;
-
+      this.checkBoxList.forEach(obj => {
+        obj.isChecked = this.masterCheck;
       });
     });
   }
-
+ 
   checkEvent() {
-    const totalItems = this.datafilter.length;
+    const totalItems = this.checkBoxList.length;
     let checked = 0;
-    this.datafilter.map(obj => {console.log(obj);
-    
-      {}
-      if (obj.statusCheck) checked++;
+    this.checkBoxList.map(obj => {
+      if (obj.isChecked) checked++;
     });
     if (checked > 0 && checked < totalItems) {
       //If even one item is checked but not all
@@ -54,59 +66,10 @@ ss:any =[]
       this.masterCheck = false;
     }
   }
-  num:any[]=[]
- 
-  sss(){
-  this.num = this.checkBoxList.forEach(it => {
-      (it.checkBoxList) == true
-      console.log(this.num);
-  
-    });
  
 
-  }
-  filter(){
-    this.filterData = this.datafilter.filter(it => it.statusCheck == true)
-    console.log(this.filterData);
-    // console.log("a");
-    
-    
-  }
-  ////////////////////////////////////////////////////////////////*//////////////////////
-  showall() {
-    this.productApi.GetProductAll().subscribe((it) => {
-      this.dataStoreAll = it;
-      console.log(this.dataStoreAll);
-      for (let index = 0; index < Object.keys(this.dataStoreAll).length; index++) {
-        this.datafilter[index] = this.dataStoreAll[index];
-        this.filtertype[index] = this.datafilter[index];
-        console.log(this.filtertype[index]);
-        console.log(this.datafilter[index]);           
-      }      
-    });
-  }
-
-  onChange(data) {
-    if (data == "ทั้งหมด") {
-      this.showall()
-      console.log(this.dataStoreAll);      
-    }
-    else {
-      this.datafilter = this.filtertype.filter(it =>
-      it.statusProduct == data)
-      console.log(this.dataStoreAll);    
-    }
-  }
-
-
-
-  public get(id) {
-    this.route.navigate(['/edit-clear', { _id: id }]);
-  }
   ngOnInit() {
-    this.showall();
-    console.log(this.datafilter);
-    console.log(this.filterData);
+ 
     
     
 
@@ -114,17 +77,7 @@ ss:any =[]
 
 
 
-  onChange1(data){
-console.log(data)
-this.asd = data
-console.log(this.asd);
-
-  }
-
-  addasd(){
-    this.asd
-    console.log(this.asd);
-    
-  }
+ 
+ 
 }
 
