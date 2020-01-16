@@ -22,7 +22,7 @@ namespace AMApi.Models
         public string Status { get; set; }   
         public int ShowTotal { get; set; }
 
-        public Boolean ButtonCheck { get; set; }  
+        public string ButtonCheck { get; set; }  
 
     }
 }

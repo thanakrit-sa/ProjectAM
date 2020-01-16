@@ -8,17 +8,27 @@
       ล้างสินค้า</ion-button>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+<ion-list>
 
-
-<ion-item>
-  
-  <ion-select placeholder="- กรุณาเลือกสถานะ -" (ionChange)="onChange1(data)" [(ngModel)]="data">
-    <ion-select-option value="ทั้งหมด">ทั้งหมด</ion-select-option>
-    <ion-select-option value="แขน">แขนน</ion-select-option>
-  </ion-select>
+  <ion-item>
+    <ion-label><strong>Select All</strong></ion-label>
+    <ion-checkbox slot="start" 
+    [(ngModel)]="masterCheck"
+    [indeterminate]="isIndeterminate"
+      (click)="checkMaster($event)"></ion-checkbox>
   </ion-item>
+
+  <ion-item *ngFor="let item of checkBoxList">
+    <ion-label></ion-label>
+    <ion-checkbox slot="start" 
+    [(ngModel)]="item.isChecked" 
+    (ionChange)="checkEvent()"></ion-checkbox>
+  </ion-item>
+</ion-list>
+
+
+
   <ion-button (click)="addasd()"></ion-button>
 
 </ion-content>

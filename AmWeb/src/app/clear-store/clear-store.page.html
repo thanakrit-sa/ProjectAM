@@ -28,38 +28,50 @@
   <ion-card>
     <ion-card-content>
       <ion-row text-center style="border-bottom:groove;">
-        <ion-col>
+        
+        <ion-item >
+          <ion-label class="left">ทั้งหมด</ion-label>
+
+          <ion-checkbox slot="start" 
+          [(ngModel)]="masterCheck"
+          [indeterminate]="isIndeterminate"
+          (click)="checkMaster($event)"
+          class="checkbox"></ion-checkbox>
+           
+        </ion-item>
+  
+          <ion-col class="a">
           <ion-label>
             <b>รหัสสินค้า</b>
           </ion-label>
         </ion-col>
-        <ion-col>
+        <ion-col class="a">
           <ion-label>
             <b>ชื่อสินค้า</b>
           </ion-label>
         </ion-col>
-        <ion-col>
+        <ion-col class="a">
           <ion-label>
             <b>นำเข้า</b>
           </ion-label>
         </ion-col>
-        <ion-col>
+        <ion-col class="a">
           <ion-label>
             <b>ขาย</b>
           </ion-label>
         </ion-col>
-        <ion-col>
+        <ion-col class="a">
           <ion-label>
             <b>คงเหลือ</b>
           </ion-label>
         </ion-col>
        
-        <ion-col>
-          <ion-label>
+        <ion-col class="a">
+          <ion-label >
             <b>สถานะ</b>
           </ion-label>
         </ion-col>
-        <ion-col>
+        <ion-col class="a">
           <ion-label>
             <b>แก้ไข</b>
           </ion-label>
@@ -67,7 +79,13 @@
 
       </ion-row>
       <ion-row style="border-bottom:groove;" text-center *ngFor="let s of datafilter">
-
+        <ion-item>
+          <ion-label></ion-label>
+          <ion-checkbox slot="start" 
+          [(ngModel)]="s.statusCheck" 
+          (ionChange)="checkEvent()"
+          ></ion-checkbox>
+        </ion-item>
         <ion-col class="a">
           <ion-label>
             {{s.idProduct}}
@@ -97,16 +115,28 @@
             {{s.totalProduct}}
           </ion-label>
         </ion-col>
-
-        <ion-col>
+        <ion-col *ngIf="s.buttonCheck == null">
           <ion-input readonly placeholder="{{s.statusProduct}}"></ion-input>
         </ion-col>
+   
 
-        <ion-col>
-          <ion-button color="warning" (click)="get(s.idProduct)">แก้ไข</ion-button>
+        <ion-col *ngIf="s.buttonCheck == null">
+          <ion-button color="warning" (click)="showinput(s)">แก้ไข</ion-button>
+        </ion-col>
+        <ion-col *ngIf="s.buttonCheck == 'check'">
+          <ion-select placeholder="{{s.statusProduct}}" (ionChange)="dropdown(changeinput)" [(ngModel)]="changeinput">
+       
+            <ion-select-option value="สินค้าครบ">สินค้าครบ</ion-select-option>
+            <ion-select-option value="สินค้าตกหล่น">สินค้าตกหล่น</ion-select-option>
+            <ion-select-option value="สินค้าเกิน">สินค้าเกิน</ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col *ngIf="s.buttonCheck == 'check'">
+          <ion-button  (click)="updateinput(s)">ตกลง</ion-button>
         </ion-col>
 
       </ion-row>
     </ion-card-content>
   </ion-card>
+  <ion-button (click)="filter()"></ion-button>
 </ion-content>
