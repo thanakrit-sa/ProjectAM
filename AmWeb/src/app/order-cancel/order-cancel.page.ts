@@ -10,7 +10,6 @@ import { product } from 'src/Models/product';
 })
 export class OrderCancelPage implements OnInit {
 
-
   isIndeterminate:boolean;
   masterCheck:boolean;
   checkBoxList:any;

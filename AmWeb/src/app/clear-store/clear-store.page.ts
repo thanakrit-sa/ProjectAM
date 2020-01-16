@@ -22,8 +22,8 @@ idproducteditstatus:any
   constructor(public productApi: ProductService, public route: Router,  ) {
 
   }
-  dataproduct :product
-  inputcheck: boolean
+  dataproduct :product;
+  inputcheck: boolean;
   isIndeterminate: boolean;
   masterCheck: boolean;
   checkBoxList: any;
