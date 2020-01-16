@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../service/product.service';
 import { Router } from '@angular/router';
-import { ClearService } from '../service/clear.service';
+
 import { product } from 'src/Models/product';
 @Component({
   selector: 'app-order-cancel',
@@ -15,7 +15,7 @@ export class OrderCancelPage implements OnInit {
   filterData:any[] =[]
 asd:any;
 
-  constructor(public productApi: ProductService, public route: Router, public clearApi: ClearService){
+  constructor(public productApi: ProductService, public route: Router){
   
   }
   isIndeterminate:boolean;

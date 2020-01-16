@@ -24,7 +24,7 @@ export class DashbroadPage implements OnInit {
   sumCostPerProduct: number[] = [];
   sumCost: number = 0;
   sumTotal: number = 0;
-  public chartLabel: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  public chartLabel: string[] = ['01', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
   public chartDataProductInStore: number[] = [];  
   public chartDataProductSellInStore: number[] = [];
   public chartDataProductTotalInStore: number[] = [];

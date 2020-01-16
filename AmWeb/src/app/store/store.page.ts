@@ -33,8 +33,9 @@ export class StorePage implements OnInit {
   public dataStoreAll: store;
   public arr: store[] = [];
   public datashow: store[] = [];
-  public chartLabel: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  public chartLabel: string[] = ['01', '02', '03'];
   month: string[] = [];
+  splitted;
   constructor(public api: ProductService, public alertController: AlertController, public activate: ActivatedRoute, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.dataStore = this.formbuilder.group({
       'idStore': [null, Validators.required],
@@ -71,11 +72,17 @@ export class StorePage implements OnInit {
         this.total = this.datafilter[index].unitProduct;
         console.log(this.total);
         console.log(this.datafilter[index].addProductStore);
-
+        this.splitted = this.datafilter[index].addProductStore.split("-",3); 
+        console.log(this.splitted);
+        console.log(this.splitted[1]);
+        
+        
+       
         for (let index = 0; index < Object.keys(this.chartLabel).length; index++) {
           console.log(this.chartLabel[index]);
-          
-          if (this.datafilter[index].addProductStore == this.chartLabel[index]) {
+
+
+          if (this.splitted[1] == this.chartLabel[index]) {
             console.log("dsfgfdsgfd");
 
           }

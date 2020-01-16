@@ -37,8 +37,8 @@ namespace AMApi.Controllers
         public Store AddStore([FromBody] Store Storex)
         {
 
-            DateTime addDate = DateTime.Now;
-            var month = addDate.Month;
+            var addDate = DateTime.Now;
+           
             var item = new Store
             {
 
@@ -49,7 +49,7 @@ namespace AMApi.Controllers
                 TotalProduct = Storex.TotalProduct,
                 UnitProduct = Storex.UnitProduct,
                 StatusProduct = Storex.StatusProduct,
-                AddProductStore = month
+                AddProductStore = addDate
 
             };
 

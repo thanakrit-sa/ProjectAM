@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ClearService } from "src/app/service/clear.service";
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../service/product.service';
 import { product } from 'src/Models/product';
@@ -19,7 +19,7 @@ export class ClearStorePage implements OnInit {
   filterData:any[] =[]
 
 
-  constructor(public productApi: ProductService, public route: Router, public clearApi: ClearService){
+  constructor(public productApi: ProductService, public route: Router){
   
   }
   isIndeterminate:boolean;
