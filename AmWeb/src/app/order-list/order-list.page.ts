@@ -14,7 +14,7 @@ import { AlertController, ToastController } from '@ionic/angular';
   selector: 'app-order-list',
   templateUrl: './order-list.page.html',
   styleUrls: ['./order-list.page.scss'],
-  template:` <ion-header>
+  template: ` <ion-header>
   <ion-toolbar color="dark" text-center>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -26,7 +26,8 @@ import { AlertController, ToastController } from '@ionic/angular';
   </ion-toolbar>
 </ion-header><br>
 
-<ion-content >
+<ion-content class="content" text-center>
+<br>
   <ion-card >
   <ion-item>
     <ion-label>รายการ</ion-label>
@@ -41,55 +42,34 @@ import { AlertController, ToastController } from '@ionic/angular';
     </ion-select>
   </ion-item>
 </ion-card>
+<br>
 
   <ion-card>
     <ion-card-content>
   <ion-row text-center style="border-bottom:groove;" >
     <ion-col>
-      <ion-label>รหัสสั่งซื้อ</ion-label>
+      <ion-label><b>รหัสสั่งซื้อ</b></ion-label>
+    </ion-col>
+
+    
+
+    <ion-col>
+      <ion-label><b>ชื่อสินค้า</b></ion-label>
     </ion-col>
 
     <ion-col>
-      <ion-label>รหัสสินค้า</ion-label>
+      <ion-label><b>จำนวนสินค้า</b></ion-label>
     </ion-col>
 
     <ion-col>
-      <ion-label>ชื่อสินค้า</ion-label>
+      <ion-label><b>ราคาสินค้า</b></ion-label>
     </ion-col>
 
-    <ion-col>
-      <ion-label>จำนวนสินค้า</ion-label>
-    </ion-col>
+   
 
-    <ion-col>
-      <ion-label>ราคาสินค้า</ion-label>
-    </ion-col>
+   
 
-    <ion-col>
-      <ion-label>ชื่อลูกค้า</ion-label>
-    </ion-col>
-
-    <ion-col>
-      <ion-label>เบอร์โทร</ion-label>
-    </ion-col>
-
-    <ion-col>
-      <ion-label>ที่อยู่</ion-label>
-    </ion-col>
-
-    <ion-col>
-      <ion-label>วันที่สั่งซื้อ</ion-label>
-    </ion-col>
-
-
-    <ion-col>
-      <ion-label>วันที่ส่ง</ion-label>
-    </ion-col>
-
-    <ion-col colspan="2">
-      <ion-label>สถานะ</ion-label>
-    </ion-col>
-    <ion-col>
+    <ion-col span="3">
       <ion-label></ion-label>
     </ion-col>
   </ion-row>
@@ -97,10 +77,7 @@ import { AlertController, ToastController } from '@ionic/angular';
   <ion-row  *ngFor="let a of datafilter | paginate: { itemsPerPage: 8, currentPage: p }" text-center style="border-bottom: groove">
     <ion-col  class="co">
       <ion-label>{{a.idOrder}}</ion-label>
-    </ion-col >
-    <ion-col class="co">
-      <ion-label>{{a.idProduct}}</ion-label>
-    </ion-col>
+    </ion-col >   
     <ion-col class="co">
       <ion-label>{{a.nameProduct}}</ion-label>
     </ion-col>
@@ -110,32 +87,25 @@ import { AlertController, ToastController } from '@ionic/angular';
     <ion-col class="co">
       <ion-label>{{a.priceOrder}} </ion-label>
     </ion-col>
-    <ion-col class="co">
-      <ion-label>{{a.nameUser}} </ion-label>
-    </ion-col>
-    <ion-col class="co">
-      <ion-label>{{a.telUser}}</ion-label>
-    </ion-col>
-    <ion-col class="co">
-      <ion-label>{{a.addressUser}}</ion-label>
-    </ion-col>
-    <ion-col class="co">
-      <ion-label>{{a.dateOrder | date}} {{a.dateOrder | date : 'shortTime'}}</ion-label>
-    </ion-col>
-    <ion-col  class="co">
-      <ion-label>{{a.sendDate | date}} {{a.sendDate | date : 'shortTime'}}</ion-label>
-    </ion-col >
-    <ion-col class="co">
-      <ion-label>{{a.status}} </ion-label>
-    </ion-col>
+
+
+    
+
+
+  
+    
     <ion-col class="co" >
-        <ion-button color="secondary" (click)="okorder(a.idOrder)" *ngIf="a.status == 'สั่งซื้อ'" size="small">รับ order</ion-button>
-        <ion-button color="success" (click)="sendorder(a.idOrder)" *ngIf="a.status == 'รับสั่งซื้อ'" size="small">ส่งสินค้า</ion-button>
+        <ion-button  color="dark" (click)="sendorder(a.idOrder)" >รายละเอียดสินค้า</ion-button> 
+        <ion-button  color="secondary" (click)="okorder(a.idOrder)" *ngIf="a.status == 'สั่งซื้อ'" class="a">รับคำสั่งซื้อ</ion-button>
+        <ion-button  color="success" (click)="sendorder(a.idOrder)" *ngIf="a.status == 'รับสั่งซื้อ'" class="a">รับสั่งซื้อ</ion-button>     
+        <ion-button  color="danger" disabled (click)="sendorder(a.idOrder)" *ngIf="a.status == 'ยกเลิก'" class="a">ยกเลิก</ion-button>     
+        <ion-button  color="warning"  disabled (click)="sendorder(a.idOrder)" *ngIf="a.status == 'ส่งสินค้า'" class="a">ส่งสินค้า</ion-button> 
+        <ion-button  color="dark" disabled (click)="sendorder(a.idOrder)" *ngIf="a.status == 'ได้รับแล้ว'" class="a">ได้รับแล้ว</ion-button> 
     </ion-col>
  
   </ion-row>
   </ion-card-content>
-</ion-card>
+</ion-card><br>
 
 <pagination-controls (pageChange)="p = $event"   
   previousLabel="ย้อนกลับ"
@@ -166,7 +136,7 @@ export class OrderListPage implements OnInit {
     public tost: ToastController
   ) { }
 
-///////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////
   ngOnInit() {
     this.getall();
     this.getdataarray();
@@ -215,7 +185,7 @@ export class OrderListPage implements OnInit {
     const toast = await this.tost.create({
       message: ' รับ Order Succes ',
       duration: 2000,
-      color: "success" ,
+      color: "success",
       position: 'top'
     });
     toast.present();
@@ -225,7 +195,7 @@ export class OrderListPage implements OnInit {
     const toast = await this.tost.create({
       message: '่ ส่งสินค้า Succes ',
       duration: 2000,
-      color: "secondary" ,
+      color: "secondary",
       position: 'top'
     });
     toast.present();

@@ -9,7 +9,7 @@
 
 <ion-content>
   <br>
-  <ion-card>
+  <ion-card class="content">
     <ion-card-content>
       <ion-item>
         <ion-label>เลือกรายการแสดง</ion-label>
@@ -19,9 +19,9 @@
     </ion-card-content>
   </ion-card>
   <br>
-  <ion-card>
+  <ion-card class="content">
     <ion-card-content>
-      <ion-row>        
+      <ion-row>
         <ion-col>
           <ion-card>
             <ion-card-header text-center class="ResultProductGet">
@@ -32,8 +32,8 @@
                   </ion-label>
                 </ion-col>
               </ion-row>
-            </ion-card-header>            
-            <ion-card-content>              
+            </ion-card-header>
+            <ion-card-content class="box-content">
               <ion-row>
                 <ion-col text-center>
                   <br>
@@ -55,8 +55,8 @@
                   </ion-label>
                 </ion-col>
               </ion-row>
-            </ion-card-header>            
-            <ion-card-content>              
+            </ion-card-header>
+            <ion-card-content class="box-content">
               <ion-row>
                 <ion-col text-center>
                   <br>
@@ -78,8 +78,8 @@
                   </ion-label>
                 </ion-col>
               </ion-row>
-            </ion-card-header>            
-            <ion-card-content>              
+            </ion-card-header>
+            <ion-card-content class="box-content">
               <ion-row>
                 <ion-col text-center>
                   <br>
@@ -101,8 +101,8 @@
                   </ion-label>
                 </ion-col>
               </ion-row>
-            </ion-card-header>            
-            <ion-card-content>              
+            </ion-card-header>
+            <ion-card-content class="box-content">
               <ion-row>
                 <ion-col text-center>
                   <br>
@@ -124,8 +124,8 @@
                   </ion-label>
                 </ion-col>
               </ion-row>
-            </ion-card-header>            
-            <ion-card-content>              
+            </ion-card-header>
+            <ion-card-content class="box-content">
               <ion-row>
                 <ion-col text-center>
                   <br>
@@ -147,8 +147,8 @@
                   </ion-label>
                 </ion-col>
               </ion-row>
-            </ion-card-header>            
-            <ion-card-content>              
+            </ion-card-header>
+            <ion-card-content class="box-content">
               <ion-row>
                 <ion-col text-center>
                   <br>
@@ -159,34 +159,39 @@
               </ion-row>
             </ion-card-content>
           </ion-card>
-        </ion-col>        
+        </ion-col>
       </ion-row>
     </ion-card-content>
   </ion-card>
-  <br>  
-  <ion-row>
-    <ion-col>
-      <ion-card>
-        <ion-card-content>
-          <ion-row>        
-            <ion-col>
-              <canvas id="mychart"></canvas>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-    <ion-col>
-      <ion-card>
-        <ion-card-content>
-          <ion-row>        
-            <ion-col>
-              <canvas id="mychart2"></canvas>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-  </ion-row>  
   <br>
+  <ion-card class="content">
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-card-content class="box-content">
+              <ion-row>
+                <ion-col>
+                  <canvas id="mychart"></canvas>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-content class="box-content">
+              <ion-row>
+                <ion-col>
+                  <canvas id="mychart2"></canvas>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  
 </ion-content>

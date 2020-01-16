@@ -17,9 +17,9 @@ export class StorePage implements OnInit {
   dataStore: FormGroup;
   dataSt: store;
   data;
-  datas:product;
-  datass:product[]=[];
-  datasss:product[]=[];
+  datas: product;
+  datass: product[] = [];
+  datasss: product[] = [];
   IdclearStore: any;
   getid: any;
   isShow: boolean = false;
@@ -33,7 +33,9 @@ export class StorePage implements OnInit {
   public dataStoreAll: store;
   public arr: store[] = [];
   public datashow: store[] = [];
-  constructor(public api:ProductService,public alertController: AlertController, public activate: ActivatedRoute, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
+  public chartLabel: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  month: string[] = [];
+  constructor(public api: ProductService, public alertController: AlertController, public activate: ActivatedRoute, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.dataStore = this.formbuilder.group({
       'idStore': [null, Validators.required],
       'idProduct': [null, Validators.required],
@@ -65,28 +67,42 @@ export class StorePage implements OnInit {
       console.log(it);
       this.dataStoreAll = it;
       for (let index = 0; index < Object.keys(this.dataStoreAll).length; index++) {
-        this.datafilter[index] = this.dataStoreAll[index];   
-           this.total = this.datafilter[index].unitProduct;
-         console.log(this.total);   
-                   
-      }         
+        this.datafilter[index] = this.dataStoreAll[index];
+        this.total = this.datafilter[index].unitProduct;
+        console.log(this.total);
+        console.log(this.datafilter[index].addProductStore);
+
+        for (let index = 0; index < Object.keys(this.chartLabel).length; index++) {
+          console.log(this.chartLabel[index]);
+          
+          if (this.datafilter[index].addProductStore == this.chartLabel[index]) {
+            console.log("dsfgfdsgfd");
+
+          }
+
+
+        }
+
+
+      }
+
       console.log(this.dataStore.value);
-      
+
     });
   }
 
-  get2(){
+  get2() {
     this.api.GetProductAll().subscribe((it) => {
       console.log(it);
       this.datas = it;
       for (let index = 0; index < Object.keys(this.datas).length; index++) {
-        this.datass[index] = this.datas[index];        
-        this.datasss = this.datass;        
+        this.datass[index] = this.datas[index];
+        this.datasss = this.datass;
         console.log(this.datasss[index]);
         console.log(this.datasss[index].total);
-        
-        
-      }     
+
+
+      }
     });
   }
 
@@ -121,11 +137,9 @@ export class StorePage implements OnInit {
     });
     this.route.navigate(['/store']);
   }
-  fil(){
-    console.log(this.datafilter[1].unitProduct);
-  }
 
- 
+
+
 }
 
 
