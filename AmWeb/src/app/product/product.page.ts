@@ -17,8 +17,8 @@ export class ProductPage implements OnInit {
   filtertype:product[] = [];
 
   constructor(public activate: ActivatedRoute,public userApi:UserService, public productApi: ProductService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
-    console.log(this.userApi.statusUser);
-    console.log(this.userApi.nameUser);
+    console.log(this.userApi.statusAdmin);
+    console.log(this.userApi.nameAdmin);
     
    }
 

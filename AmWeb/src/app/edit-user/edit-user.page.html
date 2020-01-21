@@ -11,34 +11,34 @@
   <ion-card>
     <ion-card-content>      
       <form [formGroup]="dataUser" (ngSubmit)="log()">
-        <ion-item [class.invalid]="submit && f.idUser.errors">
+        <ion-item [class.invalid]="submit && f.idadmin.errors">
           <ion-label><b>รหัสผู้ใช้</b></ion-label>
-          <ion-input placeholder="รหัสผู้ใช้" formControlName="idUser" readonly>
+          <ion-input placeholder="รหัสผู้ใช้" formControlName="idAdmin" readonly>
           </ion-input>
         </ion-item>
-        <ion-item [class.invalid]="submit && f.nameUser.errors">
+        <ion-item [class.invalid]="submit && f.nameadmin.errors">
           <ion-label><b>ชื่อผู้ใช้</b></ion-label>
-          <ion-input placeholder="ชื่อผู้ใช้" formControlName="nameUser">
+          <ion-input placeholder="ชื่อผู้ใช้" formControlName="nameAdmin">
           </ion-input>
         </ion-item>
-        <ion-item [class.invalid]="submit && f.username.errors">
+        <ion-item [class.invalid]="submit && f.usernameadmin.errors">
           <ion-label><b>Username</b></ion-label>
-          <ion-input placeholder="Username" formControlName="username">
+          <ion-input placeholder="Username" formControlName="usernameAdmin">
           </ion-input>
         </ion-item>
         <ion-item [class.invalid]="submit && f.password.errors">
           <ion-label><b>Password</b></ion-label>
-          <ion-input placeholder="Password" formControlName="password">
+          <ion-input placeholder="Password" formControlName="passwordAdmin">
           </ion-input>
         </ion-item>
-        <ion-item [class.invalid]="submit && f.telUser.errors">
+        <ion-item [class.invalid]="submit && f.teladmin.errors">
           <ion-label><b>เบอร์โทร</b></ion-label>
-          <ion-input placeholder="เบอร์โทร" formControlName="telUser">
+          <ion-input placeholder="เบอร์โทร" formControlName="telAdmin">
           </ion-input>
         </ion-item>
-        <ion-item [class.invalid]="submit && f.levelUser.errors">
+        <ion-item [class.invalid]="submit && f.leveladmin.errors">
           <ion-label><b>ระดับ</b></ion-label>          
-            <ion-select formControlName="levelUser"  placeholder="- เลือกระดับ -">
+            <ion-select formControlName="levelAdmin"  placeholder="- เลือกระดับ -">
                 <ion-select-option value="ระดับที่ 1">ระดับที่ 1</ion-select-option>
                 <ion-select-option value="ระดับที่ 2">ระดับที่ 2</ion-select-option>
                 <ion-select-option value="ระดับที่ 3">ระดับที่ 3</ion-select-option>
@@ -47,9 +47,9 @@
                 <ion-select-option value="ระดับที่ 6">ระดับที่ 6</ion-select-option>
               </ion-select>  
         </ion-item>
-        <ion-item [class.invalid]="submit && f.addressUser.errors">
+        <ion-item [class.invalid]="submit && f.addressadmin.errors">
           <ion-label><b>ที่อยู่</b></ion-label>
-          <ion-input placeholder="ที่อยู่" formControlName="addressUser">
+          <ion-input placeholder="ที่อยู่" formControlName="addressAdmin">
           </ion-input>
         </ion-item>
         <ion-button expand="full" color="dark" type="submit">แก้ไขข้อมูล</ion-button>

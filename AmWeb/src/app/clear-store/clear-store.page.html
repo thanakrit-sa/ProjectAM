@@ -1,46 +1,57 @@
 <ion-header>
   <ion-toolbar color="dark" text-center>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>เคลียร์สินค้า</ion-title>
-    <ion-button expand="block" type="submit" style="padding-right: 15px" slot="end" [routerLink]="['/edit-clear']">ล้างสินค้า</ion-button>
+    <ion-row>
+      <ion-col>
+        <ion-buttons>
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col>
+        <ion-title class="header-title">เคลียร์สินค้า</ion-title>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <br>
-  <ion-card>
-    <ion-card-content>
-      
-        <ion-item>
-          <ion-label>สถานะ</ion-label>
-          <ion-select placeholder="- กรุณาเลือกสถานะ -" (ionChange)="onChange(data)" [(ngModel)]="data">
-            <ion-select-option value="ทั้งหมด">ทั้งหมด</ion-select-option>
-            <ion-select-option value="สินค้าครบ">สินค้าครบ</ion-select-option>
-            <ion-select-option value="สินค้าตกหล่น">สินค้าตกหล่น</ion-select-option>
-            <ion-select-option value="สินค้าเกิน">สินค้าเกิน</ion-select-option>
-          </ion-select>
-        </ion-item>
-     
-    </ion-card-content>
+  <div class="menu">
+    <ion-row text-right>
+    <ion-col>
+      <ion-button class="btn-editclear" [routerLink]="['/edit-clear']">
+    <ion-label><h2><b>ตัดสต๊อก</b></h2></ion-label>
+  </ion-button>
+    </ion-col>
+  </ion-row> 
+  </div> 
+  <br>   
+  <ion-card>    
+    <ion-item class="title">
+        <ion-label><h2><b>รายการสินค้า</b></h2></ion-label>
+        <ion-select placeholder="- กรุณาเลือกสถานะ -" (ionChange)="onChange(data)" [(ngModel)]="data">
+          <ion-select-option value="ทั้งหมด">ทั้งหมด</ion-select-option>
+          <ion-select-option value="สินค้าครบ">สินค้าครบ</ion-select-option>
+          <ion-select-option value="สินค้าตกหล่น">สินค้าตกหล่น</ion-select-option>
+          <ion-select-option value="สินค้าเกิน">สินค้าเกิน</ion-select-option>
+        </ion-select>
+      </ion-item>   
   </ion-card>
   <ion-card>
     <ion-card-content>
       <ion-row text-center style="border-bottom:groove;">
-        
-        <ion-item >
-          <ion-label class="left">ทั้งหมด</ion-label>
 
-          <ion-checkbox slot="start" 
-          [(ngModel)]="masterCheck"
-          [indeterminate]="isIndeterminate"
-          (click)="checkMaster($event)"
-          class="checkbox"></ion-checkbox>
-           
+        <ion-item class="checkbox">
+          <!-- <ion-label class="left">ทั้งหมด</ion-label> -->
+
+          <ion-checkbox class="checkbox" [(ngModel)]="masterCheck" [indeterminate]="isIndeterminate"
+            (click)="checkMaster($event)" class="checkbox"></ion-checkbox>
+
         </ion-item>
-  
-          <ion-col class="a">
+
+        <ion-col class="a">
           <ion-label>
             <b>รหัสสินค้า</b>
           </ion-label>
@@ -65,9 +76,9 @@
             <b>คงเหลือ</b>
           </ion-label>
         </ion-col>
-       
+
         <ion-col class="a">
-          <ion-label >
+          <ion-label>
             <b>สถานะ</b>
           </ion-label>
         </ion-col>
@@ -79,13 +90,12 @@
 
       </ion-row>
       <ion-row style="border-bottom:groove;" text-center *ngFor="let s of datafilter">
-        <ion-item>
+
+        <ion-item class="checkbox">
           <ion-label></ion-label>
-          <ion-checkbox slot="start" 
-          [(ngModel)]="s.statusCheck" 
-          (ionChange)="checkEvent()"
-          ></ion-checkbox>
+          <ion-checkbox class="checkbox" [(ngModel)]="s.statusCheck" (ionChange)="checkEvent()"></ion-checkbox>
         </ion-item>
+
         <ion-col class="a">
           <ion-label>
             {{s.idProduct}}
@@ -118,21 +128,21 @@
         <ion-col *ngIf="s.buttonCheck == null">
           <ion-input readonly placeholder="{{s.statusProduct}}"></ion-input>
         </ion-col>
-   
+
 
         <ion-col *ngIf="s.buttonCheck == null">
           <ion-button color="warning" (click)="showinput(s)">แก้ไข</ion-button>
         </ion-col>
         <ion-col *ngIf="s.buttonCheck == 'check'">
           <ion-select placeholder="{{s.statusProduct}}" (ionChange)="dropdown(changeinput)" [(ngModel)]="changeinput">
-       
+
             <ion-select-option value="สินค้าครบ">สินค้าครบ</ion-select-option>
             <ion-select-option value="สินค้าตกหล่น">สินค้าตกหล่น</ion-select-option>
             <ion-select-option value="สินค้าเกิน">สินค้าเกิน</ion-select-option>
           </ion-select>
         </ion-col>
         <ion-col *ngIf="s.buttonCheck == 'check'">
-          <ion-button  (click)="updateinput(s)">ตกลง</ion-button>
+          <ion-button (click)="updateinput(s)">ตกลง</ion-button>
         </ion-col>
 
       </ion-row>

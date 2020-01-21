@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from "src/app/service/product.service";
 import { product } from 'src/Models/product';
-import { user } from 'src/Models/user';
+import { admin } from 'src/Models/user';
 import { NavController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -120,7 +120,7 @@ export class OrderListPage implements OnInit {
 
   dataOrder: Order;
   dataProduct: product;
-  dataUser: user;
+  dataUser: admin;
   data
   order: any;
   datafilter: Order[] = [];
@@ -140,7 +140,7 @@ export class OrderListPage implements OnInit {
   ngOnInit() {
     this.getall();
     this.getdataarray();
-    this.userApi.GetUserAll().subscribe(it => {
+    this.userApi.GetAdminAll().subscribe(it => {
       console.log(it);
       this.dataUser = it;
       console.log(this.dataUser);

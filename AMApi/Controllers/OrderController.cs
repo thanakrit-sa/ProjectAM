@@ -37,6 +37,9 @@ namespace AMApi.Controllers
             return DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
         }
 
+        
+       
+
         [HttpPost]
         public Order AddOrder([FromBody] Order Orderx )
         {

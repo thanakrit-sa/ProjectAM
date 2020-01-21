@@ -12,13 +12,77 @@ namespace AMApi.Controllers
 
     public class UserController : ControllerBase
     {
-        public static List<User> DataUser = new List<User>
+        public static List<Admin> DataAdmin = new List<Admin>
         {
-            new User { IdUser = "1", NameUser = "admin1" , Username =  "1234", Password = "1234" ,TelUser = "0165466516" , LevelUser = "Admin" ,AddressUser = "15/8 ขอนแก่น"},
-            new User { IdUser = "2", NameUser = "admin2" , Username =  "12345", Password = "12345" ,TelUser = "0665606411" , LevelUser = "Meneger" ,AddressUser = "8/1 นครพนม"},
-            new User { IdUser = "3", NameUser = "admin3" , Username =  "123456", Password = "123456" ,TelUser = "0916113237" , LevelUser = "Head" ,AddressUser = "15/8 นครราชสีมา"}
+            new Admin { IdAdmin = "1", NameAdmin = "admin1" , UsernameAdmin =  "1234", PasswordAdmin = "1234" ,TelAdmin = "0165466516" , LevelAdmin = "Admin" ,AddressAdmin = "15/8 ขอนแก่น"},
+            new Admin { IdAdmin = "2", NameAdmin = "admin2" , UsernameAdmin =  "12345", PasswordAdmin = "12345" ,TelAdmin = "0665606411" , LevelAdmin = "Meneger" ,AddressAdmin = "8/1 นครพนม"},
+            new Admin { IdAdmin = "3", NameAdmin = "admin3" , UsernameAdmin =  "123456", PasswordAdmin = "123456" ,TelAdmin = "0916113237" , LevelAdmin = "Head" ,AddressAdmin = "15/8 นครราชสีมา"}
         };
 
+        [HttpGet]
+        public ActionResult<IEnumerable<Admin>> GetAdminAll()
+        {
+            return DataAdmin.ToList();
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Admin> GetAdminById(string id)
+        {
+            return DataAdmin.FirstOrDefault(it => it.IdAdmin == id.ToString());
+        }
+
+        [HttpPost]
+        public Admin AddAdmin([FromBody] Admin Adminx)
+        {
+            var id = Guid.NewGuid().ToString();
+            var item = new Admin
+            {
+                IdAdmin = id,
+                NameAdmin = Adminx.NameAdmin,
+                TelAdmin = Adminx.TelAdmin,
+                UsernameAdmin = Adminx.UsernameAdmin,
+                PasswordAdmin = Adminx.PasswordAdmin,
+                LevelAdmin = Adminx.LevelAdmin,
+                AddressAdmin = Adminx.AddressAdmin
+            };
+
+            DataAdmin.Add(item);
+            return item;
+        }
+
+        [HttpPut("{id}")]
+        public Admin EditAdmin(string id, [FromBody] Admin Adminx)
+        {
+            var _id = DataAdmin.FirstOrDefault(it => it.IdAdmin == id.ToString());
+            var item = new Admin
+            {
+                IdAdmin = id,
+                NameAdmin = Adminx.NameAdmin,
+                TelAdmin = Adminx.TelAdmin,
+                UsernameAdmin = Adminx.UsernameAdmin,
+                PasswordAdmin = Adminx.PasswordAdmin,
+                LevelAdmin = Adminx.LevelAdmin,
+                AddressAdmin = Adminx.AddressAdmin
+            };
+            DataAdmin.Remove(_id);
+            DataAdmin.Add(item);
+            return item;
+
+        }
+
+        [HttpDelete("{id}")]
+        public void DeleteAdmin(string id)
+        {
+            var delete = DataAdmin.FirstOrDefault(it => it.IdAdmin == id.ToString());
+            DataAdmin.Remove(delete);
+        }
+        // -----------------------------------------------------------------------------
+
+        public static List<User> DataUser = new List<User>
+        {
+            new User { IdUser = "1", NameUser = "User1" , Username =  "1234", Password = "1234" ,TelUser = "0838852052" , StatusUser = "พร้อมใช้งาน" ,AddressUser = "15/8 ขอนแก่น",CardUser = "1125533448652"},
+            
+        };
         [HttpGet]
         public ActionResult<IEnumerable<User>> GetUserAll()
         {
@@ -42,8 +106,9 @@ namespace AMApi.Controllers
                 TelUser = Userx.TelUser,
                 Username = Userx.Username,
                 Password = Userx.Password,
-                LevelUser = Userx.LevelUser,
-                AddressUser = Userx.AddressUser
+                StatusUser = Userx.StatusUser,
+                AddressUser = Userx.AddressUser,
+                CardUser = Userx.CardUser
             };
 
             DataUser.Add(item);
@@ -61,8 +126,9 @@ namespace AMApi.Controllers
                 TelUser = Userx.TelUser,
                 Username = Userx.Username,
                 Password = Userx.Password,
-                LevelUser = Userx.LevelUser,
-                AddressUser = Userx.AddressUser
+                StatusUser = Userx.StatusUser,
+                AddressUser = Userx.AddressUser,
+                CardUser = Userx.CardUser
             };
             DataUser.Remove(_id);
             DataUser.Add(item);

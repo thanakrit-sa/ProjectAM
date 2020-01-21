@@ -2,10 +2,34 @@
     padding-top: 15px;
 }
 .left{
-    text-align: left;
-   
+    text-align: left;   
 }
 .checkbox{
-  margin-right: 2px;
-   
+  margin: 0;   
+  --ion-background-color:rgba(144, 12, 63, 0.001);   
 }
+.header-title {
+  padding-top: 10px;
+}
+.btn-editclear {
+  width: 150px;
+  height: 60px;
+}
+.menu{
+  width: 95%;
+}
+ion-card {
+  width: 90%;
+  margin: auto;
+}
+.title{
+  --ion-background-color:rgb(144, 12, 63);
+  color: white;
+}
+ion-card-content{
+  background-color: rgba(144, 12, 63, 0.045);  
+}
+ion-checkbox{
+  --ion-background-color:rgba(144, 12, 63, 0.045);
+}
+

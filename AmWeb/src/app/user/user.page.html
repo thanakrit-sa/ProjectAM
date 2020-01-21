@@ -1,79 +1,186 @@
 <ion-header>
   <ion-toolbar color="dark" text-center>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>สมาชิก</ion-title>
-    <ion-button style="padding-right: 15px" slot="end" type="submit" [routerLink]="['/adduser']">เพิ่มสมาชิก
-    </ion-button>
+    <ion-row>
+      <ion-col>
+        <ion-buttons>
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col >
+        <ion-title class="header-title">สมาชิก</ion-title>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
-<ion-content><br>
-  <ion-card>
-    <ion-card-content>
-      <ion-row text-center style="border-bottom:groove;">
-        <ion-col>
-          <ion-label>
-            <b>ชื่อผู้ใช้</b>
-          </ion-label>
-        </ion-col>
-        <ion-col>
-          <ion-label>
-            <b>ชื่อผู้ดูแล</b>
-          </ion-label>
-        </ion-col>
-        <ion-col>
-          <ion-label>
-            <b>เบอร์โทร</b>
-          </ion-label>
-        </ion-col>
-        <ion-col>
-          <ion-label>
-            <b>ระดับ</b>
-          </ion-label>
-        </ion-col>
+<ion-content><br>   
+  <div class="menu">
+    <ion-row text-right>
+    <ion-col>
+      <ion-button class="btn-head-admin" [routerLink]="['/adduser']"><ion-label><h2><b>เพิ่มผู้ดูแล</b></h2></ion-label></ion-button >    
+      <ion-button class="btn-head-user" [routerLink]="['/addusernotadmin']"><ion-label><h2><b>เพิ่มสมาชิก</b></h2></ion-label></ion-button>
+    </ion-col>
+  </ion-row>  
+  </div>  
+  <br>
+      <ion-card>
+        <ion-card-header (click)="showcontentAdmin()" class="header-admin" text-center>
+          <ion-row>
+            <ion-col></ion-col>
+            <ion-col class="header-content">
+              <ion-label>
+                <h2><b>ส่วนผู้ดูแลระบบ</b></h2>
+              </ion-label>
+            </ion-col>
+            <ion-col text-right>
+              <ion-icon *ngIf="isShowAdmin == true" name="add" md="md-add" size="large"></ion-icon>
+              <ion-icon *ngIf="isShowAdmin == false" name="remove" md="md-remove" class="icon-right" size="large"></ion-icon>
+            </ion-col>
+          </ion-row>          
+        </ion-card-header>        
+        <ion-card-content class="content-admin" *ngIf="isShowAdmin == false">
+          <br>
+          <ion-row text-center style="border-bottom:groove;">
+            <ion-col>
+              <ion-label>
+                <b>ชื่อผู้ใช้</b>
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                <b>ชื่อผู้ดูแล</b>
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                <b>เบอร์โทร</b>
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                <b>ระดับ</b>
+              </ion-label>
+            </ion-col>
 
-        <ion-col span="2">
-          <ion-label>
-            <b>แก้ไข</b>
-          </ion-label>
-        </ion-col>
+            <ion-col span="2">
+              <ion-label>
+                <b>แก้ไข</b>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row style="border-bottom:groove;" *ngFor="let u of dataAdminAll" text-center>
+            <ion-col class="a">
+              <ion-label>
+                {{u.usernameAdmin}}
+              </ion-label>
+            </ion-col>
+            <ion-col class="a">
+              <ion-label>
+                {{u.nameAdmin}}
+              </ion-label>
+            </ion-col>
+
+            <ion-col class="a">
+              <ion-label>
+                {{u.telAdmin}}
+              </ion-label>
+            </ion-col>
+
+            <ion-col class="a">
+              <ion-label>
+                {{u.levelAdmin}}
+              </ion-label>
+            </ion-col>
+
+            <ion-col>
+              <ion-button color="warning" (click)="EditDataAdmin(u.idAdmin)">แก้ไข</ion-button>
+
+              <ion-button color="danger" (click)="deleteAdmin(u.idAdmin)">ลบ</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    <br>
+      <ion-card >
+        <ion-card-header (click)="showcontentUser()" class="header-user" text-center>
+          <ion-row>
+            <ion-col></ion-col>
+            <ion-col class="header-content">
+              <ion-label>
+                <h2><b>ส่วนสมาชิก</b></h2>
+              </ion-label>
+            </ion-col>
+            <ion-col text-right>
+              <ion-icon *ngIf="isShowUser == true" name="add" md="md-add" size="large"></ion-icon>
+              <ion-icon *ngIf="isShowUser == false" name="remove" md="md-remove" class="icon-right" size="large"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+        <ion-card-content class="content-user" *ngIf="isShowUser == false">
+          <br>
+          <ion-row text-center style="border-bottom:groove;" >
+            <ion-col>
+              <ion-label>
+                <b>ชื่อผู้ใช้</b>
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                <b>ชื่อสมาชิก</b>
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                <b>เบอร์โทร</b>
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                <b>สถานะ</b>
+              </ion-label>
+            </ion-col>
+
+            <ion-col span="2">
+              <ion-label>
+                <b>แก้ไข</b>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row style="border-bottom:groove;" *ngFor="let u of dataUserAll" text-center>
+            <ion-col class="a">
+              <ion-label>
+                {{u.username}}
+              </ion-label>
+            </ion-col>
+            <ion-col class="a">
+              <ion-label>
+                {{u.nameUser}}
+              </ion-label>
+            </ion-col>
+
+            <ion-col class="a">
+              <ion-label>
+                {{u.telUser}}
+              </ion-label>
+            </ion-col>
+
+            <ion-col class="a">
+              <ion-label>
+                {{u.statusUser}}
+              </ion-label>
+            </ion-col>
+
+            <ion-col>
+              <ion-button color="warning" (click)="EditDataUser(u.idUser)">แก้ไข</ion-button>
+
+              <ion-button color="danger" (click)="deleteUser(u.idUser)">ลบ</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card >
+    
+ 
 
 
-      </ion-row>
-      <ion-row style="border-bottom:groove;" *ngFor="let u of dataUserAll" text-center>
-
-        <ion-col class="a">
-          <ion-label>
-            {{u.username}}
-          </ion-label>
-        </ion-col>
-        <ion-col class="a">
-          <ion-label>
-            {{u.nameUser}}
-          </ion-label>
-        </ion-col>
-        
-        <ion-col class="a">
-          <ion-label>
-            {{u.telUser}}
-          </ion-label>
-        </ion-col>
-
-        <ion-col class="a">
-          <ion-label>
-            {{u.levelUser}}
-          </ion-label>
-        </ion-col>
-
-        <ion-col>
-          <ion-button color="warning" (click)="EditDataUser(u.idUser)">แก้ไข</ion-button>
-        
-          <ion-button color="danger" (click)="deleteUser(u.idUser)">ลบ</ion-button>
-        </ion-col>
-
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
 </ion-content>

@@ -7,6 +7,7 @@ import { Order } from './Models/Order';
   providedIn: 'root'
 })
 export class CallApiService {
+  // public idUser:string;
   // public static host: string = "https://bosjazz555.appspot.com/api/";
   public static host: string ="https://localhost:5001/api/" 
   constructor(public http: HttpClient) { }
