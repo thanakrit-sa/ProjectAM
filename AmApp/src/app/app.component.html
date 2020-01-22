@@ -2,7 +2,7 @@
     <ion-split-pane>
         <ion-menu type="overlay">
           <ion-header>
-            <ion-toolbar>
+            <ion-toolbar color="dark" text-center>
               <ion-title>Menu</ion-title>
             </ion-toolbar>
           </ion-header>
@@ -24,8 +24,15 @@
             
           </ion-content>
           <ion-footer>
+            <ion-row text-center>
+              <ion-col>
+                <ion-label>
+                  <b>Hello : </b>{{callApi.nameUser}} <b>Status : </b>{{callApi.levelUser}}
+                </ion-label>
+              </ion-col>
+            </ion-row>
             <ion-menu-toggle>
-              <ion-button expand="block" (click)="logout()">Logout</ion-button>
+              <ion-button expand="block" (click)="logout()" class="button" color="dark">Logout</ion-button>
             </ion-menu-toggle>
            </ion-footer>
     

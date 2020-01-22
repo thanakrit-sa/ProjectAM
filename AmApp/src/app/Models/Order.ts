@@ -20,5 +20,7 @@ export class Order{
 
     sendDate : string;
 
+    userOrder:string
+
     status : string;
 }

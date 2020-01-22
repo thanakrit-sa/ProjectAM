@@ -4,7 +4,7 @@ import { CallApiService } from '../call-api.service';
 import { Product } from '../Models/Product';
 import { Order } from '../Models/Order';
 import { log } from 'util';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, ToastController, MenuController } from '@ionic/angular';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -13,18 +13,23 @@ import { ProductService } from '../product.service';
   styleUrls: ['./list.page.scss'],
   template: `
   <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark" text-center>
     <ion-title>
       List
     </ion-title>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-button (click)="gotoOrder()" color="primary" slot="end" size="small" >
-      <ion-icon name="add-circle"></ion-icon>
+    <ion-button (click)="gotoOrder()" color="light" slot="end"  class="buttton">
+      <ion-icon name="add-circle"> </ion-icon>
       สั่งซื้อ
     </ion-button>
   </ion-toolbar>
+  <style>
+  .my-pagination /deep/ .ngx-pagination .current {
+    background: black;
+  }
+</style>
 </ion-header>
 
 <ion-content padding>
@@ -42,19 +47,19 @@ import { ProductService } from '../product.service';
 
   <ion-row class="row">
 
-    <ion-col size="5">
+    <ion-col size="5" color="dark">
       <ion-label>สินค้า</ion-label>
     </ion-col>
 
-    <ion-col size="2">
+    <ion-col size="2"  >
       <ion-label>จำนวน</ion-label>
     </ion-col>
 
-    <ion-col size="2">
+    <ion-col size="2" >
       <ion-label>วันที่</ion-label>
     </ion-col>
 
-    <ion-col style="background-color: aqua" size="3">
+    <ion-col >
       <ion-label>สถานะ</ion-label>
     </ion-col>
 
@@ -64,7 +69,7 @@ import { ProductService } from '../product.service';
 
   </ion-row>
 
-  <ion-row *ngFor="let a of datasearch2 |filter:search| paginate: { itemsPerPage: 5, currentPage: p }">
+  <ion-row *ngFor="let a of dataUser |filter:search| paginate: { itemsPerPage: 5, currentPage: p }">
     <ion-item-sliding>
       <ion-item (click)="gotoOrderdetail(a.idOrder)">
         <ion-col size="5">
@@ -130,7 +135,7 @@ import { ProductService } from '../product.service';
   previousLabel="ย้อนกลับ"
   maxSize="5"
   nextLabel="ถัดไป"
-
+ 
   class="my-pagination"
   ></pagination-controls>
 
@@ -139,24 +144,36 @@ import { ProductService } from '../product.service';
 export class ListPage implements OnInit {
   p: number = 1
   dataOrder: Order;
-  data
+  data;
+  userName;
   pp: any;
+  dataUser:any
   datasearch: any = [];
   datasearch2: Order[] = [];
-
+  datafilter: Order[] = [];
+  dataarray: Order[] = [];
   // serarch :any;
   // serarch2 :Order[] = [];
-  constructor(public productapi: ProductService, public route: Router, public callApi: CallApiService, public alertController: AlertController, public tost: ToastController) {
-    this.getall();
+  constructor(public menuCtrl: MenuController,public productapi: ProductService, public route: Router, public callApi: CallApiService, public alertController: AlertController, public tost: ToastController) {
+   
   }
 
   ngOnInit() {
-    this.getall();
-    this.getdataarray();
-
+    this.userName = this.callApi.nameUser
+    console.log(this.userName);
+    // this.getdatafilter();
+    this.showdatafilter();
+  
   }
+
   ionViewDidEnter() {
+    this.menuCtrl.enable(true);
+    this.userName = this.callApi.nameUser
+    console.log(this.userName);
+   
+    this.showdatafilter();
     this.getdataarray()
+    this.showdatafilter();
   }
   //////////////////////////////////////////////////////////////
   setFilteredItems(ev: any) {
@@ -180,6 +197,25 @@ export class ListPage implements OnInit {
         // console.log(this.datasearch2);
       }
     });
+  }
+  getdatafilter() {
+    this.callApi.GetListAllProduct().subscribe(it => {
+      this.dataOrder = it;
+      console.log(this.dataOrder);
+      for (let index = 0; index < Object.keys(this.dataOrder).length; index++) {
+        this.datafilter[index] = this.dataOrder[index]
+        this.dataarray[index] = this.datafilter[index]
+      }
+    });
+  }
+  showdatafilter() {
+ this.callApi.GetOrderbyUsername(this.userName).subscribe(it=>{
+   this.dataUser= it
+   console.log(this.dataUser);
+   
+ })
+
+
   }
   //////////////////////////////////////////////////////////////
   ///////////////// แจ้งเตือน/////////////////////////////////////
@@ -215,23 +251,23 @@ export class ListPage implements OnInit {
     console.log(id);
     this.callApi.editokorder(id, this.data).subscribe(it => {
       this.data = it;
-      console.log(this.data);      
+      console.log(this.data);
       console.log(id);
       this.getdataarray();
-      
-      
+
+
     });
     this.productapi.CancelSellTotalProduct(this.data.idProduct, this.data.amountProduct).subscribe(it => {
       this.data = it;
       console.log(this.data);
       console.log(this.data.amountProduct);
       this.getdataarray();
-      
-      });
 
-    }
+    });
 
-  
+  }
+
+
   // cancelmorder(id) {
   //   console.log(id);
   //   this.callApi.editokorder(id, this.data).subscribe(it => {

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark" text-center>
 
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
@@ -14,14 +14,14 @@
 
 <ion-content>
   <form [formGroup]="order"(ngSubmit)="presentAlertConfirm()">
-  <h1>สั่งซื้อ</h1>
+  <h1 class="h1">สั่งซื้อ</h1>
   <ion-card>
   
 
   <ion-item>
     <ion-label>ชื่อสินค้า :</ion-label>
     <ion-select formControlName="nameProduct" [(ngModel)]="data" placeholder="เลือกสินค้า" (ionChange)="onChange(data)" >
-      <ion-select-option *ngFor="let item of dataProduct" value="{{ item.nameProduct }}">{{item.nameProduct}}</ion-select-option>
+      <ion-select-option *ngFor="let item of dataProduct" value="{{ item.nameProduct }}">{{item.nameProduct}}  </ion-select-option>
     </ion-select>
   </ion-item>
 
@@ -66,8 +66,9 @@
     <ion-label >ราคารวม : </ion-label>
     <ion-input *ngIf="data != null" placeholder="ราคารวม" formControlName="priceOrder"[(ngModel)]="sum" readonly></ion-input>
   </ion-item><br>
+  <ion-button type="submit" color="dark" class="button" expand="block">สั่งซื้อสินค้า</ion-button>
 </ion-card>
-  <ion-button type="submit">เพิ่มข้อมูล</ion-button>
+
 
 
 </form>

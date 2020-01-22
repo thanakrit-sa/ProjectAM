@@ -13,9 +13,9 @@ namespace AMApi.Controllers
     {
         public static List<Order> DataOrder = new List<Order>
         {
-            new Order {IdOrder = "100101" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="5", DateOrder = DateTime.Now, Status = "สั่งซื้อ"},
-            new Order {IdOrder = "100102" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="2",DateOrder = DateTime.Now, Status = "รับสั่งซื้อ"},
-            new Order {IdOrder = "100103" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="4",DateOrder = DateTime.Now, Status = "ยกเลิก"},
+            new Order {IdOrder = "100101" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="5", DateOrder = DateTime.Now, Status = "สั่งซื้อ", UserOrder = "admin1"},
+            new Order {IdOrder = "100102" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="2",DateOrder = DateTime.Now, Status = "รับสั่งซื้อ",UserOrder = "admin1"},
+            new Order {IdOrder = "100103" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="4",DateOrder = DateTime.Now, Status = "ยกเลิก",UserOrder = "admin1"},
             new Order {IdOrder = "100104" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder = DateTime.Now, SendDate = DateTime.Now, Status = "ส่งสินค้า"},
             new Order {IdOrder = "100105" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="3",DateOrder = DateTime.Now, SendDate = DateTime.Now, Status = "ได้รับแล้ว"},
         };
@@ -35,6 +35,12 @@ namespace AMApi.Controllers
         public ActionResult<Order> GetOrderById(string id)
         {
             return DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
+        }
+
+            [HttpGet("{data}")]
+        public ActionResult<IEnumerable<Order>> GetOrderbyUsername(string data)
+        {
+            return DataOrder.ToList().FindAll(it=>it.UserOrder == data);
         }
 
         [HttpPost]
@@ -57,6 +63,7 @@ namespace AMApi.Controllers
                NameUser = Orderx.NameUser,
                AddressUser = Orderx.AddressUser,
                TelUser = Orderx.TelUser,
+               UserOrder = Orderx.UserOrder,
                DateOrder = DateTime.Now,
                Status = "สั่งซื้อ"
             };

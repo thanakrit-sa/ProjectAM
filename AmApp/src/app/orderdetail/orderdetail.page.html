@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark" text-center>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -25,39 +25,39 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>ชื่อสินค้า :{{dataOrder.nameProduct}}</ion-label>
+      <ion-label>ชื่อสินค้า : {{dataOrder.nameProduct}}</ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label>จำนวนสินค้า :{{dataOrder.amountProduct}}</ion-label>
+      <ion-label>จำนวนสินค้า : {{dataOrder.amountProduct}}</ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label>ราคารวม :{{dataOrder.priceOrder}}</ion-label>
+      <ion-label>ราคารวม : {{dataOrder.priceOrder}}</ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label>ชื่อลูกค้า :{{dataOrder.nameUser}}</ion-label>
+      <ion-label>ชื่อลูกค้า : {{dataOrder.nameUser}}</ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label>เบอร์โทรลูกค้า :{{dataOrder.telUser}}</ion-label>
+      <ion-label>เบอร์โทรลูกค้า : {{dataOrder.telUser}}</ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label>ที่อยู่ :{{dataOrder.addressUser}}</ion-label>
+      <ion-label>ที่อยู่ : {{dataOrder.addressUser}}</ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label>วันที่รับออเดอร์ :{{dataOrder.dateOrder | date :'medium'}}</ion-label>
+      <ion-label>วันที่รับออเดอร์ : {{dataOrder.dateOrder | date :'medium'}}</ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label>วันส่งออเดอร์ :{{dataOrder.sendDate | date :'medium'}}</ion-label>
+      <ion-label>วันส่งออเดอร์ : {{dataOrder.sendDate | date :'medium'}}</ion-label>
     </ion-item>
 
     <ion-item>
-      <ion-label>สถานะ :{{dataOrder.status}}</ion-label>
+      <ion-label>สถานะ : {{dataOrder.status}}</ion-label>
     </ion-item>
 
   </ion-card>

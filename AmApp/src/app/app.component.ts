@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from "@angular/router";
+import { CallApiService } from './call-api.service';
 
 @Component({
   selector: 'app-root',
@@ -13,18 +14,18 @@ import { Router } from "@angular/router";
 export class AppComponent {
   public appPages = [
     {
-      title: 'Home',
-      url: '/home',
+      title: 'หน้าหลัก',
+      url: '/list',
       icon: 'home'
     },
+    // {
+    //   title: 'List',
+    //   url: '/list',
+    //   icon: 'list'
+    // },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
-    },
-    {
-      title: 'ShowMe',
-      url: '/showme',
+      title: 'สั้งซื้อ',
+      url: '/order',
       icon: 'list'
     },
 
@@ -34,8 +35,11 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public route:Router
+    public route:Router,
+    public callApi: CallApiService,
   ) {
+
+    
     this.initializeApp();
   }
 
@@ -48,6 +52,9 @@ export class AppComponent {
 
   logout(){
     this.route.navigate(['/login']);
+    this.callApi.nameUser = null
+    this.callApi.levelUser = null
+    
     
   }
 }

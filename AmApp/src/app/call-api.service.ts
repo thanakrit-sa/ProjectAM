@@ -2,11 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Product } from './Models/Product';
 import { Order } from './Models/Order';
+import {User} from './Models/User'
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class CallApiService {
+
+  public nameUser :string;
+  public levelUser :string;
+  
   // public static host: string = "https://bosjazz555.appspot.com/api/";
   public static host: string ="https://localhost:5001/api/" 
   constructor(public http: HttpClient) { }
@@ -38,5 +44,12 @@ export class CallApiService {
  }
  public CancelSellTotalProduct(id: string, data){
   return this.http.put<Order>(CallApiService.host+'Order/CancelSellTotalProduct/'+ id,data);
+ }
+ public GetOrderbyUsername(data:string){
+  return this.http.get<Product>(CallApiService.host+'Order/GetOrderbyUsername/'+ data);
+ }
+ //////////////////////////////////////////////////////////////////////////////////////
+ public GetUserData(){
+   return this.http.get<User>(CallApiService.host+'User/GetUserAll' )
  }
 }

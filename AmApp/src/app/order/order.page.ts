@@ -16,7 +16,7 @@ import { ProductService } from '../product.service';
   styleUrls: ['./order.page.scss'],
 })
 export class OrderPage implements OnInit {
-  www: "55"
+
   order: FormGroup;
   dataorder: Order;
   dataProduct: Product;
@@ -26,11 +26,11 @@ export class OrderPage implements OnInit {
   datasum: any
   id: any;
   check: any;
-  t: number;
-  amountp:number;
-  a: number;
-  aa: any
-  tt: any
+  total: number;
+  amountp: number;
+  amountnumber: number;
+  aamount: any
+  ttotal: any
   constructor(public productapi: ProductService, public tost: ToastController, public alertController: AlertController, public alertController1: AlertController, public route: Router, public callApi: CallApiService, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.order = this.formbuilder.group({
       'idOrder': [null],
@@ -44,6 +44,7 @@ export class OrderPage implements OnInit {
       'dateOrder': [null],
       'sendDate': [null],
       'status': [null],
+      'userOrder': [null],
       'total': [null]
     })
   }
@@ -97,46 +98,61 @@ export class OrderPage implements OnInit {
         }, {
           text: 'ok',
           handler: () => {
-            // console.log(this.order.value);
+           this.order.value.userOrder = this.callApi.nameUser
+           console.log(this.order.value.userOrder);
+           
             this.dataorder = this.order.value;
+            console.log(this.dataorder);
+            
             this.callApi.GetProductid(this.dataorder.idProduct).subscribe(it => {
-              this.tt = it.totalProduct
-              this.aa = this.dataorder.amountProduct
-              this.a = parseInt(this.aa, this.a)
-              this.t = parseInt(this.tt, this.t)
-console.log(it);
+              this.ttotal = it.totalProduct
+              this.aamount = this.dataorder.amountProduct
+              this.amountnumber = parseInt(this.aamount, this.amountnumber)
+              this.total = parseInt(this.ttotal, this.total)
+              console.log(it);
 
-              // console.log("จำนวน " + this.a);
-              // console.log("คงเหลือ " + this.t);
+              console.log("จำนวน " + this.amountnumber);
+              console.log("คงเหลือ " + this.total);
 
-              if (this.a <= this.t && this.a != 0) {
-                // console.log('dai');
-                this.t = 0;
-                this.a = 0;
+                if (this.amountnumber <= this.total && this.amountnumber != 0) {
+                  // console.log('dai');
+                  this.total = 0;
+                  this.amountnumber = 0;
 
-                this.callApi.AddOrder(this.dataorder).subscribe(it => {
-                  // console.log(it);
-                  // console.log(this.order.value.idProduct);
-                  // console.log(this.order.value);
-                });
-                this.productapi.AddSellTotalProduct(this.order.value.idProduct, this.order.value).subscribe(it => {
-                  // console.log(it);
-                });
-                this.presentToast1();
-                this.route.navigate(['/list']);
-              } 
-              else if (this.a == 0) {
-                this.presentAlert2();
-                this.t = 0;
-                this.a = 0;
-              }
-              else {
-                // console.log("maidai");
-                this.t = 0;
-                this.a = 0;
-                this.presentAlert1();
-              }
+                  this.callApi.AddOrder(this.dataorder).subscribe(it => {
+                    // console.log(it);
+                    // console.log(this.order.value.idProduct);
+                    // console.log(this.order.value);
+                  });
+                  this.productapi.AddSellTotalProduct(this.order.value.idProduct, this.order.value).subscribe(it => {
+                    // console.log(it);
+                  });
+                  this.presentToast1();
+                  this.route.navigate(['/list']);
+                } 
+                else if (this.amountnumber == 0 ) {
+                  this.presentAlert2();
+                
+                  
+                  this.total = 0;
+                  this.amountnumber = 0;
+                }
+                else if (this.amountnumber > this.total ) {
+                  this.presentAlert1();
+        
+                  this.total = 0;
+                  this.amountnumber = 0;
+                }
+                else {
+                  console.log("กรุณากรอกจำนวน");
+                  this.presentAlert2();
+                  this.total = 0;
+                  this.amountnumber = 0;
+          
+                }
             });
+         
+            
           }
         }
       ]
@@ -166,10 +182,10 @@ console.log(it);
     });
   }
   onChange(data) {
-    this.amountp = 0
+    this.amountp = null
     this.sum = null
     this.getbydata(data)
-    // console.log(data);
+    
   }
   amount(qs) {
     this.amountp = qs
