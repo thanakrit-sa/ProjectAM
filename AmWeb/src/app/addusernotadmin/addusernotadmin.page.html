@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="dark" text-center>
+    <ion-row>
+      <ion-col>
+        <ion-buttons>
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col>
+        <ion-title class="header-title">เพิ่มสมาชิก</ion-title>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content><br>
+  <ion-card>
+    <ion-card-content>
+      <form [formGroup]="datauser" (ngSubmit)="log()">
+        <ion-item [class.invalid]="submit && f.username.errors">
+          <ion-label>ชื่อผู้ใช้</ion-label>
+          <ion-input placeholder="ชื่อผู้ใช้" formControlName="username"></ion-input>
+        </ion-item>
+        <ion-item [class.invalid]="submit && f.password.errors">
+          <ion-label>รหัสผ่าน</ion-label>
+          <ion-input placeholder="รหัสผ่าน" formControlName="password"></ion-input>
+        </ion-item>
+        <ion-item [class.invalid]="submit && f.carduser.errors">
+          <ion-label>รหัสบัตรประชาชน</ion-label>
+          <ion-input placeholder="รหัสบัตรประชาชน" formControlName="carduser"></ion-input>
+        </ion-item>
+        <ion-item [class.invalid]="submit && f.nameuser.errors">
+          <ion-label>ชื่อ-นามสกุลผู้ใช้</ion-label>
+          <ion-input placeholder="ชื่อ-นามสกุล" formControlName="nameuser"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>สถานะ</ion-label>
+          <ion-select aria-placeholder="เลือกสถานะ" formControlName="statususer">
+            <ion-select-option value="พร้อมใช้งาน">พร้อมใช้งาน</ion-select-option>
+            <ion-select-option value="ระงับการใช้งาน">ระงับการใช้งาน</ion-select-option>
+            <ion-select-option value="ปิดการใช้งาน">ปิดการใช้งาน</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item [class.invalid]="submit && f.addressuser.errors">
+          <ion-label>ที่อยู่</ion-label>
+          <ion-input placeholder="ที่อยู่" formControlName="addressuser"></ion-input>
+        </ion-item>
+        <ion-item [class.invalid]="submit && f.teluser.errors">
+          <ion-label>เบอร์โทรศัพท์</ion-label>
+          <ion-input placeholder="เบอร์โทรศัพท์" formControlName="teluser"></ion-input>
+        </ion-item>
+        <ion-button expand="full" color="dark" type="submit">เพิ่มข้อมูลสมาชิก</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

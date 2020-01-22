@@ -1,22 +1,35 @@
+export class admin {
+
+        idadmin: string;
+
+        nameadmin: string;
+
+        usernameadmin: string;
+        
+        passwordadmin: string;
+
+        teladmin: string;
+
+        leveladmin: string;
+
+        addressadmin: string;
+}
+
 export class user {
 
-        idUser: string;
+        iduser: string;
 
-        nameUser: string;
+        nameuser: string;
 
         username: string;
         
         password: string;
 
-        telUser: string;
+        teluser: string;
 
-        levelUser: string;
+        Statususer: string;
 
-        addressUser: string;
+        addressuser: string;
 
-        
-
-
-
-
+        cardser: string;
 }

@@ -4,6 +4,8 @@ import { ProductService } from "src/app/service/product.service";
 import { StoreService } from "src/app/service/store.service";
 import { product } from 'src/Models/product';
 import { month } from 'src/Models/month';
+import { UserService } from '../service/user.service';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-dashbroad',
@@ -24,16 +26,17 @@ export class DashbroadPage implements OnInit {
   sumCostPerProduct: number[] = [];
   sumCost: number = 0;
   sumTotal: number = 0;
-  public chartLabel: string[] = ['01', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  public chartLabel: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun' , 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   public chartDataProductInStore: number[] = [];  
   public chartDataProductSellInStore: number[] = [];
   public chartDataProductTotalInStore: number[] = [];
-
-  constructor(public productApi: ProductService, public storeApi: StoreService) { }
+  showClose:boolean = false;
+  constructor(public productApi: ProductService, public storeApi: StoreService, public UserApi:UserService,private menu: MenuController) { }
 
   ngOnInit() {
     this.openChart();    
     this.productGetAll();
+    
     
   }
 
@@ -145,7 +148,7 @@ export class DashbroadPage implements OnInit {
     var chart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน'],
+        labels: this.chartLabel,
         datasets: [
           {
             label: "รายรับ",
@@ -178,7 +181,7 @@ export class DashbroadPage implements OnInit {
       }
     });
   }
-
+ 
   
 
 

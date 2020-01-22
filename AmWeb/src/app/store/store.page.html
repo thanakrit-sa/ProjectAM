@@ -1,39 +1,43 @@
 <ion-header>
   <ion-toolbar color="dark" text-center>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>คลังสินค้า</ion-title>
-    <ion-button expand="block" type="submit" style="padding-right: 15px" slot="end" [routerLink]="['/add-store']">
-      เพิ่มสินค้า</ion-button>
+    <ion-row>
+      <ion-col>
+        <ion-buttons>
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col>
+        <ion-title class="header-title">คลังสินค้า</ion-title>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content><br>
-  <ion-card>
-    <ion-card-content>
-      <ion-item>
-        <ion-label>รายการ</ion-label>
-        <ion-select placeholder="เลือกรายการที่ต้องการ">
-          <ion-select-option>เพิ่มสินค้า</ion-select-option>
-          <ion-select-option>แก้ไขสินค้า</ion-select-option>
-          <ion-select-option>ล้างสินค้า</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-card-content>
-  </ion-card><br>
-  
+  <div class="menu">
+    <ion-row text-right>
+      <ion-col>
+        <ion-button class="btn-addProduct" [routerLink]="['/add-store']">
+          <ion-label>
+            <h2><b>เพิ่มสินค้า</b></h2>
+          </ion-label>
+        </ion-button>        
+      </ion-col>
+    </ion-row>
+  </div>
+  <br>
   <ion-card>
     <ion-card-content>
       <ion-row>
         <ion-col size="2" *ngFor="let ii of datasss;let i = index">
           <div *ngIf="i < 6">
-          <ion-card class="a">
-            <ion-card-content text-center>
-              {{ii.nameProduct}}<br>
-              {{ii.total}}            
-            </ion-card-content>
-          </ion-card>
+            <ion-card class="a">
+              <ion-card-content text-center>
+                {{ii.nameProduct}}<br>
+                {{ii.total}}
+              </ion-card-content>
+            </ion-card>
           </div>
 
           <div *ngIf="i >= 6">
@@ -41,13 +45,13 @@
               <ion-card class="a">
                 <ion-card-content text-center>
                   {{ii.nameProduct}}<br>
-                  {{ii.total}}              
+                  {{ii.total}}
                 </ion-card-content>
               </ion-card>
             </div>
           </div>
         </ion-col>
-      </ion-row>      
+      </ion-row>
       <ion-row>
         <ion-col>
           <ion-button (click)="setShow()" color="dark" expand="full">Show Data</ion-button>
@@ -56,6 +60,16 @@
     </ion-card-content>
   </ion-card>
   <br>
+  <ion-card>
+    <ion-item>
+      <ion-label>เลือกรายการ</ion-label>
+      <ion-select>
+        <ion-select-option>เพิ่มสินค้า</ion-select-option>
+        <ion-select-option>แก้ไขสินค้า</ion-select-option>
+        <ion-select-option>ล้างสินค้า</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-card>
   <ion-card>
     <ion-card-content>
       <ion-row text-center style="border-bottom: groove">
@@ -109,17 +123,17 @@
         </ion-col>
 
         <ion-col>
-          
+
 
           <ion-button color="danger" (click)="ClearStores(s.idProduct)">ล้าง</ion-button>
-          
+
         </ion-col>
 
-        
+
       </ion-row>
-  
+
     </ion-card-content>
   </ion-card>
- 
+
 
 </ion-content>

@@ -1,17 +1,32 @@
 <ion-header>
   <ion-toolbar color="dark" text-center>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>สินค้า</ion-title>
-    
-      <ion-button style="padding-right: 15px" slot="end" type="submit" expand="block" [routerLink]="['/add-product']">เพิ่มสินค้า</ion-button>
-    
+    <ion-row>
+      <ion-col>
+        <ion-buttons>
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col>
+        <ion-title class="header-title">สินค้า</ion-title>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content><br>
- 
+  <div class="menu">
+    <ion-row text-right>
+      <ion-col>
+        <ion-button class="btn-addproduct" [routerLink]="['/add-product']">
+          <ion-label>
+            <h2><b>เพิ่มสินค้า</b></h2>
+          </ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+  <br>
   <ion-card>
     <ion-card-content>
       <ion-row text-center style="border-bottom: groove">
@@ -48,7 +63,7 @@
 
 
       </ion-row>
-      <ion-row  *ngFor="let p of datafilter" text-center style="border-bottom: groove">
+      <ion-row *ngFor="let p of datafilter" text-center style="border-bottom: groove">
 
         <ion-col class="pad">
           <ion-label>
@@ -60,7 +75,7 @@
           <ion-label>
             {{p.nameProduct}}
           </ion-label>
-        </ion-col >
+        </ion-col>
 
         <ion-col class="pad">
           <ion-label>
@@ -81,7 +96,7 @@
           </ion-label>
         </ion-col>
 
-        
+
 
 
         <ion-col>
@@ -91,7 +106,7 @@
         </ion-col>
 
 
-      </ion-row >
+      </ion-row>
     </ion-card-content>
   </ion-card>
 

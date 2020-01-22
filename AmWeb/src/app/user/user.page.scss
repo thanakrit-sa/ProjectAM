@@ -1,3 +1,41 @@
 .a{
     padding-top: 15px;
 }
+
+.header-admin {
+    background-color: #900C3F;
+    padding: 0;
+    color: white;
+}
+
+.content-admin {
+    background-color: rgba(144, 12, 63, 0.045);   
+}
+
+.header-user {
+    background-color: #1A5276;
+    padding: 0;
+    color: white;
+}
+.content-user {
+    background-color: rgba(26, 83, 118, 0.045);    
+}
+.menu {
+    width: 95%;
+}
+ion-card {
+    width: 90%;
+    margin: auto;
+}
+.header-content , .header-title{
+    padding-top: 10px;
+}
+
+.btn-head-admin , .btn-head-user {
+    width: 150px;
+    height: 60px;
+    background-color: rgba(144, 12, 63, 0.045);
+}
+.btn-head-admin {
+    background-color: rgba(144, 12, 63, 0.045);
+}

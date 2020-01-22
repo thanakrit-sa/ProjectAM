@@ -4,13 +4,16 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserService } from 'src/app/service/user.service';
+import { MenuController } from '@ionic/angular';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
+
+
 export class AppComponent {
-  
+  isShowMenu: boolean = true;
   public appPages = [
     {
       title: 'dashbroad',
@@ -49,10 +52,10 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     public userApi:UserService,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private menu: MenuController
   ) {
-    console.log(this.userApi.statusUser);
-    console.log(this.userApi.nameUser);
+    
     this.initializeApp();
   }
 
@@ -61,5 +64,13 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  openEnd() {    
+      if (this.menu.enable(true)) {
+        this.menu.enable(false);
+      } else {
+        this.menu.enable(true);
+      }    
   }
 }

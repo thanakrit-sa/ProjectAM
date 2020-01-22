@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
-import { admin } from 'src/Models/User';
+import { user } from 'src/Models/User';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-edit-user',
-  templateUrl: './edit-user.page.html',
-  styleUrls: ['./edit-user.page.scss'],
+  selector: 'app-edit-usernotadmin',
+  templateUrl: './edit-usernotadmin.page.html',
+  styleUrls: ['./edit-usernotadmin.page.scss'],
 })
-export class EditUserPage implements OnInit {
+export class EditUsernotadminPage implements OnInit {
   dataUser: FormGroup;
-  dataUserz: admin;
+  dataUserz: user;
   editDatauser: any;
   submit: boolean = false;
   
@@ -20,19 +20,20 @@ export class EditUserPage implements OnInit {
     this.editDatauser = this.activate.snapshot.paramMap.get('_id');
     console.log(this.editDatauser);
     this.dataUser = this.formbuilder.group({
-      'idAdmin': [null, Validators.required],
-      'nameAdmin': [null, Validators.required],
-      'usernameAdmin': [null, Validators.required],
-      'passwordAdmin': [null, Validators.required],
-      'telAdmin': [null, Validators.required],
-      'levelAdmin': [null, Validators.required],
-      'addressAdmin': [null, Validators.required]
+      'idUser': [null, Validators.required],
+      'nameUser': [null, Validators.required],
+      'username': [null, Validators.required],
+      'password': [null, Validators.required],
+      'telUser': [null, Validators.required],
+      'statusUser': [null, Validators.required],
+      'addressUser': [null, Validators.required],
+      'cardUser': [null, Validators.required]
 
     });
 
     
 
-    this.userApi.GetAdminByid(this.editDatauser).subscribe(it => {
+    this.userApi.GetUserByid(this.editDatauser).subscribe(it => {
       console.log(it);
       this.dataUser.patchValue(it)
       console.log(this.dataUser.value);
@@ -52,7 +53,7 @@ export class EditUserPage implements OnInit {
     this.dataUserz = this.dataUser.value
     console.log(this.dataUserz);
 
-    this.userApi.EditDataAdmin(this.editDatauser, this.dataUserz).subscribe(it => {
+    this.userApi.EditDataUser(this.editDatauser, this.dataUserz).subscribe(it => {
       console.log(it);
 
       this.route.navigate(['/user']);
@@ -60,4 +61,5 @@ export class EditUserPage implements OnInit {
     });
 
   }
+
 }

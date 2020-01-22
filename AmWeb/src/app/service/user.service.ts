@@ -1,18 +1,41 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
-import { user } from "src/Models/user";
+import { admin,user } from "src/Models/user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  public statusUser:string;
-  public nameUser:string;
+  public statusAdmin:string;
+  public nameAdmin:string;
+  public checkMenu:boolean = false;
   
   public static host: string = "https://localhost:5001/api/";
   constructor(public http: HttpClient) { }
+
+  public GetAdminAll() {
+    return this.http.get<admin>(UserService.host + 'User/GetAdminAll');
+  }
+  public AddDataAdmin(data: admin) {
+    console.log(data);
+    return this.http.post<admin>(UserService.host + 'User/AddAdmin', data);
+
+  }
+  public GetAdminByid(Id: string) {
+    return this.http.get<admin>(UserService.host + 'User/GetAdminById/' + Id);
+  }
+
+  public EditDataAdmin(Id: string, data) {
+    return this.http.put<admin>(UserService.host + 'User/EditAdmin/' + Id, data);
+  }
+
+  public DeleteDataAdmin(Id: string) {
+    return this.http.delete<admin>(UserService.host + 'User/DeleteAdmin/' + Id);
+  }
+
+  // ------------------------------------------------------------------------------
 
   public GetUserAll() {
     return this.http.get<user>(UserService.host + 'User/GetUserAll');
