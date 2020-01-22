@@ -62,11 +62,10 @@
   <br>
   <ion-card>
     <ion-item>
-      <ion-label>เลือกรายการ</ion-label>
-      <ion-select>
-        <ion-select-option>เพิ่มสินค้า</ion-select-option>
-        <ion-select-option>แก้ไขสินค้า</ion-select-option>
-        <ion-select-option>ล้างสินค้า</ion-select-option>
+      <ion-label>รายการสินค้า</ion-label>
+      <ion-select placeholder="- เลือกรายการสินค้า -" (ionChange)="onChange(data)" [(ngModel)]="data">
+        <ion-select-option value="ทั้งหมด">ทั้งหมด</ion-select-option>
+        <ion-select-option *ngFor="let p of datasss" value="{{ p.idProduct }}">{{p.nameProduct}}</ion-select-option>
       </ion-select>
     </ion-item>
   </ion-card>

@@ -95,7 +95,8 @@ import { AlertController, ToastController } from '@ionic/angular';
   
     
     <ion-col class="co" >
-        <ion-button  color="dark" (click)="sendorder(a.idOrder)" >รายละเอียดสินค้า</ion-button> 
+        <ion-button  color="dark" (click)="getdetail(a.idOrder)" >รายละเอียดสินค้า</ion-button> 
+
         <ion-button  color="secondary" (click)="okorder(a.idOrder)" *ngIf="a.status == 'สั่งซื้อ'" class="a">รับคำสั่งซื้อ</ion-button>
         <ion-button  color="success" (click)="sendorder(a.idOrder)" *ngIf="a.status == 'รับสั่งซื้อ'" class="a">รับสั่งซื้อ</ion-button>     
         <ion-button  color="danger" disabled (click)="sendorder(a.idOrder)" *ngIf="a.status == 'ยกเลิก'" class="a">ยกเลิก</ion-button>     
@@ -283,6 +284,10 @@ export class OrderListPage implements OnInit {
       console.log(it);
       this.getdataarray();
     });
+  }
+
+  getdetail(id){
+    this.route.navigate(['/detail', { _id: id }]);
   }
 
 

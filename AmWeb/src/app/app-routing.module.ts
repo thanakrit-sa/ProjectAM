@@ -20,7 +20,8 @@ const routes: Routes = [
   { path: 'order-cancel', loadChildren: './order-cancel/order-cancel.module#OrderCancelPageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'dashbroad', loadChildren: './dashbroad/dashbroad.module#DashbroadPageModule' },  { path: 'addusernotadmin', loadChildren: './addusernotadmin/addusernotadmin.module#AddusernotadminPageModule' },
-  { path: 'edit-usernotadmin', loadChildren: './edit-usernotadmin/edit-usernotadmin.module#EditUsernotadminPageModule' }
+  { path: 'edit-usernotadmin', loadChildren: './edit-usernotadmin/edit-usernotadmin.module#EditUsernotadminPageModule' },
+  { path: 'detail', loadChildren: './detail/detail.module#DetailPageModule' }
 
 ];
 
