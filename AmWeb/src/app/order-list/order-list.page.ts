@@ -22,8 +22,13 @@ import { AlertController, ToastController } from '@ionic/angular';
     <ion-title>รายการสั่งซื้อ</ion-title>
     
            
-        <ion-button style="padding-right: 15px" slot='end' [routerLink]="['/order']" >สั่งซื้อ</ion-button>
+        <ion-button style="padding-right: 15px" slot='end' [routerLink]="['/order']" color="light">สั่งซื้อ</ion-button>
   </ion-toolbar>
+  <style>
+  .my-pagination /deep/ .ngx-pagination .current {
+    background: black;
+  }
+</style>
 </ion-header><br>
 
 <ion-content class="content" text-center>

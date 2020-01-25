@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CallApiService } from '../call-api.service';
 import { Product } from '../Models/Product';
 import { Order } from '../Models/Order';
 import { log } from 'util';
 import { AlertController, ToastController, MenuController } from '@ionic/angular';
 import { ProductService } from '../product.service';
+import { User } from '../Models/User';
 
 @Component({
   selector: 'app-list',
@@ -20,7 +21,11 @@ import { ProductService } from '../product.service';
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-button (click)="gotoOrder()" color="light" slot="end"  class="buttton">
+    <ion-button (click)="gotoOrder()" color="light" slot="end"  class="buttton" *ngIf="datausercheckstatus =='พร้อมใช้งาน'">
+      <ion-icon name="add-circle"> </ion-icon>
+      สั่งซื้อ
+    </ion-button>
+    <ion-button (click)="gotoOrder1()" color="light" slot="end"  class="buttton" *ngIf="datausercheckstatus =='ไม่พร้อมใช้งาน'">
       <ion-icon name="add-circle"> </ion-icon>
       สั่งซื้อ
     </ion-button>
@@ -147,48 +152,68 @@ export class ListPage implements OnInit {
   data;
   userName;
   pp: any;
-  dataUser:any
+  dataUser: any;
+  checkstatus: any
+  datausercheckstatus: any
   datasearch: any = [];
   datasearch2: Order[] = [];
   datafilter: Order[] = [];
   dataarray: Order[] = [];
   // serarch :any;
   // serarch2 :Order[] = [];
-  constructor(public menuCtrl: MenuController,public productapi: ProductService, public route: Router, public callApi: CallApiService, public alertController: AlertController, public tost: ToastController) {
+  constructor(public actived: ActivatedRoute, public menuCtrl: MenuController, public productapi: ProductService, public route: Router, public callApi: CallApiService, public alertController: AlertController, public tost: ToastController) {
+
    
   }
+
 
   ngOnInit() {
     this.userName = this.callApi.nameUser
     console.log(this.userName);
     // this.getdatafilter();
     this.showdatafilter();
-  
+    this.callApi.GetUserbyData(this.userName).subscribe(it => {
+
+      this.datausercheckstatus = it.statusUser
+      console.log(this.datausercheckstatus);
+
+    });
+
+
+
   }
 
   ionViewDidEnter() {
     this.menuCtrl.enable(true);
     this.userName = this.callApi.nameUser
     console.log(this.userName);
-   
+
     this.showdatafilter();
     this.getdataarray()
     this.showdatafilter();
+    this.callApi.GetUserbyData(this.userName).subscribe(it => {
+      this.datausercheckstatus = it.statusUser
+      console.log(this.datausercheckstatus.statusUser);
+
+    });
+
   }
-  //////////////////////////////////////////////////////////////
+
+  ///////////////////////////////////////sercht//////////////////////////////////////
   setFilteredItems(ev: any) {
     const val = ev.target.value;
     if (val && val.trim()) {
       this.datasearch2 = this.datasearch2.filter((item) => {
-
         return (item.nameProduct.toLowerCase().indexOf(val.toLowerCase()) > -1);
-
       });
     } else {
       this.getdataarray();
     }
   }
+  
 
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////เอาข้อมูล Product มาทำเป็นอาเรย์////////////////////////////////
   getdataarray() {
     this.callApi.GetListAllProduct().subscribe(it => {
       this.datasearch = it;
@@ -208,16 +233,16 @@ export class ListPage implements OnInit {
       }
     });
   }
+  //////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////เอาข้อมูล Order มาทำ filter แยกข้อมูล//////////////////////
   showdatafilter() {
- this.callApi.GetOrderbyUsername(this.userName).subscribe(it=>{
-   this.dataUser= it
-   console.log(this.dataUser);
-   
- })
+    this.callApi.GetOrderbyUsername(this.userName).subscribe(it => {
+      this.dataUser = it
+      console.log(this.dataUser);
 
-
+    });
   }
-  //////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////
   ///////////////// แจ้งเตือน/////////////////////////////////////
   async presentToast() {
     const toast = await this.tost.create({
@@ -267,22 +292,18 @@ export class ListPage implements OnInit {
 
   }
 
+  async  gotoOrder1() {
+    const alert = await this.alertController.create({
+      header: 'เตือน',
 
-  // cancelmorder(id) {
-  //   console.log(id);
-  //   this.callApi.editokorder(id, this.data).subscribe(it => {
-  //     this.data = it;
-  //     console.log(this.data);      
-  //     console.log(id);
-  //     console.log(this.data);   
-  //   });
-  // this.productapi.AddSellTotalProduct(id, this.data).subscribe(it => {
-  //   this.data = it;
-  //   console.log(this.data);
-  //   this.getdataarray();
-  // });
+      message: 'ฟังก์ชั่นนี้ยังไม่เปิดให้ใช้บริการสำหรับบัญชีนี้  ',
+      buttons: ['OK'],
 
-  // }
+    });
+
+    await alert.present();
+
+  }
   async cancelorder(id) {
     const alert = await this.alertController.create({
       header: 'ยกเลิกการสั่งซื้อ',

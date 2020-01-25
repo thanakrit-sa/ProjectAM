@@ -11,7 +11,7 @@ import {User} from './Models/User'
 export class CallApiService {
 
   public nameUser :string;
-  public levelUser :string;
+  public name :string;
   
   // public static host: string = "https://bosjazz555.appspot.com/api/";
   public static host: string ="https://localhost:5001/api/" 
@@ -48,8 +48,11 @@ export class CallApiService {
  public GetOrderbyUsername(data:string){
   return this.http.get<Product>(CallApiService.host+'Order/GetOrderbyUsername/'+ data);
  }
- //////////////////////////////////////////////////////////////////////////////////////
+ //////////////////////////////////// user //////////////////////////////////////////////////
  public GetUserData(){
    return this.http.get<User>(CallApiService.host+'User/GetUserAll' )
  }
+ public GetUserbyData(data:string){
+  return this.http.get<User>(CallApiService.host+'User/GetUserBydata/'+ data )
+}
 }
