@@ -23,23 +23,28 @@ export class AppComponent {
     //   url: '/list',
     //   icon: 'list'
     // },
+    // {
+    //   title: 'สั้งซื้อ',
+    //   url: '/order',
+    //   icon: 'list'
+    // },
     {
-      title: 'สั้งซื้อ',
-      url: '/order',
-      icon: 'list'
+      title: 'บัญชีผู้ใช้งาน',
+      url: '/account-user',
+      icon: 'person'
     },
 
   ];
-  
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public route:Router,
+    public route: Router,
     public callApi: CallApiService,
   ) {
 
-    
+
     this.initializeApp();
   }
 
@@ -50,11 +55,11 @@ export class AppComponent {
     });
   }
 
-  logout(){
+  logout() {
     this.route.navigate(['/login']);
     this.callApi.nameUser = null
-    this.callApi.levelUser = null
-    
-    
+    this.callApi.name = null
+
+
   }
 }

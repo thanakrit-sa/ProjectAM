@@ -34,9 +34,9 @@ qq:any
       'nameProduct': [null],
       'amountProduct': [null],
       'priceOrder': [null],
-      'nameUser': [null],
-      'telUser': [null],
-      'addressUser': [null],
+      'nameUser': [""],
+      'telUser': [""],
+      'addressUser': [""],
       'dateOrder': [null],
       'sendDate': [null],
       'status': [null],
@@ -66,15 +66,20 @@ qq:any
       this.datasum = it
       console.log(this.data1);
       this.qq =0
+      if (it.totalProduct == "0"){
+        this.sold()
+        console.log("สินค้าหมดแล้ว");
+        
+      }
  
     });
   }
   onChange(data){
-    this.q = 0;
+    this.q = null;
     this.data1 = null
-    this.sum = 0
-    this.summ = 0
-    this.qq =0
+    this.sum = null
+    this.summ = null
+    this.qq =null
     
     this.getbydata(data)
  
@@ -115,7 +120,7 @@ qq:any
               this.a = parseInt(this.aa, this.a)
               this.t = parseInt(this.tt, this.t)
               console.log(it);
-                  if (this.a <= this.t && this.a != 0) {
+                  if (this.a <= this.t && this.a != 0 && this.dataorder.nameuser !="" && this.dataorder.teluser !="" && this.dataorder.addressUser !="") {
                 console.log('dai');
                 this.t = 0;
                 this.a = 0;
@@ -131,12 +136,15 @@ qq:any
                   this.t = 0;
                   this.a = 0;
                 }
-                else {
+                else if(this.a >this.t) {
                   console.log('ของหมด');
                   this.listdata()
                   this.presentAlert1();
                   this.t = 0;
                   this.a = 0;
+                }
+                else{
+                  this.presentAlert3();
                 }
               
             })
@@ -189,6 +197,26 @@ qq:any
           }
         }
       ]
+    });
+
+    await alert.present();
+  }
+  async sold() {
+    const alert = await this.alertController.create({
+      header: 'เตือน',
+
+      message: 'สินค้าชิ้นนี้หมดแล้ว',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+  async presentAlert3() {
+    const alert = await this.alertController.create({
+      header: 'เตือน',
+
+      message: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+      buttons: ['OK']
     });
 
     await alert.present();

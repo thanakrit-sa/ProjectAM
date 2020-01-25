@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'list', loadChildren: './list/list.module#ListPageModule' },
   { path: 'user', loadChildren: './user/user.module#UserPageModule' },
-  { path: 'orderdetail', loadChildren: './orderdetail/orderdetail.module#OrderdetailPageModule' },
+  { path: 'orderdetail', loadChildren: './orderdetail/orderdetail.module#OrderdetailPageModule' },  { path: 'account-user', loadChildren: './account-user/account-user.module#AccountUserPageModule' },
+
   
   
 

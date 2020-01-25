@@ -38,9 +38,9 @@ export class OrderPage implements OnInit {
       'nameProduct': [null],
       'amountProduct': [null],
       'priceOrder': [null],
-      'nameUser': [null],
-      'telUser': [null],
-      'addressUser': [null],
+      'nameUser': [""],
+      'telUser': [""],
+      'addressUser': [""],
       'dateOrder': [null],
       'sendDate': [null],
       'status': [null],
@@ -49,7 +49,9 @@ export class OrderPage implements OnInit {
     })
   }
   get f() { return this.order.controls; }
-
+  gotolist() {
+    this.route.navigate(['/list']);
+  }
   test() {
     console.log(5);
 
@@ -57,7 +59,7 @@ export class OrderPage implements OnInit {
   async presentToast1() {
     const toast = await this.tost.create({
       message: 'สั่งซื้อสินค้าเรียบร้อย',
-      duration: 5000,
+      duration: 1000,
       color: "success",
       position: 'top'
     });
@@ -73,11 +75,31 @@ export class OrderPage implements OnInit {
 
     await alert.present();
   }
+  async presentAlert3() {
+    const alert = await this.alertController1.create({
+      header: 'เตือน',
+
+      message: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
   async presentAlert2() {
     const alert = await this.alertController1.create({
       header: 'เตือน',
 
       message: 'กรุณากรอกจำนวนสินค้าให้ถูกต้อง',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+  async sold() {
+    const alert = await this.alertController1.create({
+      header: 'เตือน',
+
+      message: 'สินค้าชิ้นนี้หมดแล้ว',
       buttons: ['OK']
     });
 
@@ -98,12 +120,12 @@ export class OrderPage implements OnInit {
         }, {
           text: 'ok',
           handler: () => {
-           this.order.value.userOrder = this.callApi.nameUser
-           console.log(this.order.value.userOrder);
-           
+            this.order.value.userOrder = this.callApi.nameUser
+            console.log(this.order.value.userOrder);
+
             this.dataorder = this.order.value;
             console.log(this.dataorder);
-            
+
             this.callApi.GetProductid(this.dataorder.idProduct).subscribe(it => {
               this.ttotal = it.totalProduct
               this.aamount = this.dataorder.amountProduct
@@ -114,45 +136,49 @@ export class OrderPage implements OnInit {
               console.log("จำนวน " + this.amountnumber);
               console.log("คงเหลือ " + this.total);
 
-                if (this.amountnumber <= this.total && this.amountnumber != 0) {
-                  // console.log('dai');
-                  this.total = 0;
-                  this.amountnumber = 0;
+              if (this.amountnumber <= this.total && this.amountnumber != 0 && this.dataorder.nameUser != "" && this.dataorder.telUser != "" && this.dataorder.addressUser != "") {
+                // console.log('dai');
+                this.total = 0;
+                this.amountnumber = 0;
 
-                  this.callApi.AddOrder(this.dataorder).subscribe(it => {
-                    // console.log(it);
-                    // console.log(this.order.value.idProduct);
-                    // console.log(this.order.value);
-                  });
-                  this.productapi.AddSellTotalProduct(this.order.value.idProduct, this.order.value).subscribe(it => {
-                    // console.log(it);
-                  });
-                  this.presentToast1();
-                  this.route.navigate(['/list']);
-                } 
-                else if (this.amountnumber == 0 ) {
-                  this.presentAlert2();
-                
-                  
-                  this.total = 0;
-                  this.amountnumber = 0;
-                }
-                else if (this.amountnumber > this.total ) {
-                  this.presentAlert1();
-        
-                  this.total = 0;
-                  this.amountnumber = 0;
-                }
-                else {
-                  console.log("กรุณากรอกจำนวน");
-                  this.presentAlert2();
-                  this.total = 0;
-                  this.amountnumber = 0;
-          
-                }
+                this.callApi.AddOrder(this.dataorder).subscribe(it => {
+                  // console.log(it);
+                  // console.log(this.order.value.idProduct);
+                  // console.log(this.order.value);
+                });
+                this.productapi.AddSellTotalProduct(this.order.value.idProduct, this.order.value).subscribe(it => {
+                  // console.log(it);
+                });
+                this.amountp = null
+                this.sum = null
+                this.presentToast1();
+                this.route.navigate(['/list']);
+
+
+              }
+              else if (this.amountnumber == 0) {
+                this.presentAlert2();
+
+
+                this.total = 0;
+                this.amountnumber = 0;
+              }
+              else if (this.amountnumber > this.total) {
+                this.presentAlert1();
+
+                this.total = 0;
+                this.amountnumber = 0;
+              }
+              else {
+                this.presentAlert3();
+                this.total = 0;
+                this.amountnumber = 0;
+
+              }
+
             });
-         
-            
+
+
           }
         }
       ]
@@ -172,12 +198,15 @@ export class OrderPage implements OnInit {
     })
   }
   getbydata(data) {
-
     this.callApi.GetProductBydata(data).subscribe(it => {
       this.data1 = it
       this.datasum = it
-
-      console.log(this.data1)
+      if (it.totalProduct == "0"){
+        this.sold()
+        console.log("สินค้าหมดแล้ว");
+        
+      }
+        console.log(this.data1)
 
     });
   }
@@ -185,7 +214,7 @@ export class OrderPage implements OnInit {
     this.amountp = null
     this.sum = null
     this.getbydata(data)
-    
+
   }
   amount(qs) {
     this.amountp = qs
