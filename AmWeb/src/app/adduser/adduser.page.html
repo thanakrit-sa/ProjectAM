@@ -10,7 +10,7 @@
 <ion-content><br>
   <ion-card>
     <ion-card-content>
-      <form [formGroup]="dataadmin" (ngSubmit)="log()">
+      <form [formGroup]="dataadmin" (ngSubmit)="ConfirmInsert()">
         <ion-item [class.invalid]="submit && f.idadmin.errors">
           <ion-label>รหัสผู้ใช้</ion-label>
           <ion-input placeholder="รหัสผู้ใช้" formControlName="idadmin">

@@ -15,7 +15,7 @@ namespace AMApi.Controllers
 
         public static List<Store> DataStore = new List<Store>
         {
-            new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="20",AddProductStore = DateTime.Now}
+            new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="0",AddProductStore = DateTime.Now}
 
 
         };

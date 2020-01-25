@@ -1,31 +1,37 @@
-<ion-header>
-  <ion-toolbar color="dark" text-center>
-    <ion-title>
-      Login
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content text-center>
+<script src="https://kit.fontawesome.com/a4859189e7.js" crossorigin="anonymous"></script>
+<ion-content color="medium" text-center>
+  <br>
+  <div class="blank"></div>
   <ion-card>
-    <ion-card-content>
-      <h2><b>เข้าสู่ระบบ</b></h2>
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-content>
+    <ion-card-header color="dark">
+      <ion-row>
+        <ion-col>
+          <ion-label>
+            <h2><b>เข้าสู่ระบบ</b></h2>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content class="color-content">
+      <br>
       <form [formGroup]="datauser" (ngSubmit)="login()">
-        <ion-item>
-          <ion-label>ชื่อผู้ใช้</ion-label>
+        <ion-item color="light">
+          <ion-icon name="contact"></ion-icon>
           <ion-input placeholder="ชื่อผู้ใช้" formControlName="user"></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label>รหัสผ่าน</ion-label>
+        <ion-item color="light">
+          <ion-icon name="lock"></ion-icon>
           <ion-input type="password" placeholder="รหัสผ่าน" formControlName="pass"></ion-input>
-        </ion-item><br>
-        <ion-button color="dark" expand="block" type="submit">ตกลง</ion-button>
+        </ion-item>
+        <ion-row>
+          <ion-col text-left>
+            <ion-label *ngIf="isShowValidate == true"><br><b class="text">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง !!</b></ion-label>
+            <ion-label *ngIf="isShowValidateNull == true"><br><b class="text">กรุณากรอกชื่อผู้ใช้และรหัสผ่าน !!</b></ion-label>
+          </ion-col>
+        </ion-row>
+        <br>
+        <ion-button color="dark" expand="block" type="submit">เข้าสู่ระบบ</ion-button>
       </form>
     </ion-card-content>
   </ion-card>
-
 </ion-content>

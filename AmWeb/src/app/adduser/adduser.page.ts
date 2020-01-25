@@ -4,6 +4,7 @@ import { admin } from 'src/Models/user';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-adduser',
   templateUrl: './adduser.page.html',
@@ -14,7 +15,7 @@ export class AdduserPage implements OnInit {
   submit: boolean = false;
   dataUs: admin;
 
-  constructor(public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
+  constructor(public alertController: AlertController,public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.dataadmin = this.formbuilder.group({
       'idadmin': [null, Validators.required],
       'nameadmin': [null, Validators.required],
@@ -27,8 +28,30 @@ export class AdduserPage implements OnInit {
     })
   }
   get f() { return this.dataadmin.controls; }
+
+  async ConfirmInsert() {
+    const alert = await this.alertController.create({      
+      message: 'ต้องการที่จะเพิ่มผู้ดูแลหรือไม่ ?',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            this.log();
+            console.log('Confirm Okay');
+          }
+        }, {
+          text: 'ยกเลิก',
+          role: 'cancel',          
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
   
-  async log() {
+  log() {
     this.submit = true;
     console.log(this.dataadmin.value);
     console.log(this.dataadmin);

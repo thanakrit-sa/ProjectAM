@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import { store } from "src/Models/stroe";
+// import { Stock } from "src/Models/stock";
 @Injectable({
   providedIn: 'root'
 })
@@ -43,5 +44,9 @@ export class StoreService {
     return this.http.post<store>(StoreService.host + 'Store/AddClear', data);
 
   }
+
+
+
+
 }
 

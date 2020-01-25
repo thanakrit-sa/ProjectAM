@@ -17,7 +17,7 @@
 <ion-content><br>
   <ion-card>
     <ion-card-content>
-      <form [formGroup]="datauser" (ngSubmit)="log()">
+      <form [formGroup]="datauser" (ngSubmit)="ConfirmInsert()">
         <ion-item [class.invalid]="submit && f.username.errors">
           <ion-label>ชื่อผู้ใช้</ion-label>
           <ion-input placeholder="ชื่อผู้ใช้" formControlName="username"></ion-input>

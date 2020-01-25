@@ -73,7 +73,28 @@ export class AddStorePage implements OnInit {
   //   });
   // }
 
-  
+  async ConfirmInsert() {
+    const alert = await this.alertController.create({      
+      message: 'ต้องการที่จะเพิ่มสินค้าหรือไม่ ?',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            this.insert();
+            console.log('Confirm Okay');
+          }
+        }, {
+          text: 'ยกเลิก',
+          role: 'cancel',          
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
   insert(){
     var data = this.dataPd.filter(it => it.idProduct == this.dataStore.value.nameProduct );

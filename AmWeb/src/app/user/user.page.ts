@@ -4,6 +4,7 @@ import { admin, user } from 'src/Models/user';
 import { NavController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
@@ -15,7 +16,7 @@ export class UserPage implements OnInit {
   public dataUserAll: user;
   isShowAdmin: boolean = false;
   isShowUser: boolean = false;
-  constructor(public activate: ActivatedRoute, public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) { }
+  constructor(public alertController: AlertController,public activate: ActivatedRoute, public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getShowAdmin();
@@ -85,5 +86,48 @@ export class UserPage implements OnInit {
 
       });
     });
+  }
+  async ConfirmDeleteAdmin(idAdmin) {
+    const alert = await this.alertController.create({      
+      message: 'ต้องการที่จะลบข้อมูลผู้ดูแลหรือไม่',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            this.deleteAdmin(idAdmin);
+            console.log('Confirm Okay');
+          }
+        }, {
+          text: 'ยกเลิก',
+          role: 'cancel',          
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async ConfirmDeleteUser(idUser) {
+    const alert = await this.alertController.create({      
+      message: 'ต้องการที่จะลบข้อมูลสมาชิกหรือไม่',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            this.deleteUser(idUser);
+            console.log('Confirm Okay');
+          }
+        }, {
+          text: 'ยกเลิก',
+          role: 'cancel',          
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

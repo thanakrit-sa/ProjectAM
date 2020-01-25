@@ -25,9 +25,6 @@ export class product{
     showTotal:number;
     
     buttonCheck :Boolean;
-    idStock: string;
-    dataProductPerMonth: product[];
-    stockPerMonth: Date
     
 }
 export class dataStockPerMonth {
@@ -37,3 +34,4 @@ export class dataStockPerMonth {
     stockPerMonth: Date
 
 }
+

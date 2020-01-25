@@ -92,19 +92,19 @@ export class DashbroadPage implements OnInit {
       // -------------------- Chart --------------------
 
       for (let index = 0; index < Object.keys(this.productAll).length; index++) {
-        this.chartDataProductInStore[index] = this.productAll[index].total;        
+        this.productApi.chartDataProductInStore[index] = this.productAll[index].total;        
       }
-      console.log(this.chartDataProductInStore); 
+      console.log(this.productApi.chartDataProductInStore); 
 
       for (let index = 0; index < Object.keys(this.productAll).length; index++) {
-        this.chartDataProductSellInStore[index] = this.productAll[index].amountProduct;        
+        this.productApi.chartDataProductSellInStore[index] = this.productAll[index].amountProduct;        
       }
-      console.log(this.chartDataProductSellInStore);  
+      console.log(this.productApi.chartDataProductSellInStore);  
 
       for (let index = 0; index < Object.keys(this.productAll).length; index++) {
-        this.chartDataProductTotalInStore[index] = this.productAll[index].totalProduct;        
+        this.productApi.chartDataProductTotalInStore[index] = this.productAll[index].totalProduct;        
       }
-      console.log(this.chartDataProductTotalInStore);  
+      console.log(this.productApi.chartDataProductTotalInStore);  
     });
   }
     openChart() {
@@ -115,17 +115,17 @@ export class DashbroadPage implements OnInit {
       data: {
         labels: this.chartLabel,
         datasets: [{
-          data: this.chartDataProductInStore,
+          data: this.productApi.chartDataProductInStore,
           label: "จำนวนสินค้านำเข้า",
           borderColor: "#212F3C",
           fill: false
         }, {
-          data: this.chartDataProductSellInStore,
+          data: this.productApi.chartDataProductSellInStore,
           label: "จำนวนสินค้าที่ขาย",
           borderColor: "#0E6655",
           fill: false
         }, {
-          data: this.chartDataProductTotalInStore,
+          data: this.productApi.chartDataProductTotalInStore,
           label: "จำนวนสินค้าคงเหลือ",
           borderColor: "#900C3F",
           fill: false

@@ -4,6 +4,7 @@ import { user } from 'src/Models/user';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-addusernotadmin',
   templateUrl: './addusernotadmin.page.html',
@@ -15,7 +16,7 @@ export class AddusernotadminPage implements OnInit {
   submit: boolean = false;
   data: user;
 
-  constructor(public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
+  constructor(public alertController: AlertController,public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.datauser = this.formbuilder.group({
       'iduser': [null, Validators.required],
       'nameuser': [null, Validators.required],
@@ -30,7 +31,29 @@ export class AddusernotadminPage implements OnInit {
   }
   get f() { return this.datauser.controls; }
 
-  async log() {
+  async ConfirmInsert() {
+    const alert = await this.alertController.create({      
+      message: 'ต้องการที่จะเพิ่มสมาชิกหรือไม่ ?',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            this.log();
+            console.log('Confirm Okay');
+          }
+        }, {
+          text: 'ยกเลิก',
+          role: 'cancel',          
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  log() {
     this.submit = true;
     console.log(this.datauser.value);
     console.log(this.datauser);

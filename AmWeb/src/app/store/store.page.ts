@@ -41,6 +41,9 @@ export class StorePage implements OnInit {
   datashowfilter: product[] = [];
   filtertype: store[] = [];  
 
+  PageNumber: number = 1;
+  sumProductNumber : number;
+  
   constructor(public api: ProductService, public alertController: AlertController, public activate: ActivatedRoute, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.dataStore = this.formbuilder.group({
       'idStore': [null, Validators.required],
@@ -54,13 +57,17 @@ export class StorePage implements OnInit {
   }
 
   ngOnInit() {
-    // this.get();
+    this.get();
+    this.get2();
     this.showall();
   }
 
   ionViewDidEnter() {
     this.get();
     this.get2();
+    this.showall();
+    this.sumProductNumber;
+    
   }
 
 
@@ -71,69 +78,67 @@ export class StorePage implements OnInit {
   // -----------------------------------------------------------------------------
 
   get2() {
-    this.api.GetProductAll().subscribe((it) => {
-      console.log(it);
+    this.api.GetProductAll().subscribe((it) => {      
       this.datas = it;
       for (let index = 0; index < Object.keys(this.datas).length; index++) {
         this.datass[index] = this.datas[index];
         this.datasss = this.datass;
-        console.log(this.datasss[index]);
       }
+      console.log(this.datasss);
     });
   }
 
   // -------------------------------------------------------------------------------
 
   get() {
-    this.storeApi.GetProductStore().subscribe((it) => {
-      console.log(it);
+    this.storeApi.GetProductStore().subscribe((it) => {      
       this.dataStoreAll = it;
       for (let index = 0; index < Object.keys(this.dataStoreAll).length; index++) {
         this.datafilter[index] = this.dataStoreAll[index];
-        this.total = this.datafilter[index].unitProduct;
-        console.log(this.total);
-        console.log(this.datafilter[index].addProductStore);
-        // this.splitted = this.datafilter[index].addProductStore.split("-", 3);
-        // console.log(this.splitted);
-        // this.getmonth = this.splitted[1]
-        // console.log(this.getmonth);
+        this.total = this.datafilter[index].unitProduct;        
+        this.sumProductNumber = Object.keys(this.dataStoreAll).length;       
+        
+        this.splitted = this.datafilter[index].addProductStore.split("-", 3);        
+        this.getmonth = this.splitted[1]
+        console.log(this.getmonth);
 
         // ---------- TEst ----------
-        this.splitted = this.setdate.split("-", 3)
-        console.log(this.splitted);
-        console.log(this.splitted[1]);
-        for (let index = 0; index < Object.keys(this.chartLabel).length; index++) {
-          console.log(this.chartLabel[index]);
+        this.splitted = this.setdate.split("-", 3)        
+        console.log(this.splitted[1]);        
+        
+        for (let index = 0; index < Object.keys(this.chartLabel).length; index++) {          
         }
-        if (this.splitted[1] == this.chartLabel[index]) {
-          this.api.GetProductAll().subscribe((it) => {
-            console.log(it);
+        if (this.getmonth == this.chartLabel[index]) {
+          this.api.GetProductAll().subscribe((it) => {            
             this.datas = it;
+            for (let index = 0; index < Object.keys(this.datasss).length; index++) {
+              // if(this.datasss[index].totalProduct == "0"){
+              //   // this.datasss[index].totalProduct = "0";
+              //   // this.sumAmountProductInStore = this.sumAmountProductInStore + parseInt(this.datasss[index].totalProduct);
+              //   // console.log(this.datasss[index].totalProduct);
+                
+              // }
+              // // this.sumAmountProductInStore = this.datas[index].totalProduct;            
+            }            
             for (let index = 0; index < Object.keys(this.datas).length; index++) {
-              this.sumAmountProductInStore = this.sumAmountProductInStore + parseInt(this.datas[index].total);
-              console.log(this.sumAmountProductInStore);
-            }
-            for (let index = 0; index < Object.keys(this.datas).length; index++) {
-              this.sumAmountProductSellInStore = this.sumAmountProductSellInStore + parseInt(this.datas[index].amountProduct);
-              console.log(this.sumAmountProductSellInStore);
+              this.sumAmountProductSellInStore = this.sumAmountProductSellInStore + parseInt(this.datas[index].totalProduct);             
             }
           });
-        }
-      }
-      console.log(this.dataStore.value);
+        }       
+      }      
     });
+    console.log(this.sumAmountProductInStore);    
+    console.log(this.datafilter);    
+    console.log(this.sumAmountProductSellInStore);
   }
 
   // ----------------------------------------------------------------------------------
 
   public ClearStores(id) {
     // console.log(this.IdclearStore);
-    this.storeApi.GetProductStoreByid(id).subscribe(it => {
-      console.log(it);
-      this.dataSt = it
-      console.log(this.dataSt);
-      this.storeApi.ClearDataStore(id, this.dataSt).subscribe(it => {
-        console.log(it);
+    this.storeApi.GetProductStoreByid(id).subscribe(it => {   
+      this.dataSt = it      
+      this.storeApi.ClearDataStore(id, this.dataSt).subscribe(it => {               
       });
     });
   }
@@ -152,8 +157,7 @@ export class StorePage implements OnInit {
 
   editlog() {
     this.dataSt = this.dataStore.value
-    this.storeApi.EditDataStore(this.dataStoreAll.idProduct, this.dataSt).subscribe(it => {
-      console.log(it);
+    this.storeApi.EditDataStore(this.dataStoreAll.idProduct, this.dataSt).subscribe(it => {      
     });
     this.route.navigate(['/store']);
   }
@@ -162,30 +166,22 @@ export class StorePage implements OnInit {
 
   showall() {
     this.storeApi.GetProductStore().subscribe((it) => {
-      this.dataStoreAll = it;
-      console.log(this.dataStoreAll);
+      this.dataStoreAll = it;      
       for (let index = 0; index < Object.keys(this.dataStoreAll).length; index++) {
         this.datafilter[index] = this.dataStoreAll[index];
-        this.filtertype[index] = this.datafilter[index];
-        console.log(this.filtertype[index]);
-        console.log(this.datafilter[index]);
+        this.filtertype[index] = this.datafilter[index];        
       }
     });
   }
   onChange(data) {
     if (data == "ทั้งหมด") {
-      this.showall();
-      console.log(this.datas);
+      this.showall();      
     }
     else {
       this.datafilter = this.filtertype.filter(it =>
-        it.idProduct == data)
-      console.log(this.datas);
+        it.idProduct == data)      
     }
   }
-
-
-
 }
 
 

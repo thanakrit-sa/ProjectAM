@@ -10,7 +10,7 @@
 <ion-content><br>
   <ion-card>
     <ion-card-content>
-      <form [formGroup]="dataProduct" (ngSubmit)="log()">
+      <form [formGroup]="dataProduct" (ngSubmit)="ConfirmEdit()">
         <ion-item [class.invalid]="submit && f.idProduct.errors">
           <ion-label>รหัสสินค้า</ion-label>
           <ion-input placeholder="รหัสสินค้า" formControlName="idProduct">

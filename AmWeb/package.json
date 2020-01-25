@@ -26,6 +26,7 @@
     "@ionic/angular": "^4.7.1",
     "chart.js": "^2.9.3",
     "core-js": "^2.5.4",
+    "jw-angular-pagination": "^1.1.0",
     "ngx-pagination": "^5.0.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",

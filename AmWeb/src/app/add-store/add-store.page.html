@@ -9,7 +9,7 @@
 <ion-content><br>
   <ion-card>
     <ion-card-content>
-      <form [formGroup]="dataStore" (ngSubmit)="insert()">
+      <form [formGroup]="dataStore" (ngSubmit)="ConfirmInsert()">
         <ion-item>
           <ion-label>ชื่อสินค้า</ion-label>
           <ion-select placeholder="ชื่อสินค้า" formControlName="nameProduct" [(ngModel)]="dataIdProduct">

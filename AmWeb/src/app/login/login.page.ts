@@ -16,6 +16,8 @@ export class LoginPage implements OnInit {
   user:any;
   pass:any;
   data:admin;
+  isShowValidate:boolean = false;
+  isShowValidateNull:boolean = false;
   
   constructor(public usertApi: UserService, public formbuilder: FormBuilder, public route: Router,private menu: MenuController) {    
     this.datauser = this.formbuilder.group({
@@ -47,7 +49,15 @@ export class LoginPage implements OnInit {
         console.log(this.usertApi.nameAdmin);
         this.route.navigate(['/dashbroad']);
         
-      }else{
+      }
+      else if(this.datauser.value.user == null && this.datauser.value.pass == null){
+        this.isShowValidateNull = true;
+      }
+      else if(this.datauser.value.user != null && this.datauser.value.pass != null){
+        this.isShowValidateNull = false;
+        this.isShowValidate = true;
+      }
+      else{        
         console.log("false");
       }
       

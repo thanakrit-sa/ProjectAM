@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-
+import { dataStockPerMonth } from "src/Models/stock";
 import { product } from "src/Models/product";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-
+  
+  public chartDataProductInStore: number[] = [];  
+  public chartDataProductSellInStore: number[] = [];
+  public chartDataProductTotalInStore: number[] = [];
 
   public static host: string = "https://localhost:5001/api/";
   constructor(public http: HttpClient) { }
@@ -47,5 +50,13 @@ export class ProductService {
    public EditProductstatus(Id:string,data){
     return this.http.put<product>(ProductService.host + 'Product/EditProductstatus/' + Id, data);
    }
+   
+  public AddStock2(data:product) {
+    console.log(data);
+    return this.http.post<product>(ProductService.host + 'Stock/AddStock2', data);
+
+  }
   
 }
+
+
