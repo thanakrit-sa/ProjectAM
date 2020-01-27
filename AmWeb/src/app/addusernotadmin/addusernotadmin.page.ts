@@ -10,29 +10,124 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './addusernotadmin.page.html',
   styleUrls: ['./addusernotadmin.page.scss'],
 })
-export class AddusernotadminPage implements OnInit {  
+export class AddusernotadminPage implements OnInit {
 
   datauser: FormGroup;
   submit: boolean = false;
   data: user;
+  
+  isShowValidatePassword:boolean = false;
+  isShowValidateUsername:boolean = false;
+  isShowValidateTel:boolean = false;
+  isShowValidateStatus:boolean = false;
+  isShowValidateAddress:boolean = false;
+  isShowValidateCard:boolean = false;
+  isShowValidateName:boolean = false;
 
-  constructor(public alertController: AlertController,public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
+
+  constructor(public alertController: AlertController, public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.datauser = this.formbuilder.group({
-      'iduser': [null, Validators.required],
-      'nameuser': [null, Validators.required],
-      'username': [null, Validators.required],
-      'password': [null, Validators.required],
-      'teluser': [null, Validators.required],
-      'statususer': [null, Validators.required],
-      'addressuser': [null, Validators.required],
-      'carduser': [null, Validators.required]
+      'iduser': ["", Validators.required],
+      'nameuser': ["", Validators.required],
+      'username': ["", Validators.required],
+      'password': ["", Validators.required],
+      'teluser': ["", Validators.compose([Validators.pattern('(^0)([1-9]){2}-([1-9]){3}-([0-9]){4}$'), Validators.required])],
+      'statususer': ["", Validators.required],
+      'addressuser': ["", Validators.required],
+      'carduser': ["", Validators.compose([Validators.pattern('([0-9]){13}$'), Validators.required])]
 
     })
   }
+
+  // ---------------------------------------------------------------------- Validate
+
+  public errorMessages = {
+    teluser: [      
+      { type: 'pattern', message: 'กรุณากรอกเบอร์โทรให้ถูกต้อง 0XX-XXX-XXXX' }
+    ],
+    carduser: [      
+      { type: 'pattern', message: 'กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง [0-9] สิบสามหลัก' }
+    ],
+  }; 
+  get carduser() {
+    return this.datauser.get("carduser");
+  }
+  get teluser() {
+    return this.datauser.get("teluser");
+  }
+
   get f() { return this.datauser.controls; }
 
+  async Alert() {
+    const alert = await this.alertController.create({
+      message: 'กรุณากรอกข้อมูลให้ครบถ้วน.',
+      buttons: ['ตกลง']
+    });
+
+    await alert.present();
+  }
+
+  check() {
+    if (this.datauser.value.nameuser != "" && this.datauser.value.username != "" && this.datauser.value.password != "" && this.datauser.value.statususer != ""
+      && this.datauser.value.addressuser != "" && this.datauser.value.carduser != "" && this.datauser.value.teluser != "") {
+      this.ConfirmInsert();
+      
+      this.isShowValidatePassword = false;
+      this.isShowValidateUsername = false;
+      this.isShowValidateTel = false;
+      this.isShowValidateAddress = false;
+      this.isShowValidateCard = false;
+      this.isShowValidateName = false;
+      this.isShowValidateStatus = false;
+      
+    }
+    else {
+      this.isShowValidatePassword = true;
+      this.isShowValidateUsername = true;
+      this.isShowValidateTel = true;
+      this.isShowValidateAddress = true;
+      this.isShowValidateCard = true;
+      this.isShowValidateName = true;
+      this.isShowValidateStatus = true;
+      
+      this.Alert();
+    }
+    // else if (this.datauser.value.nameuser != "" && this.datauser.value.username != "" && this.datauser.value.password != "" && this.datauser.value.statususer != ""
+    // && this.datauser.value.addressuser != "" && this.datauser.value.carduser != "" && this.datauser.value.teluser == "") {      
+    //   this.isShowValidate = true;
+    // }
+    // else if (this.datauser.value.nameuser != "" && this.datauser.value.username != "" && this.datauser.value.password != "" && this.datauser.value.statususer != ""
+    // && this.datauser.value.addressuser != "" && this.datauser.value.carduser == "" && this.datauser.value.teluser == "") {      
+    //   this.isShowValidate = true;
+    // }
+    // else if (this.datauser.value.nameuser != "" && this.datauser.value.username != "" && this.datauser.value.password != "" && this.datauser.value.statususer != ""
+    // && this.datauser.value.addressuser == "" && this.datauser.value.carduser == "" && this.datauser.value.teluser == "") {      
+    //   this.isShowValidate = true;
+    // }
+    // else if (this.datauser.value.nameuser != "" && this.datauser.value.username != "" && this.datauser.value.password != "" && this.datauser.value.statususer == ""
+    // && this.datauser.value.addressuser == "" && this.datauser.value.carduser == "" && this.datauser.value.teluser == "") {      
+    //   this.isShowValidate = true;
+    // }
+    // else if (this.datauser.value.nameuser != "" && this.datauser.value.username != "" && this.datauser.value.password == "" && this.datauser.value.statususer == ""
+    // && this.datauser.value.addressuser == "" && this.datauser.value.carduser == "" && this.datauser.value.teluser == "") {      
+    //   this.isShowValidate = true;
+    // }
+    // else if (this.datauser.value.nameuser != "" && this.datauser.value.username == "" && this.datauser.value.password == "" && this.datauser.value.statususer == ""
+    // && this.datauser.value.addressuser == "" && this.datauser.value.carduser == "" && this.datauser.value.teluser == "") {      
+    //   this.isShowValidate = true;
+    // }
+    // else if (this.datauser.value.nameuser != "" && this.datauser.value.username != "" && this.datauser.value.password != "" && this.datauser.value.statususer != ""
+    // && this.datauser.value.addressuser != "" && this.datauser.value.carduser != "" && this.datauser.value.teluser != "") {      
+    //   this.ConfirmInsert();      
+    //   this.isShowValidate = false;
+    // }
+
+  }
+
+  // ------------------------------------------------------------------------- Insert  
+
   async ConfirmInsert() {
-    const alert = await this.alertController.create({      
+    const alert = await this.alertController.create({
       message: 'ต้องการที่จะเพิ่มสมาชิกหรือไม่ ?',
       buttons: [
         {
@@ -43,7 +138,7 @@ export class AddusernotadminPage implements OnInit {
           }
         }, {
           text: 'ยกเลิก',
-          role: 'cancel',          
+          role: 'cancel',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }

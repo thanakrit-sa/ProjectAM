@@ -3,7 +3,7 @@ import { StoreService } from "src/app/service/store.service";
 import { store } from 'src/Models/stroe';
 import { product } from 'src/Models/product';
 import { NavController } from '@ionic/angular';
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../service/product.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
@@ -24,29 +24,68 @@ export class AddStorePage implements OnInit {
 
   // product
   dataProduct: FormGroup;
-  dataPd: product[]=[];
+  dataPd: product[] = [];
   getDataProduct: any;
-  dataProductAll : product;
-  nameproduct : string;
-  dataIdProduct:any
-
+  dataProductAll: product;
+  nameproduct: string;
+  dataIdProduct: any
+  // num: number = 9;
 
   public dataStoreAll: store;
-  constructor(public alertController: AlertController,public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder, public productApi: ProductService,public activate:ActivatedRoute) {
+  // isShowBtn:boolean=true;
+  isShowValidate: boolean = false;
+  isShowValidateTotal: boolean = false;
+  constructor(public alertController: AlertController, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder, public productApi: ProductService, public activate: ActivatedRoute) {
     this.dataStore = this.formbuilder.group({
-      'idStore': [null, Validators.required],
-      'idProduct':[null, Validators.required],
-      'nameProduct':[null, Validators.required],
-      'unitProduct':[null, Validators.required],
-      'totalProduct':[null, Validators.required],
-      'addProductStore': [null, Validators.required]
+      // 'idStore': [null, Validators.required],
+      'idProduct': [null, Validators.required],
+      'nameProduct': [null, Validators.required],
+      // 'unitProduct': [null, Validators.required],
+      'totalProduct': [null, Validators.compose([Validators.pattern('[0-9]*'), Validators.required])],
+      // 'addProductStore': [null, Validators.required]
     });
     // this.productApi.GetProductByid(this.getDataProduct).subscribe(it => {
     //   console.log(it);
     //   this.getDataProduct =it;
     //   console.log(this.getDataProduct);
     // });
+  } 
+  
+  // ---------------------------------------------------------------------------- Validate
+
+  public errorMessages = {
+    totalProduct: [
+      { type: 'required', message: 'กรุณากรอกจำนวนสินค้า' },
+      { type: 'pattern', message: 'กรุณากรอกจำนวนสินค้าให้ถูกต้อง 0-9' }
+    ],
+    nameProduct: [
+      { type: 'required', message: 'กรุณาเลือกสินค้าสินค้า' }
+    ]
+  };
+  get nameProduct() {
+    return this.dataStore.get("nameProduct");
   }
+  get totalProduct() {
+    return this.dataStore.get("totalProduct");
+  }
+  check() {
+    if (this.dataStore.value.nameProduct == null && this.dataStore.value.totalProduct == null && this.dataStore.value.idProduct == null) {
+      this.isShowValidate = true;
+    }
+    else if(this.dataStore.value.nameProduct != null && this.dataStore.value.totalProduct == null && this.dataStore.value.idProduct == null){      
+      this.isShowValidate = true;
+    }
+    else if(this.dataStore.value.nameProduct == null && this.dataStore.value.totalProduct != null && this.dataStore.value.idProduct == null){      
+      this.isShowValidate = true;
+    }
+    else if(this.dataStore.value.nameProduct != null && this.dataStore.value.totalProduct != null && this.dataStore.value.idProduct == null){      
+      this.isShowValidate = false;
+      this.ConfirmInsert();
+    }   
+  }
+
+
+  // -------------------------------------------------------------------------------------- Getshow
 
   ngOnInit() {
     this.productApi.GetProductAll().subscribe((it) => {
@@ -54,12 +93,19 @@ export class AddStorePage implements OnInit {
       this.dataProductAll = it;
       for (let index = 0; index < Object.keys(this.dataProductAll).length; index++) {
         this.dataPd[index] = this.dataProductAll[index];
-        
+
       }
       console.log(this.dataPd);
       console.log(this.dataProductAll);
     });
+    // if (this.dataStore.value.nameProduct != "" && this.dataStore.value.totalProduct != "") {
+    //   this.isShowBtn = true;
+    // }else{
+    //   this.isShowBtn = false;
+    // }
   }
+
+
 
   get f() { return this.dataStore.controls; }
 
@@ -72,9 +118,11 @@ export class AddStorePage implements OnInit {
   //     console.log(it);
   //   });
   // }
+  
+  // ------------------------------------------------------------------ Insert
 
   async ConfirmInsert() {
-    const alert = await this.alertController.create({      
+    const alert = await this.alertController.create({
       message: 'ต้องการที่จะเพิ่มสินค้าหรือไม่ ?',
       buttons: [
         {
@@ -85,7 +133,7 @@ export class AddStorePage implements OnInit {
           }
         }, {
           text: 'ยกเลิก',
-          role: 'cancel',          
+          role: 'cancel',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
@@ -96,28 +144,21 @@ export class AddStorePage implements OnInit {
     await alert.present();
   }
 
-  insert(){
-    var data = this.dataPd.filter(it => it.idProduct == this.dataStore.value.nameProduct );
+  insert() {
+    var data = this.dataPd.filter(it => it.idProduct == this.dataStore.value.nameProduct);
     console.log(data[0]);
     this.dataStore.value.idProduct = data[0].idProduct;
-    this.dataStore.value.nameProduct = data[0].nameProduct;    
+    this.dataStore.value.nameProduct = data[0].nameProduct;
     console.log(this.dataStore.value);
-    this.storeApi.AddStore(this.dataStore.value).subscribe(it =>{
+    this.storeApi.AddStore(this.dataStore.value).subscribe(it => {
     });
-   
-    
-    
-    console.log(this.dataStore);  
-    this.productApi.EditAddTotalProduct(this.dataStore.value.idProduct,this.dataStore.value).subscribe(it =>{
+    console.log(this.dataStore);
+    this.productApi.EditAddTotalProduct(this.dataStore.value.idProduct, this.dataStore.value).subscribe(it => {
     });
-   
-      
-
-   
     this.route.navigate(['/store']);
   }
 
-  
+
 }
 
 

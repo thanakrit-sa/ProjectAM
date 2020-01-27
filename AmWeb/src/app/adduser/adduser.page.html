@@ -10,32 +10,52 @@
 <ion-content><br>
   <ion-card>
     <ion-card-content>
-      <form [formGroup]="dataadmin" (ngSubmit)="ConfirmInsert()">
-        <ion-item [class.invalid]="submit && f.idadmin.errors">
+      <form [formGroup]="dataadmin" (ngSubmit)="check()">
+        <!-- <ion-item [class.invalid]="submit && f.idadmin.errors">
           <ion-label>รหัสผู้ใช้</ion-label>
           <ion-input placeholder="รหัสผู้ใช้" formControlName="idadmin">
           </ion-input>
-        </ion-item>
+        </ion-item> -->
         <ion-item [class.invalid]="submit && f.nameadmin.errors">
           <ion-label>ชื่อผู้ใช้</ion-label>
           <ion-input placeholder="ชื่อผู้ใช้" formControlName="nameadmin">
           </ion-input>
         </ion-item>
+        <div *ngFor="let error of errorMessages.nameadmin">
+          <div *ngIf="nameadmin.hasError(error.type) && (nameadmin.dirty || nameadmin.touched)">
+            <ion-label color="danger">* {{error.message}}</ion-label>
+          </div>
+        </div>
         <ion-item [class.invalid]="submit && f.usernameadmin.errors">
           <ion-label>Username</ion-label>
           <ion-input placeholder="Username" formControlName="usernameadmin">
           </ion-input>
         </ion-item>
+        <div *ngFor="let error of errorMessages.usernameadmin">
+          <div *ngIf="usernameadmin.hasError(error.type) && (usernameadmin.dirty || usernameadmin.touched)">
+            <ion-label color="danger">* {{error.message}}</ion-label>
+          </div>
+        </div>
         <ion-item [class.invalid]="submit && f.passwordadmin.errors">
           <ion-label>Password</ion-label>
           <ion-input placeholder="Password" formControlName="passwordadmin">
           </ion-input>
         </ion-item>
+        <div *ngFor="let error of errorMessages.passwordadmin">
+          <div *ngIf="passwordadmin.hasError(error.type) && (passwordadmin.dirty || passwordadmin.touched)">
+            <ion-label color="danger">* {{error.message}}</ion-label>
+          </div>
+        </div>
         <ion-item [class.invalid]="submit && f.teladmin.errors">
           <ion-label>เบอร์โทร</ion-label>
           <ion-input placeholder="เบอร์โทร" formControlName="teladmin">
           </ion-input>
         </ion-item>
+        <div *ngFor="let error of errorMessages.teladmin">
+          <div *ngIf="teladmin.hasError(error.type) && (teladmin.dirty || teladmin.touched)">
+            <ion-label color="danger">* {{error.message}}</ion-label>
+          </div>
+        </div>
         <ion-item [class.invalid]="submit && f.leveladmin.errors">
           
             <ion-label>ระดับ</ion-label>
@@ -49,11 +69,25 @@
               </ion-select>            
           
         </ion-item>
+        <div *ngFor="let error of errorMessages.leveladmin">
+          <div *ngIf="leveladmin.hasError(error.type) && (leveladmin.dirty || leveladmin.touched)">
+            <ion-label color="danger">* {{error.message}}</ion-label>
+          </div>
+        </div>
         <ion-item [class.invalid]="submit && f.addressadmin.errors">
           <ion-label>ที่อยู่</ion-label>
           <ion-input placeholder="ที่อยู่" formControlName="addressadmin">
           </ion-input>
         </ion-item>
+        <div *ngFor="let error of errorMessages.addressadmin">
+          <div *ngIf="addressadmin.hasError(error.type) && (addressadmin.dirty || addressadmin.touched)">
+            <ion-label color="danger">* {{error.message}}</ion-label>
+          </div>
+        </div>
+        <div *ngIf="isShowValidate == true">
+          <ion-label color="danger">* กรุณากรอกข้อมูลให้ครบถ้วน !!</ion-label>
+        </div>
+        <br>
         <ion-button expand="full" color="dark" type="submit">เพิ่มข้อมูลผู้ดูแล</ion-button>
       </form>
     </ion-card-content>
