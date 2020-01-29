@@ -41,25 +41,34 @@
     <ion-input formControlName="amountProduct" (ionChange)="amount(amountp)"[(ngModel)]="amountp"placeholder="กรอกจำนวนสินค้า"*ngIf="data != null" clearInput >
     </ion-input>
   </ion-item>
-
+  <div *ngIf="isShowValidateamountProduct == true">
+    <ion-label color="danger">* กรุณากรอกจำนวนสินค้า !!</ion-label>
+  </div> 
 
   <ion-item>
     <ion-label>ชื่อลูกค้า :</ion-label>
     <ion-input placeholder="ชื่อลูกค้า" formControlName="nameUser" clearInput>
     </ion-input>
   </ion-item>
-
+  <div *ngIf="isShowValidateName == true">
+    <ion-label color="danger">* กรุณากรอกชื่อลูกค้า !!</ion-label>
+  </div> 
   <ion-item>
     <ion-label>เบอร์โทรลูกค้า :</ion-label>
     <ion-input placeholder="เบอร์โทรลูกค้า" formControlName="telUser" clearInput>
     </ion-input>
   </ion-item>
-
+  <div *ngIf="isShowValidatetelUser == true">
+    <ion-label color="danger">* กรุณากรอกเบอร์โทรลูกค้า !!</ion-label>
+  </div> 
   <ion-item>
     <ion-label>ที่อยู่ :</ion-label>
     <ion-input placeholder="ที่อยู่" formControlName="addressUser" clearInput>
     </ion-input>
   </ion-item>
+    <div *ngIf="isShowValidateaddressUser == true">
+    <ion-label color="danger">* กรุณากรอกที่อยู่ !!</ion-label>
+  </div> 
 
   
   <ion-item>

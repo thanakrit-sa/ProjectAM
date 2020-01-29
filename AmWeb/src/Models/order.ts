@@ -4,8 +4,8 @@ export class Order {
       nameProduct :string;
       amountProduct :string;
       priceOrder :string;
-      nameuser :string;
-      teluser :string;
+      nameUser :string;
+      telUser :string;
       addressUser:string;
       dateOrder :string;
       sendDate :string;

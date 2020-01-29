@@ -31,12 +31,16 @@ export class OrderPage implements OnInit {
   amountnumber: number;
   aamount: any
   ttotal: any
+  isShowValidateName :any=false
+  isShowValidatetelUser :any=false
+  isShowValidateaddressUser:any =false
+  isShowValidateamountProduct:any =false
   constructor(public productapi: ProductService, public tost: ToastController, public alertController: AlertController, public alertController1: AlertController, public route: Router, public callApi: CallApiService, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.order = this.formbuilder.group({
       'idOrder': [null],
       'idProduct': [null],
       'nameProduct': [null],
-      'amountProduct': [null],
+      'amountProduct': [""],
       'priceOrder': [null],
       'nameUser': [""],
       'telUser': [""],
@@ -45,7 +49,7 @@ export class OrderPage implements OnInit {
       'sendDate': [null],
       'status': [null],
       'userOrder': [null],
-      'total': [null]
+      'total': [""]
     })
   }
   get f() { return this.order.controls; }
@@ -132,7 +136,10 @@ export class OrderPage implements OnInit {
               this.amountnumber = parseInt(this.aamount, this.amountnumber)
               this.total = parseInt(this.ttotal, this.total)
               console.log(it);
-
+              this.isShowValidateName = false;
+              this.isShowValidatetelUser = false;
+               this.isShowValidateaddressUser = false;
+              this.isShowValidateamountProduct = false;
               console.log("จำนวน " + this.amountnumber);
               console.log("คงเหลือ " + this.total);
 
@@ -171,8 +178,26 @@ export class OrderPage implements OnInit {
               }
               else {
                 this.presentAlert3();
-                this.total = 0;
-                this.amountnumber = 0;
+                if (this.dataorder.nameUser == "") {
+                  console.log("name");
+                  this.isShowValidateName = true;
+                }
+                if (this.dataorder.telUser == "") {
+                  console.log("เทล");
+                  this.isShowValidatetelUser = true;
+                }
+                if (this.dataorder.addressUser == "") {
+                  console.log("แอดเดส");
+                  this.isShowValidateaddressUser = true;
+                }
+                if(this.dataorder.amountProduct == ""){
+                  this.isShowValidateamountProduct = true
+                  console.log("amount");
+                }
+                if(this.dataorder.amountProduct == null){
+                  this.isShowValidateamountProduct = true
+                  console.log("amount");
+                }
 
               }
 

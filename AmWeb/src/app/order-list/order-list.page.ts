@@ -20,8 +20,6 @@ import { AlertController, ToastController } from '@ionic/angular';
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>รายการสั่งซื้อ</ion-title>
-    
-           
         <ion-button style="padding-right: 15px" slot='end' [routerLink]="['/order']" color="light">สั่งซื้อ</ion-button>
   </ion-toolbar>
   <style>

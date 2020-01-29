@@ -39,15 +39,10 @@ export class DashbroadPage implements OnInit {
     
     
   }
-
-
-
-
   // events on slice click
   public chartClicked(e: any): void {
     console.log(e);
   }
-
   // event on pie chart slice hover
   public chartHovered(e: any): void {
     console.log(e);

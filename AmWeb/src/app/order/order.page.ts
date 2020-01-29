@@ -18,39 +18,67 @@ export class OrderPage implements OnInit {
   dataProduct: any;
   data1: {};
   dataorder: Order
-  summ:any
-sum : any;
-datasum :any;
-t: number;
-a: number;
-q:number;
-aa: any
-tt: any
-qq:any
-  constructor(public callapiOrder:OrderService,public callapiProduct: ProductService, public formbuilder: FormBuilder, public alertController: AlertController, public router: Router) {
+  summ: any
+  sum: any;
+  datasum: any;
+  t: number;
+  a: number;
+  q: number;
+  aa: any
+  tt: any
+  qq: any
+  checktel: any
+  checkamountProduct: any
+  isShowValidateName: boolean = false;
+  isShowValidatetelUser: boolean = false;
+  isShowValidateaddressUser: boolean = false;
+  constructor(public callapiOrder: OrderService, public callapiProduct: ProductService, public formbuilder: FormBuilder, public alertController: AlertController, public router: Router) {
     this.order = this.formbuilder.group({
       'idOrder': [null],
       'idProduct': [null],
       'nameProduct': [null],
-      'amountProduct': [null],
+      'amountProduct': [null, Validators.compose([Validators.pattern('([0-9])*'), Validators.required])],
       'priceOrder': [null],
       'nameUser': [""],
-      'telUser': [""],
+      'telUser': ["", Validators.compose([Validators.pattern('(^0)([1-9]){2}-([1-9]){3}-([0-9]){4}$'), Validators.required])],
       'addressUser': [""],
       'dateOrder': [null],
       'sendDate': [null],
       'status': [null],
       'type': [null],
       'price': [null],
-      'total':[null]
+      'total': [null]
     })
   }
-  get f() { return this.order.controls; }
-  ionViewDidEnter(){
+  ////////////////va///////////////////////////////////
+  public errorMessages = {
+    telUser: [
+      { type: 'pattern', message: 'กรุณากรอกเบอร์โทรให้ถูกต้อง 0XX-XXX-XXXX' }
+    ],
+    amountProduct: [
+      { type: 'pattern', message: 'กรุณากรอกเฉพาะตัวเลข' }
+    ],
+  };
+  get amountProduct() {
+    return this.order.get("amountProduct");
+  }
+  get telUser() {
+    return this.order.get("telUser");
+  }
+  get f() {
+
+    return this.order.controls;
+
+  }
+
+
+  ////////////////////////////////////////////////////////
+
+  ionViewDidEnter() {
     this.listdata()
   }
   ngOnInit() {
-  
+
   }
   listdata() {
     this.callapiProduct.GetProductAll().subscribe(it => {
@@ -61,33 +89,33 @@ qq:any
   }
   getbydata(data) {
     this.callapiProduct.GetProductBydata(data).subscribe(it => {
-     
+
       this.data1 = it
       this.datasum = it
       console.log(this.data1);
-      this.qq =0
-      if (it.totalProduct == "0"){
+      this.qq = 0
+      if (it.totalProduct == "0") {
         this.sold()
         console.log("สินค้าหมดแล้ว");
-        
+
       }
- 
+
     });
   }
-  onChange(data){
+  onChange(data) {
     this.q = null;
     this.data1 = null
     this.sum = null
     this.summ = null
-    this.qq =null
-    
+    this.qq = null
+
     this.getbydata(data)
- 
-  
+
+
     // console.log(data);
   }
 
-  amount(qs){
+  amount(qs) {
     this.qq = qs
     console.log(this.qq);
     this.sum = qs * this.datasum.priceProduct
@@ -109,46 +137,69 @@ qq:any
         }, {
           text: 'ok',
           handler: () => {
+            this.isShowValidateName = false;
+            this.isShowValidatetelUser = false;
+            this.isShowValidateaddressUser = false;
             console.log(this.order.value);
             console.log(this.order);
             this.dataorder = this.order.value;
             console.log(this.dataorder);
-            this.callapiProduct.GetProductByid(this.dataorder.idProduct).subscribe(it =>{
+            this.callapiProduct.GetProductByid(this.dataorder.idProduct).subscribe(it => {
               console.log(this.dataorder.amountProduct);
               this.tt = it.totalProduct
               this.aa = this.dataorder.amountProduct
               this.a = parseInt(this.aa, this.a)
               this.t = parseInt(this.tt, this.t)
+     
               console.log(it);
-                  if (this.a <= this.t && this.a != 0 && this.dataorder.nameuser !="" && this.dataorder.teluser !="" && this.dataorder.addressUser !="") {
+              if (this.a <= this.t && this.a != 0 && this.dataorder.nameUser != "" && this.dataorder.telUser != "" && this.dataorder.addressUser != "") {
                 console.log('dai');
                 this.t = 0;
                 this.a = 0;
-              this.okAlert();
-    
-            
-          }
 
-                else if(this.a == 0){
-                  this.presentAlert2();
-                  this.listdata()
-                  console.log('ใส่ไม่ถูก');
-                  this.t = 0;
-                  this.a = 0;
-                }
-                else if(this.a >this.t) {
-                  console.log('ของหมด');
-                  this.listdata()
-                  this.presentAlert1();
-                  this.t = 0;
-                  this.a = 0;
-                }
-                else{
+                this.okAlert();
+              }
+
+
+              else if (this.a == 0) {
+                this.presentAlert2();
+                this.listdata()
+                console.log('ใส่ไม่ถูก');
+                this.t = 0;
+                this.a = 0;
+              }
+              else if (this.a > this.t) {
+                console.log('ของหมด');
+                this.listdata()
+                this.presentAlert1();
+                this.t = 0;
+                this.a = 0;
+              }
+              else {
                   this.presentAlert3();
+                if (this.dataorder.nameUser == "") {
+                  console.log("name");
+                  this.isShowValidateName = true;
                 }
-              
+                if (this.dataorder.telUser == "") {
+                  console.log("เทล");
+                  this.isShowValidatetelUser = true;
+                }
+                if (this.dataorder.addressUser == "") {
+                  console.log("แอดเดส");
+                  this.isShowValidateaddressUser = true;
+                }
+                // else {
+
+                
+                //   this.t = 0;
+                //   this.a = 0;
+                // }
+
+              }
+
             })
-            
+
           }
         }
       ]
@@ -182,7 +233,7 @@ qq:any
       header: 'แจ้งเตือน!',
       message: 'สั่งซื้อสินค้าเรียบร้อย',
       buttons: [
-    {
+        {
           text: 'ตกลง',
           handler: () => {
             this.callapiOrder.AddOrder(this.dataorder).subscribe(it => {
@@ -192,7 +243,7 @@ qq:any
             this.callapiProduct.AddSellTotalProduct(this.order.value.idProduct, this.order.value).subscribe(it => {
               console.log(it);
             });
-            
+
             this.router.navigate(['/order-list']);
           }
         }
