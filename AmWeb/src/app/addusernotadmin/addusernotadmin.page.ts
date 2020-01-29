@@ -70,8 +70,7 @@ export class AddusernotadminPage implements OnInit {
   check() {
     if (this.datauser.value.nameuser != "" && this.datauser.value.username != "" && this.datauser.value.password != "" && this.datauser.value.statususer != ""
       && this.datauser.value.addressuser != "" && this.datauser.value.carduser != "" && this.datauser.value.teluser != "") {
-      this.ConfirmInsert();
-      
+      this.ConfirmInsert();      
       this.isShowValidatePassword = false;
       this.isShowValidateUsername = false;
       this.isShowValidateTel = false;
@@ -81,15 +80,74 @@ export class AddusernotadminPage implements OnInit {
       this.isShowValidateStatus = false;
       
     }
-    else {
-      this.isShowValidatePassword = true;
+    else if(this.datauser.value.nameuser == ""){      
+      this.isShowValidateName = true;    
+      this.isShowValidatePassword = false;
+      this.isShowValidateUsername = false;
+      this.isShowValidateTel = false;
+      this.isShowValidateAddress = false;
+      this.isShowValidateCard = false;      
+      this.isShowValidateStatus = false;       
+      this.Alert();
+    }
+    else if(this.datauser.value.username == ""){      
       this.isShowValidateUsername = true;
-      this.isShowValidateTel = true;
-      this.isShowValidateAddress = true;
-      this.isShowValidateCard = true;
-      this.isShowValidateName = true;
-      this.isShowValidateStatus = true;
-      
+      this.isShowValidatePassword = false;      
+      this.isShowValidateTel = false;
+      this.isShowValidateAddress = false;
+      this.isShowValidateCard = false;
+      this.isShowValidateName = false;
+      this.isShowValidateStatus = false;      
+      this.Alert();
+    }
+    else if(this.datauser.value.password == ""){
+      this.isShowValidatePassword = true;       
+      this.isShowValidateUsername = false;
+      this.isShowValidateTel = false;
+      this.isShowValidateAddress = false;
+      this.isShowValidateCard = false;
+      this.isShowValidateName = false;
+      this.isShowValidateStatus = false;    
+      this.Alert();
+    }
+    else if(this.datauser.value.statususer == ""){      
+      this.isShowValidateStatus = true;   
+      this.isShowValidatePassword = false;
+      this.isShowValidateUsername = false;
+      this.isShowValidateTel = false;
+      this.isShowValidateAddress = false;
+      this.isShowValidateCard = false;
+      this.isShowValidateName = false;      
+      this.Alert();
+    }
+    else if(this.datauser.value.addressuser == ""){      
+      this.isShowValidateAddress = true;   
+      this.isShowValidatePassword = false;
+      this.isShowValidateUsername = false;
+      this.isShowValidateTel = false;      
+      this.isShowValidateCard = false;
+      this.isShowValidateName = false;
+      this.isShowValidateStatus = false;       
+      this.Alert();
+    }
+    else if(this.datauser.value.carduser == ""){      
+      this.isShowValidateCard = true;        
+      this.isShowValidatePassword = false;
+      this.isShowValidateUsername = false;
+      this.isShowValidateTel = false;
+      this.isShowValidateAddress = false;      
+      this.isShowValidateName = false;
+      this.isShowValidateStatus = false;
+      this.Alert();
+    }
+    else if(this.datauser.value.teluser == ""){      
+      this.isShowValidateTel = true;      
+      this.isShowValidatePassword = false;
+      this.isShowValidateUsername = false;      
+      this.isShowValidateAddress = false;
+      this.isShowValidateCard = false;
+      this.isShowValidateName = false;
+      this.isShowValidateStatus = false;  
       this.Alert();
     }
     // else if (this.datauser.value.nameuser != "" && this.datauser.value.username != "" && this.datauser.value.password != "" && this.datauser.value.statususer != ""

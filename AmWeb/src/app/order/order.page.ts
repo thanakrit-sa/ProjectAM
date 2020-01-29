@@ -125,6 +125,7 @@ qq:any
                 this.t = 0;
                 this.a = 0;
               this.okAlert();
+               
     
             
           }

@@ -16,7 +16,8 @@ export class ProductPage implements OnInit {
   public dataProductAll :product;
   datafilter:product[] = [];
   filtertype:product[] = [];
-
+  pagenumber:number = 1;
+  sumProductNumber:number;
   constructor(public alertController: AlertController,public activate: ActivatedRoute,public userApi:UserService, public productApi: ProductService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     console.log(this.userApi.statusAdmin);
     console.log(this.userApi.nameAdmin);
@@ -30,6 +31,7 @@ export class ProductPage implements OnInit {
       for (let index = 0; index < Object.keys(this.dataProductAll).length; index++) {
         this.datafilter[index] = this.dataProductAll[index];
       }
+      this.sumProductNumber = Object.keys(this.datafilter).length;
       this.filtertype = this.datafilter;
       console.log(this.filtertype);
       console.log(this.dataProductAll);

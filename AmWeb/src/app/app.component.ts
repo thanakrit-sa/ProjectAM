@@ -16,32 +16,32 @@ export class AppComponent {
   isShowMenu: boolean = true;
   public appPages = [
     {
-      title: 'dashbroad',
+      title: 'แผงควบคุม',
       url: '/dashbroad',
       icon: 'pie'
     },
     {
-      title: 'Store',
+      title: 'คลังสินค้า',
       url: '/store',
       icon: 'cube'
     },
     {
-      title: 'Product',
+      title: 'สินค้า',
       url: '/product',
       icon: 'basket'
     },
     {
-      title: 'User',
+      title: 'สมาชิก',
       url: '/user',
       icon: 'contact'
     },
     {
-      title: 'Clear',
+      title: 'สต๊อกสินค้า',
       url: '/clear-store',
       icon: 'trash'
     },
     {
-      title: 'Order',
+      title: 'รายการสั่งซื้อ',
       url: '/order-list',
       icon: 'list'
     },
