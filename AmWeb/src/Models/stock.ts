@@ -21,17 +21,14 @@ export class product{
 
     statusProduct:String;
 
-    statusCheck:Boolean;
-    showTotal:number;
     
-    buttonCheck :Boolean;
     
 }
-export class dataStockPerMonth {
+export class stock {
 
     idStock: string;
     dataProductPerMonth: product[];
-    stockPerMonth: Date
+    stockPerMonth: string;
 
 }
 

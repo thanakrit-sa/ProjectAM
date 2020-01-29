@@ -11,20 +11,16 @@ namespace AMApi.Controllers
     [ApiController]
 
     public class StockController : ControllerBase
-    {
-
-        // public static List<Stock> DataStock = new List<Stock>
-        // {
-        // };
-        public static List<DataStockPerMonth> DataProductStock = new List<DataStockPerMonth>
+    {   
+        public static List<Stock> Stock = new List<Stock>
         {
         };
         [HttpGet]
-        public ActionResult<IEnumerable<DataStockPerMonth>> GetStockAll()
+        public ActionResult<IEnumerable<Stock>> GetStockAll()
         {
-            return DataProductStock.ToList();
+            return Stock.ToList();
         }
-
+       
         [HttpGet]
         // public ActionResult<IEnumerable<Stock>> GetStockAll2()
         // {
@@ -32,55 +28,24 @@ namespace AMApi.Controllers
         // }
 
         [HttpGet("{id}")]
-        public ActionResult<DataStockPerMonth> GetStockById(string id)
+        public ActionResult<Stock> GetStockById(string id)
         {
-            return DataProductStock.FirstOrDefault(it => it.IdStock == id.ToString());
-        }
-        // [HttpPost]
-        // public Stock AddStock([FromBody] Product Stockx)
-        // {
-        //     Guid id = Guid.NewGuid();
-        //     var addDate = DateTime.Now;
-
-        //     var item = new Stock
-        //     {
-
-        //         // IdStock = id.ToString(),
-        //         IdProduct = Stockx.IdProduct,
-        //         NameProduct = Stockx.NameProduct,
-        //         TotalProduct = Stockx.TotalProduct,
-        //         TypeProduct = Stockx.TypeProduct,
-        //         PriceProduct = Stockx.PriceProduct,
-        //         CostProduct = Stockx.CostProduct,
-        //         Total = Stockx.Total,
-        //         AmountProduct = Stockx.AmountProduct,
-        //         // DataProductPerMonth = DataStock.ToArray(),
-        //         // StockPerMonth = addDate
-
-        //     };
-
-        //     DataStock.Add(item);
-        //     return item;
-
-        // }
+            return Stock.FirstOrDefault(it => it.IdStock == id.ToString());
+        }     
         [HttpPost]
-        public DataStockPerMonth AddStock2()
+        public Stock AddStockTest([FromBody] Stock Stockx)
         {
             Guid id = Guid.NewGuid();
-            var addDate = DateTime.Now;
-
-
-            var item2 = new DataStockPerMonth
+            var addDate = DateTime.Now;           
+            var item = new Stock
             {
-
                 IdStock = id.ToString(),
-                DataProductPerMonth = DataProductStock.ToArray(),
-                StockPerMonth = addDate
-
+                DataProductPerMonth = Stockx.DataProductPerMonth.ToArray(),
+                StockPerMonth = addDate.ToString()
             };
 
-            DataProductStock.Add(item2);
-            return item2;
+            Stock.Add(item);
+            return item;
 
         }
 

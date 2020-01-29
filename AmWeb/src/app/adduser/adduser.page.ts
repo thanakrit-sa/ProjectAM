@@ -14,7 +14,13 @@ export class AdduserPage implements OnInit {
   dataadmin: FormGroup;
   submit: boolean = false;
   dataUs: admin;
-  isShowValidate: boolean = false;
+
+  isShowValidateName: boolean = false;
+  isShowValidateUsername: boolean = false;
+  isShowValidatePassword: boolean = false;
+  isShowValidateTel: boolean = false;
+  isShowValidateLevel: boolean = false;
+  isShowValidateAddress: boolean = false;
   constructor(public alertController: AlertController, public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.dataadmin = this.formbuilder.group({
       // 'idadmin': [null, Validators.required],
@@ -30,59 +36,89 @@ export class AdduserPage implements OnInit {
 
   // ------------------------------------------------------------------------------------- Validation
 
+  async Alert() {
+    const alert = await this.alertController.create({
+      message: 'กรุณากรอกข้อมูลให้ครบถ้วน.',
+      buttons: ['ตกลง']
+    });
+
+    await alert.present();
+  }
+
   public errorMessages = {
     teladmin: [
-      { type: 'required', message: 'กรุณากรอกเบอร์โทร' },
       { type: 'pattern', message: 'กรุณากรอกเบอร์โทรให้ถูกต้อง 0XX-XXX-XXXX' }
-    ],    
-    // idadmin: [
-    //   { type: 'required', message: 'กรุณากรอกรหัสผู้ดูแล' }
-    // ],
-    nameadmin: [
-      { type: 'required', message: 'กรุณากรอกชื่อผู้ดูแล' }
     ],
-    usernameadmin: [
-      { type: 'required', message: 'กรุณากรอกชื่อผู้ใช้' }
-    ],
-    passwordadmin: [
-      { type: 'required', message: 'กรุณากรอกรหัสผ่าน' }
-    ],
-    leveladmin: [
-      { type: 'required', message: 'กรุณากรอกระดับผู้ดูแล' }
-    ],
-    addressadmin: [
-      { type: 'required', message: 'กรุณากรอกที่อยู่' }
-    ]
   };
-  get nameadmin() {
-    return this.dataadmin.get("nameadmin");
-  }
-  get usernameadmin() {
-    return this.dataadmin.get("usernameadmin");
-  }
-  get passwordadmin() {
-    return this.dataadmin.get("passwordadmin");
-  }
-  get leveladmin() {
-    return this.dataadmin.get("leveladmin");
-  }
-  get addressadmin() {
-    return this.dataadmin.get("addressadmin");
-  }
+
   get teladmin() {
     return this.dataadmin.get("teladmin");
   }
 
   check() {
-    if (this.dataadmin.value.nameadmin == "" && this.dataadmin.value.usernameadmin == "" && this.dataadmin.value.passwordadmin == "" && this.dataadmin.value.leveladmin == ""
-      && this.dataadmin.value.addressadmin == "" && this.dataadmin.value.teladmin == "") {
-      this.isShowValidate = true;
-    }    
-    else if((this.dataadmin.value.nameadmin != "" && this.dataadmin.value.usernameadmin != "" && this.dataadmin.value.passwordadmin != "" && this.dataadmin.value.leveladmin != ""
-    && this.dataadmin.value.addressadmin != "" && this.dataadmin.value.teladmin != "")){
-      this.isShowValidate = false;
+    if (this.dataadmin.value.nameadmin != "" && this.dataadmin.value.usernameadmin != "" && this.dataadmin.value.passwordadmin != "" && this.dataadmin.value.leveladmin != ""
+      && this.dataadmin.value.addressadmin != "" && this.dataadmin.value.teladmin != "") {
       this.ConfirmInsert();
-      console.log("false");
+      this.isShowValidateName = false;
+      this.isShowValidateUsername = false;
+      this.isShowValidatePassword = false;
+      this.isShowValidateTel = false;
+      this.isShowValidateLevel = false;
+      this.isShowValidateAddress = false;
+    }
+    else if (this.dataadmin.value.nameadmin == "") {
+      this.isShowValidateName = true;
+      this.isShowValidateUsername = false;
+      this.isShowValidatePassword = false;
+      this.isShowValidateTel = false;
+      this.isShowValidateLevel = false;
+      this.isShowValidateAddress = false;
+      this.Alert();
+    }
+    else if (this.dataadmin.value.usernameadmin == "") {
+      this.isShowValidateName = false;
+      this.isShowValidateUsername = true;
+      this.isShowValidatePassword = false;
+      this.isShowValidateTel = false;
+      this.isShowValidateLevel = false;
+      this.isShowValidateAddress = false;
+      this.Alert();
+    }
+    else if (this.dataadmin.value.passwordadmin == "") {
+      this.isShowValidateName = false;
+      this.isShowValidateUsername = false;
+      this.isShowValidatePassword = true;
+      this.isShowValidateTel = false;
+      this.isShowValidateLevel = false;
+      this.isShowValidateAddress = false;
+      this.Alert();
+    }
+    else if (this.dataadmin.value.leveladmin == "") {
+      this.isShowValidateName = false;
+      this.isShowValidateUsername = false;
+      this.isShowValidatePassword = false;
+      this.isShowValidateTel = false;
+      this.isShowValidateLevel = true;
+      this.isShowValidateAddress = false;
+      this.Alert();
+    }
+    else if (this.dataadmin.value.addressadmin == "") {
+      this.isShowValidateName = false;
+      this.isShowValidateUsername = false;
+      this.isShowValidatePassword = false;
+      this.isShowValidateTel = false;
+      this.isShowValidateLevel = false;
+      this.isShowValidateAddress = true;
+      this.Alert();
+    }
+    else if (this.dataadmin.value.teladmin == "") {
+      this.isShowValidateName = false;
+      this.isShowValidateUsername = false;
+      this.isShowValidatePassword = false;
+      this.isShowValidateTel = true;
+      this.isShowValidateLevel = false;
+      this.isShowValidateAddress = false;
+      this.Alert();
     }
   }
 

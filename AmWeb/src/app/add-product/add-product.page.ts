@@ -13,8 +13,12 @@ import { AlertController } from '@ionic/angular';
 export class AddProductPage implements OnInit {
   dataProduct: FormGroup;
   submit: boolean = false;
-  isShowValidate:boolean = false;
   dataPd: product;
+  isShowValidateId: boolean = false;
+  isShowValidateName: boolean = false;
+  isShowValidateType: boolean = false;
+  isShowValidatePrice: boolean = false;
+  isShowValidateCost: boolean = false;
   constructor(public alertController: AlertController, public productApi: ProductService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.dataProduct = this.formbuilder.group({
       'idProduct': [null, Validators.required],
@@ -32,75 +36,77 @@ export class AddProductPage implements OnInit {
 
   // ------------------------------------------------------------------------------------- Validation
 
+  async Alert() {
+    const alert = await this.alertController.create({
+      message: 'กรุณากรอกข้อมูลให้ครบถ้วน.',
+      buttons: ['ตกลง']
+    });
+
+    await alert.present();
+  }
+
   public errorMessages = {
     costProduct: [
-      { type: 'required', message: 'กรุณากรอกราคาต้นทุน' },
       { type: 'pattern', message: 'กรุณากรอกราคาต้นทุนให้ถูกต้อง 0-9' }
     ],
     priceProduct: [
-      { type: 'required', message: 'กรุณากรอกราคาสินค้า' },
       { type: 'pattern', message: 'กรุณากรอกราคาสินค้าให้ถูกต้อง 0-9' }
     ],
-    typeProduct: [
-      { type: 'required', message: 'กรุณาเลือกชนิดสินค้า' }
-    ],
-    nameProduct: [
-      { type: 'required', message: 'กรุณากรอกชื่อสินค้าสินค้า' }
-    ],
-    idProduct: [
-      { type: 'required', message: 'กรุณากรอกรหัสสินค้าสินค้า' }
-    ]
   };
-  get idProduct() {
-    return this.dataProduct.get("idProduct");
-  }
-  get nameProduct() {
-    return this.dataProduct.get("nameProduct");
-  }
-  get typeProduct() {
-    return this.dataProduct.get("typeProduct");
-  }
   get priceProduct() {
     return this.dataProduct.get("priceProduct");
   }
   get costProduct() {
     return this.dataProduct.get("costProduct");
-  }  
+  }
 
   check() {
-    if (this.dataProduct.value.nameProduct == null && this.dataProduct.value.totalProduct == null && this.dataProduct.value.idProduct == null && this.dataProduct.value.typeProduct == null
-      && this.dataProduct.value.priceProduct == null && this.dataProduct.value.costProduct == null) {
-      this.isShowValidate = true;            
-    }    
-    // else if (this.dataProduct.value.nameProduct != null && this.dataProduct.value.totalProduct == null && this.dataProduct.value.idProduct == null && this.dataProduct.value.typeProduct == null
-    //   && this.dataProduct.value.priceProduct == null && this.dataProduct.value.costProduct == null){      
-    //   this.isShowValidate = true;          
-    // }   
-    // else if (this.dataProduct.value.nameProduct == null && this.dataProduct.value.totalProduct != null && this.dataProduct.value.idProduct == null && this.dataProduct.value.typeProduct == null
-    //   && this.dataProduct.value.priceProduct == null && this.dataProduct.value.costProduct == null){      
-    //   this.isShowValidate = true;          
-    // } 
-    // else if (this.dataProduct.value.nameProduct == null && this.dataProduct.value.totalProduct == null && this.dataProduct.value.idProduct != null && this.dataProduct.value.typeProduct == null
-    //   && this.dataProduct.value.priceProduct == null && this.dataProduct.value.costProduct == null){      
-    //   this.isShowValidate = true;          
-    // } 
-    // else if (this.dataProduct.value.nameProduct == null && this.dataProduct.value.totalProduct == null && this.dataProduct.value.idProduct == null && this.dataProduct.value.typeProduct != null
-    //   && this.dataProduct.value.priceProduct == null && this.dataProduct.value.costProduct == null){      
-    //   this.isShowValidate = true;          
-    // } 
-    // else if (this.dataProduct.value.nameProduct == null && this.dataProduct.value.totalProduct == null && this.dataProduct.value.idProduct == null && this.dataProduct.value.typeProduct == null
-    //   && this.dataProduct.value.priceProduct != null && this.dataProduct.value.costProduct == null){      
-    //   this.isShowValidate = true;          
-    // } 
-    // else if (this.dataProduct.value.nameProduct == null && this.dataProduct.value.totalProduct == null && this.dataProduct.value.idProduct == null && this.dataProduct.value.typeProduct == null
-    //   && this.dataProduct.value.priceProduct == null && this.dataProduct.value.costProduct != null){      
-    //   this.isShowValidate = true;          
-    // } 
-    else {
-      this.isShowValidate = false; 
+    if (this.dataProduct.value.nameProduct != null && this.dataProduct.value.idProduct != null && this.dataProduct.value.typeProduct != null
+      && this.dataProduct.value.priceProduct != null && this.dataProduct.value.costProduct != null) {
+      this.isShowValidateId = false;
+      this.isShowValidateName = false;
+      this.isShowValidateType = false;
+      this.isShowValidatePrice = false;
+      this.isShowValidateCost = false;
       this.ConfirmInsert();
-      console.log("false");  
+    } else if (this.dataProduct.value.nameProduct == null) {
+      this.isShowValidateId = false;
+      this.isShowValidateName = true;
+      this.isShowValidateType = false;
+      this.isShowValidatePrice = false;
+      this.isShowValidateCost = false;
+      this.Alert();
+    } else if (this.dataProduct.value.typeProduct == null) {
+      this.isShowValidateId = false;
+      this.isShowValidateName = false;
+      this.isShowValidateType = true;
+      this.isShowValidatePrice = false;
+      this.isShowValidateCost = false;
+      this.Alert();
+    } else if (this.dataProduct.value.idProduct == null) {
+      this.isShowValidateId = true;
+      this.isShowValidateName = false;
+      this.isShowValidateType = false;
+      this.isShowValidatePrice = false;
+      this.isShowValidateCost = false;
+      this.Alert();
+    } else if (this.dataProduct.value.priceProduct == null) {
+      this.isShowValidateId = false;
+      this.isShowValidateName = false;
+      this.isShowValidateType = false;
+      this.isShowValidatePrice = true;
+      this.isShowValidateCost = false;
+      this.Alert();
+    } else if (this.dataProduct.value.costProduct == null) {
+      this.isShowValidateId = false;
+      this.isShowValidateName = false;
+      this.isShowValidateType = false;
+      this.isShowValidatePrice = false;
+      this.isShowValidateCost = true; 
+      this.Alert();
     }
+
+
   }
 
   // ------------------------------------------------------------------------------------- Insert

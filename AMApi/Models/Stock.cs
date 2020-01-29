@@ -1,14 +1,25 @@
 using System;
 
 namespace AMApi.Models
-{   
-     public class DataStockPerMonth
+{
+    public class product
+    {
+        public string IdStock { get; set; }
+        public string IdProduct { get; set; }
+        public string NameProduct { get; set; }
+        public string TypeProduct { get; set; }
+        public string PriceProduct { get; set; }
+        public string CostProduct { get; set; }        
+        public string TotalProduct { get; set; }        
+        public string Total { get; set; }
+        public string AmountProduct { get; set; }
+        public string StatusProduct { get; set; }
+    }
+    public class Stock
     {
 
         public string IdStock { get; set; }
-        public DataStockPerMonth[] DataProductPerMonth { get; set; }
-        public DateTime StockPerMonth { get; set; }
-
-
+        public product[] DataProductPerMonth { get; set; }
+        public string StockPerMonth { get; set; }
     }
 }
