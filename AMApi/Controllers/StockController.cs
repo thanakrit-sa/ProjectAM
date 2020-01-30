@@ -21,17 +21,14 @@ namespace AMApi.Controllers
             return Stock.ToList();
         }
        
-        [HttpGet]
-        // public ActionResult<IEnumerable<Stock>> GetStockAll2()
-        // {
-        //     return DataStock.ToList();
-        // }
+        
 
         [HttpGet("{id}")]
         public ActionResult<Stock> GetStockById(string id)
         {
             return Stock.FirstOrDefault(it => it.IdStock == id.ToString());
-        }     
+        } 
+    
         [HttpPost]
         public Stock AddStockTest([FromBody] Stock Stockx)
         {

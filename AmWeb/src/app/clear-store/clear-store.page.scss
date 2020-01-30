@@ -32,4 +32,14 @@ ion-card-content{
 ion-checkbox{
   --ion-background-color:rgba(144, 12, 63, 0.045);
 }
-
+.title-content {
+  --ion-background-color:rgb(26, 82,118);    
+  background-color: rgb(26, 82,118);
+  color: white;
+}
+.body-content {
+  background-color: rgba(26, 83, 118, 0.045);    
+}
+.data {
+  background-color: rgba(26, 83, 118, 0.123);    
+}

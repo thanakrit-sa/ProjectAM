@@ -63,9 +63,8 @@ export class ProductService {
   public GetStockAll() {
     return this.http.get<stock>(ProductService.host + 'Stock/GetStockAll');
   }
-
+  public GetStockByid(Id: string) {
+    return this.http.get<stock>(ProductService.host + 'Stock/GetStockById/' + Id);
+  }
   
 }
-
-
-

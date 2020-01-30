@@ -38,6 +38,11 @@
         </ion-button>
         <ion-button class="btn-editclear" (click)="closeContent()" *ngIf="isShowButtonBack == true">
           <ion-label>
+            <h2><b>รายการสินค้า</b></h2>
+          </ion-label>
+        </ion-button>
+        <ion-button class="btn-editclear" (click)="showContent()" *ngIf="isShowButtonBack2 == true">
+          <ion-label>
             <h2><b>ย้อนกลับ</b></h2>
           </ion-label>
         </ion-button>
@@ -185,7 +190,7 @@
 
   <div *ngIf="isShowContentStockPerMonth == true">
     <ion-card>
-      <ion-item class="title">
+      <ion-item class="title-content">
         <ion-label>
           <h2><b>รายการสต๊อกสินค้า</b></h2>
         </ion-label>
@@ -207,7 +212,7 @@
       </ion-item>
     </ion-card>
     <ion-card>
-      <ion-card-content>
+      <ion-card-content class="body-content">
         <ion-row text-center style="border-bottom:groove;">
           <ion-col class="a">
             <ion-label>
@@ -230,7 +235,8 @@
             </ion-label>
           </ion-col>
         </ion-row>
-        <ion-row style="border-bottom:groove;" text-center *ngFor="let s of getShowStockAll">
+        <ion-row style="border-bottom:groove;" text-center
+          *ngFor="let s of getShowStockAll | paginate: { itemsPerPage: 10, currentPage: PageNumber }">
           <ion-col class="a">
             <ion-label>
               {{s.idStock}}
@@ -241,15 +247,14 @@
               {{ s.stockPerMonth | date:'shortTime' }}
             </ion-label>
           </ion-col>
-
           <ion-col class="a">
             <ion-label>
               {{ s.stockPerMonth | date:'longDate' }}
             </ion-label>
-          </ion-col> 
+          </ion-col>
           <ion-col>
-            <ion-button color="dark" (click)="showinput(s)">ดูรายละเอียด</ion-button>
-          </ion-col>          
+            <ion-button color="dark" (click)="getShowDetailStock(s.idStock)">ดูรายละเอียด</ion-button>
+          </ion-col>
         </ion-row>
       </ion-card-content>
     </ion-card>
@@ -264,5 +269,115 @@
         </ion-col>
       </ion-row>
     </div>
+  </div>
+  <div *ngIf="isShowContentStockDetail == true">
+    <ion-card>
+      <ion-item class="title-content">
+        <ion-label>
+          <h2><b>รายการสต๊อกสินค้า</b></h2>
+        </ion-label>
+        <ion-select placeholder="- กรุณาเลือกรายการ -" (ionChange)="onChange(data)" [(ngModel)]="data">
+          <ion-select-option value="ทั้งหมด">ทั้งหมด</ion-select-option>
+          <ion-select-option value="มกราคม">มกราคม</ion-select-option>
+          <ion-select-option value="กุมภาพันธ์">กุมภาพันธ์</ion-select-option>
+          <ion-select-option value="มีนาคม">มีนาคม</ion-select-option>
+          <ion-select-option value="เมษายน">เมษายน</ion-select-option>
+          <ion-select-option value="พฤษภาคม">พฤษภาคม</ion-select-option>
+          <ion-select-option value="มิถุนายน">มิถุนายน</ion-select-option>
+          <ion-select-option value="กรกฎาคม">กรกฎาคม</ion-select-option>
+          <ion-select-option value="สิงหาคม">สิงหาคม</ion-select-option>
+          <ion-select-option value="กันยายน">กันยายน</ion-select-option>
+          <ion-select-option value="ตุลาคม">ตุลาคม</ion-select-option>
+          <ion-select-option value="พฤศจิกายน">พฤศจิกายน</ion-select-option>
+          <ion-select-option value="ธันวาคม">ธันวาคม</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-card-content class="body-content">
+        <br>
+        <ion-row text-center>
+          <ion-col>
+            <ion-card>
+              <ion-card-content class="data">
+                <ion-label><b>จำนวนสินค้านำเข้าทั้งหมด</b></ion-label><br>
+                <ion-label>จำนวน {{sumProductList}} รายการ</ion-label>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card>
+              <ion-card-content class="data">
+                <ion-label><b>จำนวนนำเข้าทั้งหมด</b></ion-label><br>
+                <ion-label>จำนวน {{sumProductIn}} ชิ้น</ion-label>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>          
+          <ion-col>
+            <ion-card>
+              <ion-card-content class="data">
+                <ion-label><b>จำนวนที่ขายทั้งหมด</b></ion-label><br>
+                <ion-label>จำนวน {{sumProductSell}} ชิ้น</ion-label>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card>
+              <ion-card-content class="data">
+                <ion-label><b>จำนวนคงเหลือทั้งหมด</b></ion-label><br>
+                <ion-label>จำนวน {{sumProductTotal}} ชิ้น</ion-label>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <br>
+        <ion-row text-center style="border-bottom: groove;">
+          <ion-col>
+            <ion-label><b>รหัสสินค้า</b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-label><b>ชื่อสินค้า</b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-label><b>ชนิดสินค้า</b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-label><b>สถานะสินค้า</b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-label><b>จำนวนนำเข้า</b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-label><b>จำนวนที่ขาย</b></ion-label>
+          </ion-col>
+          <ion-col>
+            <ion-label><b>จำนวนคงเหลือ</b></ion-label>
+          </ion-col>          
+        </ion-row>
+        <ion-row *ngFor="let s of showData" text-center style="border-bottom: groove;">
+          <ion-col>
+            {{s.idProduct}}
+          </ion-col>
+          <ion-col>
+            {{s.nameProduct}}
+          </ion-col>
+          <ion-col>
+            {{s.typeProduct}}
+          </ion-col>
+          <ion-col>
+            {{s.statusProduct}}
+          </ion-col>
+          <ion-col>
+            {{s.total}}
+          </ion-col>
+          <ion-col>
+            {{s.amountProduct}}
+          </ion-col>
+          <ion-col>
+            {{s.totalProduct}}
+          </ion-col>          
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
