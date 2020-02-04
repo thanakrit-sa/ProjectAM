@@ -20,15 +20,23 @@
   <br>
   <div class="menu">
     <ion-row text-right>
+      <ion-col *ngIf="isShowDate == true">
+        <ion-label>{{showDate}}</ion-label>
+      </ion-col>
       <ion-col>
         <ion-button class="btn-editclear" (click)="Confirm()" *ngIf="isShowButton == true">
           <ion-label>
             <h2><b>ตัดสต๊อก</b></h2>
           </ion-label>
         </ion-button>
-        <ion-button class="btn-editclear" (click)="filter()" disabled *ngIf="isShowButtonDisabled == false">
+        <!-- <ion-button class="btn-editclear" (click)="filter()" disabled *ngIf="isShowButtonDisabled == false">
           <ion-label>
             <h2><b>ตัดสต๊อก</b></h2>
+          </ion-label>
+        </ion-button> -->
+        <ion-button class="btn-editclear" (click)="checkUpdate()" *ngIf="isShowButtonUpdate == true">
+          <ion-label>
+            <h2><b>อัพเดท</b></h2>
           </ion-label>
         </ion-button>
         <ion-button class="btn-editclear" (click)="showContent()" *ngIf="isShowButtonCheck == false">
@@ -45,11 +53,12 @@
           <ion-label>
             <h2><b>ย้อนกลับ</b></h2>
           </ion-label>
-        </ion-button>
+        </ion-button>        
       </ion-col>
     </ion-row>
   </div>
   <br>
+
   <div *ngIf="isShowContentStock == false">
     <ion-card>
       <ion-item class="title">
@@ -114,14 +123,19 @@
           </ion-col>
 
         </ion-row>
+        
+        <div *ngIf="isShowProductZero == true" text-center>
+          <br>
+          <ion-label><h1><b>ไม่มีรายการสินค้า</b></h1></ion-label>
+        </div>
         <ion-row style="border-bottom:groove;" text-center
-          *ngFor="let s of datafilter | paginate: { itemsPerPage: 10, currentPage: PageNumber }">
+          *ngFor="let s of showDataFilter | paginate: { itemsPerPage: 10, currentPage: PageNumber }">
 
-          <ion-item class="checkbox">
+          <ion-item class="checkbox" *ngIf="a == false">
             <ion-label></ion-label>
-            <ion-checkbox class="checkbox" [(ngModel)]="s.statusCheck" (ionChange)="checkEvent()"></ion-checkbox>
+            <ion-checkbox [(ngModel)]="s.statusCheck" (ionChange)="checkEvent()"></ion-checkbox>
           </ion-item>
-
+      
           <ion-col class="a">
             <ion-label>
               {{s.idProduct}}

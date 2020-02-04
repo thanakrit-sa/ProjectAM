@@ -173,6 +173,7 @@ export class StorePage implements OnInit {
       }
     });
   }
+  
   onChange(data) {
     if (data == "ทั้งหมด") {
       this.showall();      
