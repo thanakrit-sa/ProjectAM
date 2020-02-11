@@ -45,8 +45,15 @@ export class StoreService {
 
   }
 
+  public getproductallyear(data){
+    return this.http.get<store>(StoreService.host+'Store/Getstoredatebyyear/'+ data);
+   }
+   public getproductlistbydateyear(data:string , data2:string){
+    return this.http.get<store>(StoreService.host+'Store/Getstoredatebyfindall/' + data + '/' + data2);
+   }
 
-
-
+   public getproductallmonth(data){
+    return this.http.get<store>(StoreService.host+'Store/Getstoredatebymouth/'+ data);
+   }
 }
 

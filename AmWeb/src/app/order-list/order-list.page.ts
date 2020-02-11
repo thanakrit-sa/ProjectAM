@@ -180,9 +180,12 @@ export class OrderListPage implements OnInit {
     if (data == "ทั้งหมด") {
       this.getdataarray()
     }
-    else this.datafilter = this.arrayfilter.filter(it =>
-      it.status == data)
-  }
+
+    else {
+      this.datafilter = this.arrayfilter.filter(it => 
+      it.status == data
+       )}
+  } 
 
   ///////////////// แจ้งเตือน/////////////////////////////////////
   async presentToast() {
@@ -289,7 +292,7 @@ export class OrderListPage implements OnInit {
     });
   }
 
-  getdetail(id){
+  getdetail(id) {
     this.route.navigate(['/detail', { _id: id }]);
   }
 

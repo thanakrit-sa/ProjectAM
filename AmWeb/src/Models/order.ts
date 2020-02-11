@@ -7,7 +7,8 @@ export class Order {
       nameUser :string;
       telUser :string;
       addressUser:string;
-      dateOrder :string;
+      dateOrder:string ;
       sendDate :string;
-      status :string
+      status :string;
+      priceProduct:string;
 }

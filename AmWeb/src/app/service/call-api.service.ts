@@ -40,4 +40,5 @@ export class CallApiService {
  public CancelSellTotalProduct(id: string, data){
   return this.http.put<Order>(CallApiService.host+'Order/CancelSellTotalProduct/'+ id,data);
  }
+
 }

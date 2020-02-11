@@ -29,6 +29,7 @@ export class AddStorePage implements OnInit {
   dataProductAll: product;
   nameproduct: string;
   dataIdProduct: any
+  datacostProduct :any;
   // num: number = 9;
 
   public dataStoreAll: store;
@@ -42,6 +43,7 @@ export class AddStorePage implements OnInit {
       'nameProduct': [null, Validators.required],
       // 'unitProduct': [null, Validators.required],
       'totalProduct': [null, Validators.compose([Validators.pattern('[0-9]*'), Validators.required])],
+      'costProduct': [null],
       // 'addProductStore': [null, Validators.required]
     });
     // this.productApi.GetProductByid(this.getDataProduct).subscribe(it => {
@@ -105,7 +107,15 @@ export class AddStorePage implements OnInit {
     // }
   }
 
-
+  data(data){
+    console.log(data);
+    this.productApi.GetProductByid(data).subscribe(it =>{
+      console.log(it);
+      this.datacostProduct = it.costProduct
+      console.log(this.datacostProduct);
+      
+    })
+  }
 
   get f() { return this.dataStore.controls; }
 
@@ -150,7 +160,10 @@ export class AddStorePage implements OnInit {
     this.dataStore.value.idProduct = data[0].idProduct;
     this.dataStore.value.nameProduct = data[0].nameProduct;
     console.log(this.dataStore.value);
+    this.dataStore.value.costProduct = this.dataStore.value.totalProduct * this.datacostProduct
     this.storeApi.AddStore(this.dataStore.value).subscribe(it => {
+      console.log(it);
+      
     });
     console.log(this.dataStore);
     this.productApi.EditAddTotalProduct(this.dataStore.value.idProduct, this.dataStore.value).subscribe(it => {

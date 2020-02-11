@@ -13,11 +13,20 @@ namespace AMApi.Controllers
     {
         public static List<Order> DataOrder = new List<Order>
         {
-            new Order {IdOrder = "100101" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="5", DateOrder = DateTime.Now, Status = "สั่งซื้อ", UserOrder = "admin1"},
-            new Order {IdOrder = "100102" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="2",DateOrder = DateTime.Now, Status = "รับสั่งซื้อ",UserOrder = "admin1"},
-            new Order {IdOrder = "100103" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="4",DateOrder = DateTime.Now, Status = "ยกเลิก",UserOrder = "admin1"},
-            new Order {IdOrder = "100104" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder = DateTime.Now, SendDate = DateTime.Now, Status = "ส่งสินค้า"},
-            new Order {IdOrder = "100105" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="3",DateOrder = DateTime.Now, SendDate = DateTime.Now, Status = "ได้รับแล้ว"},
+            // new Order {IdOrder = "100201" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/12/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="1234"},
+            // new Order {IdOrder = "100101" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/12/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="6857"},
+            // new Order {IdOrder = "100102" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/11/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="7845"},
+            // new Order {IdOrder = "100103" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/10/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="7652"},
+            // new Order {IdOrder = "100104" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "02/09/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="2547"},
+            // new Order {IdOrder = "100105" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/08/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="3148"},
+            // new Order {IdOrder = "100106" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/07/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="2365"},
+            // new Order {IdOrder = "100107" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/06/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="4900"},
+            // new Order {IdOrder = "100108" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "02/05/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="6577"},
+            // new Order {IdOrder = "100109" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/04/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="7500"},
+            // new Order {IdOrder = "100110" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/03/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="7000"},
+            // new Order {IdOrder = "100111" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/02/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="5999"},
+            // new Order {IdOrder = "100112" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "02/01/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="8000"},
+
         };
 
 
@@ -37,35 +46,53 @@ namespace AMApi.Controllers
             return DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
         }
 
-            [HttpGet("{data}")]
+        [HttpGet("{data}")]
         public ActionResult<IEnumerable<Order>> GetOrderbyUsername(string data)
         {
-            return DataOrder.ToList().FindAll(it=>it.UserOrder == data);
+            return DataOrder.ToList().FindAll(it => it.UserOrder == data);
+        }
+
+      [HttpGet("{data}/{data2}")]
+        public ActionResult<IEnumerable<Order>> GetOrderdatebyfindallbyyrearandmonth(string data, string data2)
+        {
+            return DataOrder.ToList().FindAll(it => (DateTime.Parse(it.DateOrder).Year.ToString() == data)&&((DateTime.Parse(it.DateOrder).Month.ToString() == data2)));
+        }
+
+        [HttpGet("{data}")]
+        public ActionResult<IEnumerable<Order>> GetOrderdatebyfindall(string data)
+        {
+            return DataOrder.ToList().FindAll(it => DateTime.Parse(it.DateOrder).Month.ToString() == data);
+        }
+         [HttpGet("{data}")]
+        public ActionResult<IEnumerable<Order>> GetOrderdatebyfindallbyyear(string data)
+        {
+            return DataOrder.ToList().FindAll(it => DateTime.Parse(it.DateOrder).Year.ToString() == data);
         }
 
         [HttpPost]
-        public Order AddOrder([FromBody] Order Orderx )
+        public Order AddOrder([FromBody] Order Orderx)
         {
 
-                var text= "OD";
-                var textsub = text.Substring(0,1).ToString();
-                var id = Guid.NewGuid().ToString();
-                var textid = text+"-"+id.Substring(0,4)  ;
-                // var split = id.Split("",5).ToString();
-                // var textID = text + split.ToString() ;
+            var text = "OD";
+            var textsub = text.Substring(0, 1).ToString();
+            var id = Guid.NewGuid().ToString();
+            var textid = text + "-" + id.Substring(0, 4);
+
+            // var split = id.Split("",5).ToString();
+            // var textID = text + split.ToString() ;
             var item = new Order
             {
-               IdOrder = textid,
-               IdProduct = Orderx.IdProduct,
-               NameProduct = Orderx.NameProduct,
-               AmountProduct = Orderx.AmountProduct,
-               PriceOrder = Orderx.PriceOrder,
-               NameUser = Orderx.NameUser,
-               AddressUser = Orderx.AddressUser,
-               TelUser = Orderx.TelUser,
-               UserOrder = Orderx.UserOrder,
-               DateOrder = DateTime.Now,
-               Status = "สั่งซื้อ"
+                IdOrder = textid,
+                IdProduct = Orderx.IdProduct,
+                NameProduct = Orderx.NameProduct,
+                AmountProduct = Orderx.AmountProduct,
+                PriceOrder = Orderx.PriceOrder,
+                NameUser = Orderx.NameUser,
+                AddressUser = Orderx.AddressUser,
+                TelUser = Orderx.TelUser,
+                UserOrder = Orderx.UserOrder,
+                DateOrder = DateTime.Now.ToString("dd/MM/yyyy"),
+                Status = "สั่งซื้อ"
             };
 
             DataOrder.Add(item);
@@ -110,7 +137,7 @@ namespace AMApi.Controllers
                 AddressUser = Orderx.AddressUser,
                 TelUser = Orderx.TelUser,
                 DateOrder = Orderx.DateOrder,
-                SendDate = DateTime.Now,
+                SendDate = DateTime.Now.ToString("dd/MM/yyyy"),
                 Status = "ส่งสินค้า"
             };
             DataOrder.Remove(_id);
@@ -184,7 +211,8 @@ namespace AMApi.Controllers
                 SellTotals = SellTotal - SellTotal;
                 AllTotals = AllTotal + SellTotal;
             }
-            else {
+            else
+            {
                 SellTotals = SellTotal - SellTotal;
                 AllTotals = AllTotal + AllTotal;
             }
