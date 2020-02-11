@@ -14,6 +14,7 @@ namespace AMApi.Models
         public string Total { get; set; }
         public string AmountProduct { get; set; }
         public string StatusProduct { get; set; }
+        public Boolean StatusCheck { get; set; }  
     }
     public class Stock
     {

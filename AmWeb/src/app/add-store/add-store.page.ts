@@ -36,6 +36,7 @@ export class AddStorePage implements OnInit {
   // isShowBtn:boolean=true;
   isShowValidate: boolean = false;
   isShowValidateTotal: boolean = false;
+  
   constructor(public alertController: AlertController, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder, public productApi: ProductService, public activate: ActivatedRoute) {
     this.dataStore = this.formbuilder.group({
       // 'idStore': [null, Validators.required],

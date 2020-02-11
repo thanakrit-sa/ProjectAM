@@ -63,9 +63,18 @@ export class ProductService {
   public GetStockAll() {
     return this.http.get<stock>(ProductService.host + 'Stock/GetStockAll');
   }
+  public GetStockByid(Id: string) {
+    return this.http.get<stock>(ProductService.host + 'Stock/GetStockById/' + Id);
+  }
+  public GetStock(month: string, year: string ){
+    return this.http.get<stock>(ProductService.host+ 'Stock/GetStock/'+ month +'/'+ year);
+   }
+  public EditNumber(Id: string, data) {
+    return this.http.put<product>(ProductService.host + 'Product/EditNumber/' + Id, data);
+  }
+  public UpdateStock(Id: string, data) {
+    return this.http.put<stock>(ProductService.host + 'Stock/UpdateStock/' + Id, data);
+  }
 
   
 }
-
-
-

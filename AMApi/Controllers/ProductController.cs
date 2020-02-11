@@ -88,6 +88,31 @@ namespace AMApi.Controllers
             DataProduct.Remove(_id);
             DataProduct.Add(item);
             return item;
+        }
+        [HttpPut("{id}")]
+        public Product EditNumber(string id, [FromBody] Product Productx)
+        {
+            var _id = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
+            var item = new Product
+            {
+                IdProduct = id,
+                NameProduct = _id.NameProduct,
+                TypeProduct = _id.TypeProduct,
+                PriceProduct = _id.PriceProduct,
+                TotalProduct = _id.TotalProduct,
+                unitProduct = _id.unitProduct,
+                StatusProduct = _id.StatusProduct,
+                CostProduct = _id.CostProduct,
+                AmountProduct = _id.AmountProduct,
+                StatusCheck = _id.StatusCheck,
+                ButtonCheck = _id.ButtonCheck,
+                // TotalProduct = _id.TotalProduct,
+                ShowTotal = 1,
+                Total = _id.Total
+            };
+            DataProduct.Remove(_id);
+            DataProduct.Add(item);
+            return item;
 
         }
         [HttpPut("{id}")]
@@ -119,7 +144,7 @@ namespace AMApi.Controllers
         [HttpDelete("{id}")]
         public void DeleteProduct(string id)
         {
-            var delete = DataProduct.FirstOrDefault(it => it.IdProduct == id.ToString());
+            var delete = DataProduct.FirstOrDefault(it => it.ShowTotal == 1);
             DataProduct.Remove(delete);
         }
 
@@ -173,8 +198,8 @@ namespace AMApi.Controllers
                 StatusProduct = _id.StatusProduct,
                 AmountProduct = _id.AmountProduct,
                 CostProduct = _id.CostProduct,
-                ShowTotal = getcheck.ShowTotal
-                // ShowTotal = ss
+                ShowTotal = 0
+                
             };
             DataProduct.Remove(_id);
             DataProduct.Add(item);
