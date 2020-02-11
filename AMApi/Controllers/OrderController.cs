@@ -26,7 +26,6 @@ namespace AMApi.Controllers
             // new Order {IdOrder = "100110" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/03/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="7000"},
             // new Order {IdOrder = "100111" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/02/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="5999"},
             // new Order {IdOrder = "100112" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "02/01/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="8000"},
-
         };
 
 

@@ -24,7 +24,8 @@
       <ion-select-option *ngFor="let item of dataProduct" value="{{ item.nameProduct }}">{{item.nameProduct}}  </ion-select-option>
     </ion-select>
   </ion-item>
-
+</ion-card>
+<ion-card >
   <ion-item >
     <ion-label>รหัสสินค้า : </ion-label>
     <ion-input formControlName="idProduct" *ngIf="data1 != null" [(ngModel)]="data1.idProduct" readonly>
