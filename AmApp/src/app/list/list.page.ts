@@ -20,11 +20,7 @@ import { User } from '../Models/User';
     </ion-title>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-button (click)="gotoOrder()" color="light" slot="end"  class="buttton" *ngIf="datausercheckstatus =='พร้อมใช้งาน'">
-      <ion-icon name="add-circle"> </ion-icon>
-      สั่งซื้อ
-    </ion-button>
+    </ion-buttons>    
     <ion-button (click)="gotoOrder1()" color="light" slot="end"  class="buttton" *ngIf="datausercheckstatus =='ไม่พร้อมใช้งาน'">
       <ion-icon name="add-circle"> </ion-icon>
       สั่งซื้อ
@@ -39,7 +35,9 @@ import { User } from '../Models/User';
 
 <ion-content padding>
 
-  <div text-center>
+    <ion-button class="btn" *ngIf="datausercheckstatus =='พร้อมใช้งาน'" (click)="gotoOrder()"><ion-label><h2><b>สั่งซื้อ</b></h2></ion-label></ion-button >    
+  <br><br>
+    <div text-center>
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h4>รายการสั่งซื้อ</h4>
@@ -52,20 +50,20 @@ import { User } from '../Models/User';
 
   <ion-row class="row">
 
-    <ion-col size="5" color="dark">
-      <ion-label>สินค้า</ion-label>
+    <ion-col size="5" color="dark" text-center>
+      <ion-label><b>สินค้า</b></ion-label>
     </ion-col>
 
-    <ion-col size="2"  >
-      <ion-label>จำนวน</ion-label>
+    <ion-col size="2" text-center>
+      <ion-label><b>จำนวน</b></ion-label>
     </ion-col>
 
-    <ion-col size="2" >
-      <ion-label>วันที่</ion-label>
+    <ion-col size="2" text-center>
+      <ion-label><b>วันที่</b></ion-label>
     </ion-col>
 
-    <ion-col >
-      <ion-label>สถานะ</ion-label>
+    <ion-col text-center>
+      <ion-label><b>สถานะ</b></ion-label>
     </ion-col>
 
     <!-- <ion-col  style="background-color: blueviolet" size="3" >
@@ -77,7 +75,7 @@ import { User } from '../Models/User';
   <ion-row *ngFor="let a of dataUser |filter:search| paginate: { itemsPerPage: 5, currentPage: p }">
     <ion-item-sliding>
       <ion-item (click)="gotoOrderdetail(a.idOrder)">
-        <ion-col size="5">
+        <ion-col size="5" text-center>
           <ion-label>{{a.nameProduct}}</ion-label>
         </ion-col>
 
@@ -85,11 +83,11 @@ import { User } from '../Models/User';
           <ion-label>{{a.amountProduct}}</ion-label>
         </ion-col>
 
-        <ion-col size="2">
+        <ion-col size="2" text-center>
           <ion-label>{{a.dateOrder | date}}</ion-label>
         </ion-col>
 
-        <ion-col size="3" text-left>
+        <ion-col size="3" text-center>
           <ion-label>{{a.status}}</ion-label>
 
         </ion-col>
@@ -176,7 +174,7 @@ export class ListPage implements OnInit {
   // serarch2 :Order[] = [];
   constructor(public actived: ActivatedRoute, public menuCtrl: MenuController, public productapi: ProductService, public route: Router, public callApi: CallApiService, public alertController: AlertController, public tost: ToastController) {
 
-   
+
   }
 
 
@@ -223,7 +221,7 @@ export class ListPage implements OnInit {
       this.getdataarray();
     }
   }
-  
+
 
   //////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////เอาข้อมูล Product มาทำเป็นอาเรย์////////////////////////////////
@@ -254,7 +252,7 @@ export class ListPage implements OnInit {
       this.dataUser = it
       console.log(this.dataUser);
       for (let index = 0; index < Object.keys(this.dataUser).length; index++) {
-      this.datafilter[index] = this.dataUser[index]
+        this.datafilter[index] = this.dataUser[index]
       }
       this.countdata = Object.keys(this.datafilter).length
     });
