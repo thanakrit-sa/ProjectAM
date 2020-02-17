@@ -12,8 +12,8 @@ namespace AMApi.Models
         public string NameUser { get; set; }
         public string TelUser { get; set; }
         public string AddressUser { get; set; }
-        public DateTime? DateOrder { get; set; }
-        public DateTime? SendDate { get; set; }
+        public string DateOrder { get; set; }
+        public string SendDate { get; set; }
         public string Status { get; set; }
         public string TotalProduct { get; set; }
         public string TypeProduct { get; set; }

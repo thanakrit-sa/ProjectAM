@@ -18,10 +18,11 @@ namespace AMApi.Models
         public string TotalAll { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
-        public DateTime? AddProductStore { get; set; }
+        public string AddProductStore { get; set; }
         public DateTime? EditProductStore { get; set; }
         public DateTime? ClearProductStore { get; set; }        
         public string unitTotal { get; set; }
+        public string CostProduct {get ; set;}
        
     }
 }

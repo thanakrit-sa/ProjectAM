@@ -110,7 +110,16 @@ export class LoginPage implements OnInit {
     await alert.present();
 
   }
+ionViewDidEnter(){
+  this.callApi.GetUserData().subscribe(it => {
 
+    this.user1 = it
+    this.datauser = it
+    console.log(this.datauser);
+
+  })
+  this.menuCtrl.enable(false);
+}
   ngOnInit() {
     this.callApi.GetUserData().subscribe(it => {
 
@@ -138,7 +147,6 @@ export class LoginPage implements OnInit {
 
 
   gotoList() {
-
     if (this.user.value.user != "" && this.user.value.password != "") {
       this.callApi.GetUserbyData(this.user.value.user).subscribe(it => {
         this.datausername = it

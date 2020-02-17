@@ -26,156 +26,188 @@
 
 <ion-content>
   <br>
+  <ion-card class="content">
+    <ion-card-content>
+      <ion-item>
+        <ion-select placeholder="เลือกปีที่ต้องการ"  (ionChange)="onChangyear(year)" [(ngModel)]="year">
+          <ion-select-option value ="2020">2020</ion-select-option>
+          <ion-select-option value ="2021">2021</ion-select-option>
+          <ion-select-option value ="2022">2022</ion-select-option>
+          <ion-select-option value ="2023">2023</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="year != null">
+        <ion-select placeholder="เลือกเดือนที่ต้องการ"  (ionChange)="onChange(data)" [(ngModel)]="data">
+          <ion-select-option >ทั้งหมด</ion-select-option>
+          <ion-select-option value ="1">มกราคม</ion-select-option>
+          <ion-select-option value ="2">กุมภาพันธ์</ion-select-option>
+          <ion-select-option value ="3">มีนาคม</ion-select-option>
+          <ion-select-option value ="4">เมษายน</ion-select-option>
+          <ion-select-option value ="5">พฤษภาคม</ion-select-option>
+          <ion-select-option value ="6">มิถุนายน</ion-select-option>
+          <ion-select-option value ="7">กรกฎาคม</ion-select-option>
+          <ion-select-option value ="8">สิงหาคม</ion-select-option>
+          <ion-select-option value ="9">กันยายน</ion-select-option>
+          <ion-select-option value ="10">ตุลาคม</ion-select-option>
+          <ion-select-option value ="11">พฤศจิกายน</ion-select-option>
+          <ion-select-option value ="12">ธันวาคม</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-  <ion-item>
-    <ion-label>เลือกรายการแสดง</ion-label>
-    <ion-select>
-    </ion-select>
-  </ion-item>
-
+    </ion-card-content>
+  </ion-card>
+<ion-button (click)="check()"></ion-button>
   <br>
-
-  <ion-row>
-    <ion-col>
-      <ion-card>
-        <ion-card-header text-center class="ResultProductGet">
-          <ion-row>
-            <ion-col>
-              <ion-label>
-                <h2><b>จำนวนสินค้านำเข้า</b></h2>
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-card-header>
-        <ion-card-content class="box-content">
-          <ion-row>
-            <ion-col text-center>
-              <br>
-              <ion-label>
-                <h2>{{sumAmountProductInStore | number}}</h2>
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-    <ion-col>
-      <ion-card>
-        <ion-card-header text-center class="ResultProductSell">
-          <ion-row>
-            <ion-col>
-              <ion-label>
-                <h2><b>จำนวนสินค้าที่ขาย</b></h2>
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-card-header>
-        <ion-card-content class="box-content">
-          <ion-row>
-            <ion-col text-center>
-              <br>
-              <ion-label>
-                <h2>{{sumAmountProductSellInStore | number}}</h2>
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-    <ion-col>
-      <ion-card>
-        <ion-card-header text-center class="ResultProductTotal">
-          <ion-row>
-            <ion-col>
-              <ion-label>
-                <h2><b>จำนวนสินค้าคงเหลือ</b></h2>
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-card-header>
-        <ion-card-content class="box-content">
-          <ion-row>
-            <ion-col text-center>
-              <br>
-              <ion-label>
-                <h2>{{sumAmountProductTotalInStore | number}}</h2>
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-    <ion-col>
-      <ion-card>
-        <ion-card-header text-center class="Total">
-          <ion-row>
-            <ion-col>
-              <ion-label>
-                <h2><b>รายรับ</b></h2>
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-card-header>
-        <ion-card-content class="box-content">
-          <ion-row>
-            <ion-col text-center>
-              <br>
-              <ion-label>
-                <h2>{{sumSell | number}} THB</h2>
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-    <ion-col>
-      <ion-card>
-        <ion-card-header text-center class="Sell">
-          <ion-row>
-            <ion-col>
-              <ion-label>
-                <h2><b>รายจ่าย</b></h2>
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-card-header>
-        <ion-card-content class="box-content">
-          <ion-row>
-            <ion-col text-center>
-              <br>
-              <ion-label>
-                <h2>{{sumCost | number}} THB</h2>
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-    <ion-col>
-      <ion-card>
-        <ion-card-header text-center class="Result">
-          <ion-row>
-            <ion-col>
-              <ion-label>
-                <h2><b>กำไรสุทธิ</b></h2>
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-card-header>
-        <ion-card-content class="box-content">
-          <ion-row>
-            <ion-col text-center>
-              <br>
-              <ion-label>
-                <h2>{{sumTotal | number}} THB</h2>
-              </ion-label>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-  </ion-row>
-
+  <ion-card class="content">
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-card-header text-center class="ResultProductGet">
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h2><b>จำนวนสินค้านำเข้า</b></h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>
+            <ion-card-content class="box-content">
+              <ion-row>
+                <ion-col text-center>
+                  <br>
+                  <ion-label>
+                    <h2>{{totalbuyproduct | number}}</h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header text-center class="ResultProductSell">
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h2><b>จำนวนสินค้าที่ขาย</b></h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>
+            <ion-card-content class="box-content">
+              <ion-row>
+                <ion-col text-center>
+                  <br>
+                  <ion-label>
+                    <h2>{{totalsellinmonth | number}}</h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header text-center class="ResultProductTotal">
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h2><b>จำนวนสินค้าคงเหลือ</b></h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>
+            <ion-card-content class="box-content">
+              <ion-row>
+                <ion-col text-center>
+                  <br>
+                  <ion-label>
+                    <h2>{{totalstock | number}}</h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header text-center class="Total">
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h2><b>รายรับ</b></h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>
+            <ion-card-content class="box-content">
+              <ion-row>
+                <ion-col text-center>
+                  <br>
+                  <ion-label>
+                    <h2>{{revenue | number}} THB</h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header text-center class="Sell">
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h2><b>รายจ่าย</b></h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>
+            <ion-card-content class="box-content">
+              <ion-row>
+                <ion-col text-center>
+                  <br>
+                  <ion-label>
+                    <h2>{{expenditure | number}} THB</h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header text-center class="Result">
+              <ion-row>
+                <ion-col>
+                  <ion-label>
+                    <h2><b>กำไรสุทธิ</b></h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>
+            <ion-card-content class="box-content">
+              <ion-row>
+                <ion-col text-center>
+                  <br>
+                  <ion-label *ngIf="expenditure < revenue" color="success"> 
+                    <h2 >{{netprofitinmonth | number}} THB</h2>
+                  </ion-label>
+                  <ion-label *ngIf="expenditure > revenue" color="danger"> 
+                    <h2 >{{netprofitinmonth | number}} THB</h2>
+                  </ion-label>
+                  <ion-label *ngIf="expenditure == revenue" > 
+                    <h2 >{{netprofitinmonth | number}} THB</h2>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
   <br>
   <ion-card class="content">
     <ion-card-content>

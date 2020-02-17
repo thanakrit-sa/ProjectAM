@@ -23,5 +23,7 @@ export class store{
     sellProduct:string;
 
     total:string;
+
+    costProduct:string;
     
 }

@@ -15,9 +15,18 @@ namespace AMApi.Controllers
 
         public static List<Store> DataStore = new List<Store>
         {
-            new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="0",AddProductStore = DateTime.Now}
-
-
+            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/12/2563 13:28:15",CostProduct="2999"},
+            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/11/2563 13:28:15",CostProduct="2999"},
+            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/1/2563 13:28:15",CostProduct="2999"},
+            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/2/2563 13:28:15",CostProduct="2999"},
+            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/3/2563 13:28:15",CostProduct="2999"},
+            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/4/2563 13:28:15",CostProduct="2999"},
+            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/5/2563 13:28:15",CostProduct="2999"},
+            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/6/2563 13:28:15",CostProduct="2999"},
+            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/7/2563 13:28:15",CostProduct="2999"},
+            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/8/2563 13:28:15",CostProduct="2999"},
+            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/9/2563 13:28:15",CostProduct="2999"},
+            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/10/2563 13:28:15",CostProduct="2999"},
         };
 
 
@@ -32,13 +41,30 @@ namespace AMApi.Controllers
         {
             return DataStore.FirstOrDefault(it => it.IdProduct == id.ToString());
         }
+        [HttpGet("{data}")]
+        public ActionResult<IEnumerable<Store>> Getstoredatebyyear(string data)
+        {
+            return DataStore.ToList().FindAll(it => DateTime.Parse(it.AddProductStore).Year.ToString() == data);
+        }
 
+        [HttpGet("{data}")]
+        public ActionResult<IEnumerable<Store>> Getstoredatebymouth(string data)
+        {
+            return DataStore.ToList().FindAll(it => DateTime.Parse(it.AddProductStore).Month.ToString() == data);
+        }
+
+
+        [HttpGet("{data}/{data2}")]
+        public ActionResult<IEnumerable<Store>> Getstoredatebyfindall(string data, string data2)
+        {
+            return DataStore.ToList().FindAll(it => (DateTime.Parse(it.AddProductStore).Year.ToString() == data) && ((DateTime.Parse(it.AddProductStore).Month.ToString() == data2)));
+        }
         [HttpPost]
         public Store AddStore([FromBody] Store Storex)
         {
 
             var addDate = DateTime.Now;
-           
+
             var item = new Store
             {
 
@@ -49,7 +75,8 @@ namespace AMApi.Controllers
                 TotalProduct = Storex.TotalProduct,
                 UnitProduct = Storex.UnitProduct,
                 StatusProduct = Storex.StatusProduct,
-                AddProductStore = addDate
+                CostProduct = Storex.CostProduct,
+                AddProductStore = DateTime.Now.ToString("dd/MM/yyyy")
 
             };
 

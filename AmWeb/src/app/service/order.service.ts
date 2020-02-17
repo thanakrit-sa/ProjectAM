@@ -7,6 +7,8 @@ import { product } from 'src/Models/product';
   providedIn: 'root'
 })
 export class OrderService {
+
+  public chartrevenue : number[] =[];
   public static host: string ="https://localhost:5001/api/" 
   constructor( public http:HttpClient,) { }
 
@@ -14,7 +16,7 @@ export class OrderService {
     return this.http.get<Order>(OrderService.host+ 'Order/GetOrderAll');
   }
   public AddOrder(data:Order){
-    console.log(data);
+    
     return this.http.post<Order>(OrderService.host+ 'Order/AddOrder' , data);
   }
   public GetProductById(Id:string){
@@ -29,7 +31,18 @@ export class OrderService {
  public getallproduct( ){
   return this.http.get<product>(OrderService.host+'Product/GetProductAll');
  }
-
+ public getProductbygroup( ){
+  return this.http.get<Order>(OrderService.host+'Order/GetOrderbygroup');
+ }
+ public getorderlistbymonth(data){
+  return this.http.get<Order>(OrderService.host+'Order/GetOrderdatebyfindall/'+ data);
+ }
+ public getorderallyear(data){
+  return this.http.get<Order>(OrderService.host+'Order/GetOrderdatebyfindallbyyear/'+ data);
+ }
+ public getorderlistbydateyear(data:string , data2:string){
+  return this.http.get<Order>(OrderService.host+'Order/GetOrderdatebyfindallbyyrearandmonth/' + data + '/' + data2);
+ }
 
 }
 

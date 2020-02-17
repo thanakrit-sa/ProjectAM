@@ -26,7 +26,7 @@
       <form [formGroup]="dataStore" (ngSubmit)="check()">
         <ion-item>
           <ion-label>ชื่อสินค้า</ion-label>
-          <ion-select placeholder="ชื่อสินค้า" formControlName="nameProduct" [(ngModel)]="dataIdProduct">
+          <ion-select placeholder="ชื่อสินค้า" formControlName="nameProduct" [(ngModel)]="dataIdProduct" (ionChange)=data(dataIdProduct)>
             <ion-select-option *ngFor="let p of dataProductAll" value="{{ p.idProduct }}">{{p.nameProduct}}
             </ion-select-option>
           </ion-select>

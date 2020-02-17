@@ -110,7 +110,13 @@ import { AlertController, ToastController } from '@ionic/angular';
   </ion-row>
   </ion-card-content>
 </ion-card><br>
-
+<div class="page">
+<ion-row>
+<ion-col text-left>
+<br>
+<ion-label>จำนวนรายการสั่งซื้อ <b>{{countdata}}</b> รายการ.</ion-label>
+</ion-col>
+<ion-col text-right>
 <pagination-controls (pageChange)="p = $event"   
   previousLabel="ย้อนกลับ"
   maxSize="5"
@@ -118,8 +124,16 @@ import { AlertController, ToastController } from '@ionic/angular';
 
   class="my-pagination"
   ></pagination-controls>
+  </ion-col>
+  </ion-row>
+  </div>
 </ion-content> `
 })
+
+
+
+
+
 export class OrderListPage implements OnInit {
 
   dataOrder: Order;
@@ -163,7 +177,7 @@ export class OrderListPage implements OnInit {
       console.log(this.dataOrder);
     });
   }
-
+countdata
   getdataarray() {
     this.orderApi.GetListAllProduct().subscribe(it => {
       this.dataOrder = it;
@@ -172,6 +186,8 @@ export class OrderListPage implements OnInit {
         this.datafilter[index] = this.dataOrder[index]
         this.arrayfilter[index] = this.datafilter[index]
       }
+this.countdata = Object.keys(this.datafilter).length
+    
     });
   }
   //////////////////////////////////////////////////////////////
@@ -180,8 +196,14 @@ export class OrderListPage implements OnInit {
     if (data == "ทั้งหมด") {
       this.getdataarray()
     }
-    else this.datafilter = this.arrayfilter.filter(it =>
-      it.status == data)
+
+    else {
+      this.datafilter = this.arrayfilter.filter(it =>
+        it.status == data
+        
+      )
+      this.countdata = Object.keys(this.datafilter).length
+    }
   }
 
   ///////////////// แจ้งเตือน/////////////////////////////////////
@@ -289,7 +311,7 @@ export class OrderListPage implements OnInit {
     });
   }
 
-  getdetail(id){
+  getdetail(id) {
     this.route.navigate(['/detail', { _id: id }]);
   }
 

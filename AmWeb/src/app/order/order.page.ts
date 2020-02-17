@@ -156,7 +156,6 @@ export class OrderPage implements OnInit {
                 console.log('dai');
                 this.t = 0;
                 this.a = 0;
-
                 this.okAlert();
               }
 

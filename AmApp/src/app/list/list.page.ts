@@ -136,13 +136,26 @@ import { User } from '../Models/User';
 
   </ion-row>
   <!-- ///////////////////////////////////////////////////////// -->
+  <div class="page">
+
+  <ion-row >
+  <ion-col text-left size="3">
+  <br>
+ <label>Total : {{countdata}}</label>
+  </ion-col>
+
+  <ion-col text-right >
+  
   <pagination-controls (pageChange)="p = $event"   
-  previousLabel="ย้อนกลับ"
-  maxSize="5"
-  nextLabel="ถัดไป"
- 
-  class="my-pagination"
-  ></pagination-controls>
+    previousLabel="ย้อนกลับ"
+    maxSize="5"
+    nextLabel="ถัดไป"
+  
+    class="my-pagination"
+    ></pagination-controls>
+    </ion-col>
+    </ion-row>
+    </div>
 
 </ion-content> `
 })
@@ -235,12 +248,17 @@ export class ListPage implements OnInit {
   }
   //////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////เอาข้อมูล Order มาทำ filter แยกข้อมูล//////////////////////
+  countdata
   showdatafilter() {
     this.callApi.GetOrderbyUsername(this.userName).subscribe(it => {
       this.dataUser = it
       console.log(this.dataUser);
-
+      for (let index = 0; index < Object.keys(this.dataUser).length; index++) {
+      this.datafilter[index] = this.dataUser[index]
+      }
+      this.countdata = Object.keys(this.datafilter).length
     });
+
   }
   ///////////////////////////////////////////////////////////////////////////////////////////
   ///////////////// แจ้งเตือน/////////////////////////////////////
