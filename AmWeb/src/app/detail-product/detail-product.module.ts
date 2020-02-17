@@ -5,13 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { OrderListPage } from './order-list.page';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { DetailProductPage } from './detail-product.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: OrderListPage
+    component: DetailProductPage
   }
 ];
 
@@ -19,11 +18,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    NgxPaginationModule,
     IonicModule,
     RouterModule.forChild(routes),
-   
+    
   ],
-  declarations: [OrderListPage]
+  declarations: [DetailProductPage]
 })
-export class OrderListPageModule {}
+export class DetailProductPageModule {}

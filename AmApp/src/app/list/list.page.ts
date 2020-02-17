@@ -84,7 +84,7 @@ import { User } from '../Models/User';
         </ion-col>
 
         <ion-col size="2" text-center>
-          <ion-label>{{a.dateOrder | date}}</ion-label>
+          <ion-label>{{a.dateOrder}}</ion-label>
         </ion-col>
 
         <ion-col size="3" text-center>

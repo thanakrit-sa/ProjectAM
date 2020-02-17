@@ -113,6 +113,7 @@ namespace AMApi.Controllers
                 AddressUser = Orderx.AddressUser,
                 TelUser = Orderx.TelUser,
                 DateOrder = Orderx.DateOrder,
+                UserOrder = Orderx.UserOrder,
                 Status = "รับสั่งซื้อ"
             };
             DataOrder.Remove(_id);
@@ -137,6 +138,7 @@ namespace AMApi.Controllers
                 TelUser = Orderx.TelUser,
                 DateOrder = Orderx.DateOrder,
                 SendDate = DateTime.Now.ToString("dd/MM/yyyy"),
+                UserOrder = Orderx.UserOrder,
                 Status = "ส่งสินค้า"
             };
             DataOrder.Remove(_id);
@@ -159,6 +161,7 @@ namespace AMApi.Controllers
                 AddressUser = Orderx.AddressUser,
                 TelUser = Orderx.TelUser,
                 DateOrder = Orderx.DateOrder,
+                UserOrder = Orderx.UserOrder,
                 Status = "ยกเลิก"
             };
             DataOrder.Remove(_id);
@@ -182,6 +185,7 @@ namespace AMApi.Controllers
                 TelUser = Orderx.TelUser,
                 DateOrder = Orderx.DateOrder,
                 SendDate = Orderx.SendDate,
+                UserOrder = Orderx.UserOrder,
                 Status = "ได้รับแล้ว"
             };
             DataOrder.Remove(_id);
