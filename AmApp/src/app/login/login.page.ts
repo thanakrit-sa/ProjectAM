@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
   usercheck
   passcheck
   constructor(public alertController: AlertController, public route: Router, public callApi: CallApiService, public form: FormBuilder, public menuCtrl: MenuController) {
-
+    this.stopit()
     this.user = this.form.group({
       'user': ["", Validators.required],
       'password': ["", Validators.required]
@@ -110,17 +110,24 @@ export class LoginPage implements OnInit {
     await alert.present();
 
   }
-ionViewDidEnter(){
-  this.callApi.GetUserData().subscribe(it => {
 
-    this.user1 = it
-    this.datauser = it
-    console.log(this.datauser);
+  stopit() {
+    this.menuCtrl.close();
+    this.menuCtrl.enable(false);
+  }
 
-  })
-  this.menuCtrl.enable(false);
-}
+  ionViewWillEnter() {
+    this.stopit()
+    this.callApi.GetUserData().subscribe(it => {
+      this.user1 = it
+      this.datauser = it
+      console.log(this.datauser);
+    })
+    
+  }
+ 
   ngOnInit() {
+
     this.callApi.GetUserData().subscribe(it => {
 
       this.user1 = it
@@ -128,7 +135,7 @@ ionViewDidEnter(){
       console.log(this.datauser);
 
     })
-    this.menuCtrl.enable(false);
+    this.stopit()
   }
 
 
@@ -150,7 +157,7 @@ ionViewDidEnter(){
     if (this.user.value.user != "" && this.user.value.password != "") {
       this.callApi.GetUserbyData(this.user.value.user).subscribe(it => {
         this.datausername = it
-        console.log(this.datausername); 
+        console.log(this.datausername);
         if (this.datausername == null) {
           console.log("ไม่พบ User");
           this.presentAlertUser();
@@ -164,7 +171,7 @@ ionViewDidEnter(){
               console.log("welcome");
               this.callApi.nameUser = this.datausername.username
               this.callApi.name = this.datausername.nameUser
-              this.route.navigate(['/list',{_id:this.datausername.statusUser}])
+              this.route.navigate(['/list', { _id: this.datausername.statusUser }])
             }
           }
           else if (this.user.value.user == this.datausername.username && this.user.value.password != this.datausername.password) {

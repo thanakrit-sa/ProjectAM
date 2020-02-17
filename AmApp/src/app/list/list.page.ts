@@ -14,7 +14,7 @@ import { User } from '../Models/User';
   styleUrls: ['./list.page.scss'],
   template: `
   <ion-header>
-  <ion-toolbar color="dark" text-center>
+  <ion-toolbar color="dark" text-center >
     <ion-title>
       List
     </ion-title>
@@ -68,9 +68,7 @@ import { User } from '../Models/User';
       <ion-label>สถานะ</ion-label>
     </ion-col>
 
-    <!-- <ion-col  style="background-color: blueviolet" size="3" >
-      <ion-label>ดู</ion-label>
-    </ion-col> -->
+
 
   </ion-row>
 
@@ -86,7 +84,7 @@ import { User } from '../Models/User';
         </ion-col>
 
         <ion-col size="2">
-          <ion-label>{{a.dateOrder | date}}</ion-label>
+          <ion-label>{{a.dateOrder}}</ion-label>
         </ion-col>
 
         <ion-col size="3" text-left>
@@ -176,7 +174,7 @@ export class ListPage implements OnInit {
   // serarch2 :Order[] = [];
   constructor(public actived: ActivatedRoute, public menuCtrl: MenuController, public productapi: ProductService, public route: Router, public callApi: CallApiService, public alertController: AlertController, public tost: ToastController) {
 
-   
+
   }
 
 
@@ -186,9 +184,10 @@ export class ListPage implements OnInit {
     // this.getdatafilter();
     this.showdatafilter();
     this.callApi.GetUserbyData(this.userName).subscribe(it => {
-
+      if (it != null) {
       this.datausercheckstatus = it.statusUser
-      console.log(this.datausercheckstatus);
+        console.log(this.datausercheckstatus);
+      }
 
     });
 
@@ -205,12 +204,13 @@ export class ListPage implements OnInit {
     this.getdataarray()
     this.showdatafilter();
     this.callApi.GetUserbyData(this.userName).subscribe(it => {
+      if (it != null) {
       this.datausercheckstatus = it.statusUser
-      console.log(this.datausercheckstatus.statusUser);
-
+      console.log(this.datausercheckstatus);
+      }
     });
 
-  }
+ 1 }
 
   ///////////////////////////////////////sercht//////////////////////////////////////
   setFilteredItems(ev: any) {
@@ -223,7 +223,7 @@ export class ListPage implements OnInit {
       this.getdataarray();
     }
   }
-  
+
 
   //////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////เอาข้อมูล Product มาทำเป็นอาเรย์////////////////////////////////
@@ -254,7 +254,7 @@ export class ListPage implements OnInit {
       this.dataUser = it
       console.log(this.dataUser);
       for (let index = 0; index < Object.keys(this.dataUser).length; index++) {
-      this.datafilter[index] = this.dataUser[index]
+        this.datafilter[index] = this.dataUser[index]
       }
       this.countdata = Object.keys(this.datafilter).length
     });
