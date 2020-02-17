@@ -23,7 +23,8 @@ export class product{
 
     statusCheck:Boolean;
     showTotal:number;
-    
+    showDate: Date
+    totalShow:string;
     buttonCheck :Boolean;
     idStock: string;
     dataProductPerMonth: product[];

@@ -1,5 +1,7 @@
 {
   "name": "AmWeb",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

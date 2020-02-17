@@ -23,6 +23,8 @@ export class product{
 
     statusCheck:Boolean;
 
+    totalShow:string;
+
     
     
 }

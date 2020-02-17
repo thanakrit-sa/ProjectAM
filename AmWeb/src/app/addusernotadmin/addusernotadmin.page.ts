@@ -5,6 +5,7 @@ import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 @Component({
   selector: 'app-addusernotadmin',
   templateUrl: './addusernotadmin.page.html',
@@ -23,9 +24,11 @@ export class AddusernotadminPage implements OnInit {
   isShowValidateAddress:boolean = false;
   isShowValidateCard:boolean = false;
   isShowValidateName:boolean = false;
+  isShowCloseTab: boolean = true;
+  isShowOpenTab: boolean = true;
 
 
-  constructor(public alertController: AlertController, public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
+  constructor(private menu: MenuController,public alertController: AlertController, public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.datauser = this.formbuilder.group({
       'iduser': ["", Validators.required],
       'nameuser': ["", Validators.required],
@@ -37,6 +40,40 @@ export class AddusernotadminPage implements OnInit {
       'carduser': ["", Validators.compose([Validators.pattern('([0-9]){13}$'), Validators.required])]
 
     })
+  }
+
+  async ConfirmLogout() {
+    const alert = await this.alertController.create({
+      message: 'ต้องการออกจากระบบหรือไม่ ? ',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            this.route.navigate(['/login'])
+          }
+        }, {
+          text: 'ยกเลิก',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  closeTab() {
+    this.menu.enable(false);
+    this.isShowOpenTab = false;
+    this.isShowCloseTab = false;
+  }
+  openTab() {
+    this.menu.enable(true);
+    this.isShowOpenTab = true;
+    this.isShowCloseTab = true;
   }
 
   // ---------------------------------------------------------------------- Validate

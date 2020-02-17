@@ -3,8 +3,7 @@ using System;
 namespace AMApi.Models
 {
     public class product
-    {
-        public string IdStock { get; set; }
+    {        
         public string IdProduct { get; set; }
         public string NameProduct { get; set; }
         public string TypeProduct { get; set; }
@@ -15,6 +14,7 @@ namespace AMApi.Models
         public string AmountProduct { get; set; }
         public string StatusProduct { get; set; }
         public Boolean StatusCheck { get; set; }  
+        public string TotalShow { get; set; }
     }
     public class Stock
     {

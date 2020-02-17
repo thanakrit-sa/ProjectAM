@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { OrderListPage } from './order-list.page';
 import {NgxPaginationModule} from 'ngx-pagination';
+
 const routes: Routes = [
   {
     path: '',
@@ -20,7 +21,8 @@ const routes: Routes = [
     FormsModule,
     NgxPaginationModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+   
   ],
   declarations: [OrderListPage]
 })

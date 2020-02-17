@@ -15,7 +15,7 @@ namespace AMApi.Controllers
 
         public static List<Store> DataStore = new List<Store>
         {
-            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/12/2563 13:28:15",CostProduct="2999"},
+            // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/12/2563 13:28:15",CostProduct="2999"}
             // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/11/2563 13:28:15",CostProduct="2999"},
             // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/1/2563 13:28:15",CostProduct="2999"},
             // new Store {IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TotalProduct="1",AddProductStore = "03/2/2563 13:28:15",CostProduct="2999"},

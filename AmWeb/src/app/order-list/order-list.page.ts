@@ -9,7 +9,8 @@ import { UserService } from '../service/user.service';
 import { Order } from 'src/Models/order';
 import { OrderService } from '../service/order.service';
 import { AlertController, ToastController } from '@ionic/angular';
-
+import { DetailProductPage } from 'src/app/detail-product/detail-product.page';
+import { ModalController } from '@ionic/angular';
 @Component({
   selector: 'app-order-list',
   templateUrl: './order-list.page.html',
@@ -98,8 +99,8 @@ import { AlertController, ToastController } from '@ionic/angular';
   
     
     <ion-col class="co" >
-        <ion-button  color="dark" (click)="getdetail(a.idOrder)" >รายละเอียดสินค้า</ion-button> 
-
+      
+<ion-button (click)="openModal(a.idOrder)">รายละเอียดสินค้า</ion-button>
         <ion-button  color="secondary" (click)="okorder(a.idOrder)" *ngIf="a.status == 'สั่งซื้อ'" class="a">รับคำสั่งซื้อ</ion-button>
         <ion-button  color="success" (click)="sendorder(a.idOrder)" *ngIf="a.status == 'รับสั่งซื้อ'" class="a">รับสั่งซื้อ</ion-button>     
         <ion-button  color="danger" disabled (click)="sendorder(a.idOrder)" *ngIf="a.status == 'ยกเลิก'" class="a">ยกเลิก</ion-button>     
@@ -108,6 +109,10 @@ import { AlertController, ToastController } from '@ionic/angular';
     </ion-col>
  
   </ion-row>
+ 
+    
+ 
+    <p *ngIf="dataReturned">{{dataReturned}}</p>
   </ion-card-content>
 </ion-card><br>
 <div class="page">
@@ -143,7 +148,7 @@ export class OrderListPage implements OnInit {
   order: any;
   datafilter: Order[] = [];
   arrayfilter: Order[] = [];
-
+  dataReturned: any;
   constructor(
     public route: Router,
     public productApi: ProductService,
@@ -151,7 +156,8 @@ export class OrderListPage implements OnInit {
     public userApi: UserService,
     public orderApi: OrderService,
     public alertController: AlertController,
-    public tost: ToastController
+    public tost: ToastController,
+    public modalController: ModalController
   ) { }
 
   ///////////////////////////////////////////////////////////////
@@ -170,6 +176,25 @@ export class OrderListPage implements OnInit {
     this.getdataarray();
   }
 
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: DetailProductPage,
+      componentProps: {
+        "paramID": 123,
+        "paramTitle": "Test Title"
+      }
+    });
+
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        this.dataReturned = dataReturned.data;
+        //alert('Modal Sent Data :'+ dataReturned);
+      }
+    });
+
+    return await modal.present();
+  }
+
   getall() {
     this.orderApi.GetListAllProduct().subscribe(it => {
       console.log(it);
@@ -177,7 +202,7 @@ export class OrderListPage implements OnInit {
       console.log(this.dataOrder);
     });
   }
-countdata
+  countdata
   getdataarray() {
     this.orderApi.GetListAllProduct().subscribe(it => {
       this.dataOrder = it;
@@ -186,8 +211,8 @@ countdata
         this.datafilter[index] = this.dataOrder[index]
         this.arrayfilter[index] = this.datafilter[index]
       }
-this.countdata = Object.keys(this.datafilter).length
-    
+      this.countdata = Object.keys(this.datafilter).length
+
     });
   }
   //////////////////////////////////////////////////////////////
@@ -200,7 +225,7 @@ this.countdata = Object.keys(this.datafilter).length
     else {
       this.datafilter = this.arrayfilter.filter(it =>
         it.status == data
-        
+
       )
       this.countdata = Object.keys(this.datafilter).length
     }

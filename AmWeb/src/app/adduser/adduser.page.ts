@@ -5,6 +5,9 @@ import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
+import { ProductService } from "src/app/service/product.service";
+
 @Component({
   selector: 'app-adduser',
   templateUrl: './adduser.page.html',
@@ -14,14 +17,27 @@ export class AdduserPage implements OnInit {
   dataadmin: FormGroup;
   submit: boolean = false;
   dataUs: admin;
-
+  
+  public dataAdminAll: admin;
   isShowValidateName: boolean = false;
   isShowValidateUsername: boolean = false;
   isShowValidatePassword: boolean = false;
   isShowValidateTel: boolean = false;
   isShowValidateLevel: boolean = false;
   isShowValidateAddress: boolean = false;
-  constructor(public alertController: AlertController, public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
+  isShowCloseTab: boolean = true;
+  isShowOpenTab: boolean = true;
+  isShowImage: boolean = false;
+  selectedImage: any;
+  imageUrl: any;
+  image: string;
+
+
+  
+ 
+
+
+  constructor(public api:ProductService,private menu: MenuController, public alertController: AlertController, public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.dataadmin = this.formbuilder.group({
       // 'idadmin': [null, Validators.required],
       'nameadmin': ["", Validators.required],
@@ -29,9 +45,44 @@ export class AdduserPage implements OnInit {
       'passwordadmin': ["", Validators.required],
       'teladmin': ["", Validators.compose([Validators.pattern('(^0)([1-9]){2}-([1-9]){3}-([0-9]){4}$'), Validators.required])],
       'leveladmin': ["", Validators.required],
-      'addressadmin': ["", Validators.required]
+      'addressadmin': ["", Validators.required],
+      'file': ["", Validators.required]
 
     })
+  }
+   
+  async ConfirmLogout() {
+    const alert = await this.alertController.create({
+      message: 'ต้องการออกจากระบบหรือไม่ ? ',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            this.route.navigate(['/login'])
+          }
+        }, {
+          text: 'ยกเลิก',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  closeTab() {
+    this.menu.enable(false);
+    this.isShowOpenTab = false;
+    this.isShowCloseTab = false;
+  }
+  openTab() {
+    this.menu.enable(true);
+    this.isShowOpenTab = true;
+    this.isShowCloseTab = true;
   }
 
   // ------------------------------------------------------------------------------------- Validation
@@ -47,6 +98,7 @@ export class AdduserPage implements OnInit {
 
   public errorMessages = {
     teladmin: [
+
       { type: 'pattern', message: 'กรุณากรอกเบอร์โทรให้ถูกต้อง 0XX-XXX-XXXX' }
     ],
   };
@@ -149,8 +201,11 @@ export class AdduserPage implements OnInit {
   }
 
   log() {
+    this.dataadmin.value.file = this.api.imageName
+    console.log(this.api.imageName);
+    
     this.submit = true;
-    console.log(this.dataadmin.value);
+    console.log(this.dataadmin.value.file);
     console.log(this.dataadmin);
     this.dataUs = this.dataadmin.value;
     this.userApi.AddDataAdmin(this.dataUs).subscribe(it => {
@@ -160,6 +215,41 @@ export class AdduserPage implements OnInit {
   }
 
   ngOnInit() {
+
+  this.userApi.GetAdminAll().subscribe((it) => {
+      console.log(it);
+      this.dataAdminAll = it;      
+      console.log(this.dataAdminAll);
+      for (let index = 0; index < Object.keys(this.dataAdminAll).length; index++) {
+        console.log(this.dataAdminAll[index].file);       
+        
+      }
+    });
+    
+    
+  }
+
+  imageSelect(event) {
+
+    
+    this.selectedImage = event.target.files[0];
+    console.log(this.selectedImage);
+    
+
+    let reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      this.imageUrl = e.target.result;
+     
+    };
+    
+    reader.readAsDataURL(this.selectedImage);
+    
   }
 
 }
+
+ 
+
+ 
+

@@ -2,14 +2,21 @@
   <ion-toolbar color="dark" text-center>
     <ion-row>
       <ion-col>
-        <ion-buttons>
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
+        <ion-button color="dark" class="btnTab" (click)="closeTab()" *ngIf="isShowCloseTab == true">
+          <ion-icon size="large" name="close-circle-outline"></ion-icon>
+        </ion-button>
+        <ion-button color="dark" class="btnTab" (click)="openTab()" *ngIf="isShowOpenTab == false">
+          <ion-icon size="large" name="menu"></ion-icon>
+        </ion-button>
       </ion-col>
       <ion-col>
-        <ion-title class="header-title">คลังสินค้า</ion-title>
+        <ion-title>แผงควบคุม</ion-title>
       </ion-col>
-      <ion-col></ion-col>
+      <ion-col>
+        <ion-button color="dark" class="btnTabExit" (click)="openTab()">
+          <ion-icon size="large" name="exit"></ion-icon>
+        </ion-button>
+      </ion-col>
     </ion-row>
   </ion-toolbar>
 </ion-header>
@@ -118,12 +125,12 @@
         </ion-col>
         <ion-col class="aa">
           <ion-label>
-            {{ s.addProductStore | date:'shortTime' }}
+            {{ s.addProductStore}}
           </ion-label>
         </ion-col>
         <ion-col class="aa">
           <ion-label>
-            {{ s.addProductStore | date:'longDate' }}
+            {{ s.addProductStore}}
           </ion-label>
         </ion-col>
         <!-- <ion-col>

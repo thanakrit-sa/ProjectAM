@@ -9,6 +9,7 @@ import { ProductService } from '../service/product.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { filter } from 'minimatch';
 import { AlertController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 
 
 @Component({
@@ -36,8 +37,10 @@ export class AddStorePage implements OnInit {
   // isShowBtn:boolean=true;
   isShowValidate: boolean = false;
   isShowValidateTotal: boolean = false;
+  isShowCloseTab:boolean = true;
+  isShowOpenTab:boolean = true;
   
-  constructor(public alertController: AlertController, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder, public productApi: ProductService, public activate: ActivatedRoute) {
+  constructor(private menu: MenuController,public alertController: AlertController, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder, public productApi: ProductService, public activate: ActivatedRoute) {
     this.dataStore = this.formbuilder.group({
       // 'idStore': [null, Validators.required],
       'idProduct': [null, Validators.required],
@@ -53,6 +56,40 @@ export class AddStorePage implements OnInit {
     //   console.log(this.getDataProduct);
     // });
   } 
+
+  async ConfirmLogout() {
+    const alert = await this.alertController.create({      
+      message: 'ต้องการออกจากระบบหรือไม่ ? ',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {            
+            this.route.navigate(['/login'])
+          }
+        },{
+          text: 'ยกเลิก',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  closeTab(){
+    this.menu.enable(false);
+    this.isShowOpenTab = false;
+    this.isShowCloseTab = false;
+  }
+  openTab(){
+    this.menu.enable(true);
+    this.isShowOpenTab = true;
+    this.isShowCloseTab = true;
+  }
   
   // ---------------------------------------------------------------------------- Validate
 
@@ -91,6 +128,7 @@ export class AddStorePage implements OnInit {
   // -------------------------------------------------------------------------------------- Getshow
 
   ngOnInit() {
+    
     this.productApi.GetProductAll().subscribe((it) => {
       console.log(it);
       this.dataProductAll = it;
