@@ -31,7 +31,7 @@ export class HomePage {
 
   test: Order[] = []
   dataorder: Order[] = [];
-
+  item: Order
   test111 = "sssss"
   dataOrder1: Order
   datadatebill: Date
@@ -44,7 +44,12 @@ export class HomePage {
 
 
   }
-
+  doRefresh(refresher) {
+    this.callapi.GetListAllProduct().subscribe(it => { 
+      this.item= it
+      refresher.target.complete();
+    });
+  }
 
   createPdf() {
     var docDefinition = {
@@ -106,7 +111,7 @@ export class HomePage {
 
       ],
       styles: {
-        ss:{},
+        ss: {},
         header: {
           fontSize: 18,
           bold: true,
@@ -157,7 +162,7 @@ export class HomePage {
     }
   }
 
-dataname:any[]=[]
+  dataname: any[] = []
   getdatafilter() {
     this.callapi.GetListAllProduct().subscribe(it => {
       console.log(it.dateOrder);
@@ -172,10 +177,10 @@ dataname:any[]=[]
 
       }
       console.log(this.dataname);
-      
-      
-     
-      this.databill.order = this.dataOrder1.nameProduct 
+
+
+
+      this.databill.order = this.dataOrder1.nameProduct
       console.log(this.databill.order);
     });
 

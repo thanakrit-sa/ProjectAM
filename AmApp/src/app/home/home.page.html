@@ -2,10 +2,12 @@
   <ion-toolbar></ion-toolbar>
   </ion-header>
  <ion-content>
-
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 <ion-item>
   <ion-label >From</ion-label>
-  <ion-input [(ngModel)]="letterObj.from"></ion-input>
+  <ion-input [(ngModel)]="letterObj.from">{{item}}</ion-input>
 </ion-item>
 <ion-item>
   <ion-label >to</ion-label>

@@ -34,7 +34,9 @@ import { User } from '../Models/User';
 </ion-header>
 
 <ion-content padding>
-
+<ion-refresher (ionRefresh)="doRefresh($event)">
+<ion-refresher-content></ion-refresher-content>
+</ion-refresher>
     <ion-button class="btn" *ngIf="datausercheckstatus =='พร้อมใช้งาน'" (click)="gotoOrder()"><ion-label><h2><b>สั่งซื้อ</b></h2></ion-label></ion-button >    
   <br><br>
     <div text-center>
@@ -81,11 +83,7 @@ import { User } from '../Models/User';
           <ion-label>{{a.amountProduct}}</ion-label>
         </ion-col>
 
-<<<<<<< HEAD
-        <ion-col size="2">
-=======
         <ion-col size="2" text-center>
->>>>>>> 87c5ef88b8b94a2bea3ccbfde211f2037a950874
           <ion-label>{{a.dateOrder}}</ion-label>
         </ion-col>
 
@@ -178,7 +176,16 @@ export class ListPage implements OnInit {
 
 
   }
-
+  doRefresh(refresher) {
+    this.callApi.GetOrderbyUsername(this.userName).subscribe(it => {
+      this.dataUser = it
+      console.log(this.dataUser);
+      for (let index = 0; index < Object.keys(this.dataUser).length; index++) {
+        this.datafilter[index] = this.dataUser[index]
+      }
+      refresher.target.complete();
+    });
+  }
 
   ngOnInit() {
     this.userName = this.callApi.nameUser
