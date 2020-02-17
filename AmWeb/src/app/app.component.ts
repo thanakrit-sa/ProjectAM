@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserService } from 'src/app/service/user.service';
 import { MenuController } from '@ionic/angular';
+import { ProductService } from "src/app/service/product.service";
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -13,7 +14,7 @@ import { MenuController } from '@ionic/angular';
 
 
 export class AppComponent {
-  isShowMenu: boolean = true;
+  
   public appPages = [
     {
       title: 'แผงควบคุม',
@@ -53,7 +54,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     public userApi:UserService,
     private statusBar: StatusBar,
-    private menu: MenuController
+    private menu: MenuController,
+    public api:ProductService
   ) {
     
     this.initializeApp();
@@ -65,12 +67,7 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
+ 
 
-  openEnd() {    
-      if (this.menu.enable(true)) {
-        this.menu.enable(false);
-      } else {
-        this.menu.enable(true);
-      }    
-  }
+
 }

@@ -13,6 +13,9 @@ export class admin {
         leveladmin: string;
 
         addressadmin: string;
+
+        file: string;
+        
 }
 
 export class user {
@@ -32,4 +35,7 @@ export class user {
         addressuser: string;
 
         cardser: string;
+
+        file: string;
+      
 }

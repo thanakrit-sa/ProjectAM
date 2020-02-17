@@ -10,8 +10,12 @@ namespace AMApi.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
 
+
+
     public class UserController : ControllerBase
     {
+
+        
         public static List<Admin> DataAdmin = new List<Admin>
         {
             new Admin { IdAdmin = "1", NameAdmin = "admin1" , UsernameAdmin =  "1234", PasswordAdmin = "1234" ,TelAdmin = "0165466516" , LevelAdmin = "Admin" ,AddressAdmin = "15/8 ขอนแก่น"},
@@ -43,7 +47,8 @@ namespace AMApi.Controllers
                 UsernameAdmin = Adminx.UsernameAdmin,
                 PasswordAdmin = Adminx.PasswordAdmin,
                 LevelAdmin = Adminx.LevelAdmin,
-                AddressAdmin = Adminx.AddressAdmin
+                AddressAdmin = Adminx.AddressAdmin,
+                File = Adminx.File
             };
 
             DataAdmin.Add(item);
@@ -117,6 +122,7 @@ namespace AMApi.Controllers
                 StatusUser = Userx.StatusUser,
                 AddressUser = Userx.AddressUser,
                 CardUser = Userx.CardUser
+                
             };
 
             DataUser.Add(item);
@@ -150,8 +156,7 @@ namespace AMApi.Controllers
             var delete = DataUser.FirstOrDefault(it => it.IdUser == id.ToString());
             DataUser.Remove(delete);
         }
-
-
-    }
+            }
+    
 
 }

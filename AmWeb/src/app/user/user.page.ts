@@ -5,6 +5,9 @@ import { NavController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
+import { ProductService } from "src/app/service/product.service";
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
@@ -16,7 +19,53 @@ export class UserPage implements OnInit {
   public dataUserAll: user;
   isShowAdmin: boolean = false;
   isShowUser: boolean = false;
-  constructor(public alertController: AlertController,public activate: ActivatedRoute, public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) { }
+  isShowCloseTab: boolean = true;
+  isShowOpenTab: boolean = true;
+  response: { 'dbPath': '' };
+  user = {
+    "imgPath": ''
+  }
+  selectedImage: any;
+  imageUrl: any;
+  a:admin []=[];
+  aaa:admin []=[];
+  constructor(public api:ProductService,private menu: MenuController, public alertController: AlertController, public activate: ActivatedRoute, public userApi: UserService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) { }
+
+
+
+  async ConfirmLogout() {
+    const alert = await this.alertController.create({
+      message: 'ต้องการออกจากระบบหรือไม่ ? ',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            this.route.navigate(['/login'])
+          }
+        }, {
+          text: 'ยกเลิก',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  closeTab() {
+    this.menu.enable(false);
+    this.isShowOpenTab = false;
+    this.isShowCloseTab = false;
+  }
+  openTab() {
+    this.menu.enable(true);
+    this.isShowOpenTab = true;
+    this.isShowCloseTab = true;
+  }
 
   ngOnInit() {
     this.getShowAdmin();
@@ -26,14 +75,47 @@ export class UserPage implements OnInit {
   ionViewDidEnter() {
     this.getShowAdmin();
     this.getShowUser();
+   
   }
 
   getShowAdmin() {
     this.userApi.GetAdminAll().subscribe((it) => {
       console.log(it);
-      this.dataAdminAll = it;
+      this.dataAdminAll = it;      
       console.log(this.dataAdminAll);
+      for (let index = 0; index < Object.keys(this.dataAdminAll).length; index++) {
+        console.log(this.dataAdminAll[index].file);  
+        // this.a[index] =  this.dataAdminAll[index].file
+        // this.aaa[index] =  this.dataAdminAll[index].file.split(":");    
+        // console.log(this.aaa[index]);
+           
+      }
+     
+      
     });
+  }
+
+
+     
+
+  imageSelect() {
+
+    
+    // this.selectedImage = this.api.imageName
+    console.log(this.api.imageName);
+    
+    console.log(this.selectedImage);
+    
+
+    // let reader = new FileReader();
+
+    // reader.onload = (e: any) => {
+    //   this.imageUrl = e.target.result;
+     
+    // };
+    
+    // reader.readAsDataURL(this.selectedImage);
+    
   }
 
   getShowUser() {
@@ -48,8 +130,7 @@ export class UserPage implements OnInit {
     this.userApi.DeleteDataAdmin(idAdmin).subscribe(it => {
       this.userApi.GetAdminAll().subscribe((it) => {
         console.log(it);
-        this.dataAdminAll = it;
-        console.log(this.dataAdminAll);
+        this.dataAdminAll = it;        
 
       });
     });
@@ -88,7 +169,7 @@ export class UserPage implements OnInit {
     });
   }
   async ConfirmDeleteAdmin(idAdmin) {
-    const alert = await this.alertController.create({      
+    const alert = await this.alertController.create({
       message: 'ต้องการที่จะลบข้อมูลผู้ดูแลหรือไม่',
       buttons: [
         {
@@ -99,7 +180,7 @@ export class UserPage implements OnInit {
           }
         }, {
           text: 'ยกเลิก',
-          role: 'cancel',          
+          role: 'cancel',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
@@ -110,7 +191,7 @@ export class UserPage implements OnInit {
   }
 
   async ConfirmDeleteUser(idUser) {
-    const alert = await this.alertController.create({      
+    const alert = await this.alertController.create({
       message: 'ต้องการที่จะลบข้อมูลสมาชิกหรือไม่',
       buttons: [
         {
@@ -121,7 +202,7 @@ export class UserPage implements OnInit {
           }
         }, {
           text: 'ยกเลิก',
-          role: 'cancel',          
+          role: 'cancel',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }

@@ -9,6 +9,8 @@ namespace AMApi.Models
         public string TelAdmin { get; set; }
         public string LevelAdmin { get; set; }
         public string AddressAdmin { get; set; }
+        public string File { get; set; }
+        
     }
      public class User
     {

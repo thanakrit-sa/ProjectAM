@@ -2,13 +2,18 @@
 .color {
     background-color: #f4f5f8!important;
 }
-
-.ion-color-vibrant {
-    --ion-color-base: #ffff00;
-    --ion-color-base-rgb: 255,255,0;
-    --ion-color-contrast: #000000;
-    --ion-color-contrast-rgb: 0,0,0;
-    --ion-color-shade: #e0e000;
-    --ion-color-tint: #ffff1a;
-  }
-
+.split-pane-md.split-pane-visible>.split-pane-side {
+    min-width: 100px;
+    max-width: 15%;      
+}
+.tabColor {
+    --background-color: green($color: #000000);
+}
+.avatar {
+    margin-left: 20px;
+}
+.iconAvatar {
+    width: 65px;
+    height: 65px;
+    margin-left: 20px;
+}

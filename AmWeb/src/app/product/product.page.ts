@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../service/user.service';
 import { AlertController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 @Component({
   selector: 'app-product',
   templateUrl: './product.page.html',
@@ -13,16 +14,52 @@ import { AlertController } from '@ionic/angular';
 })
 export class ProductPage implements OnInit {
 
-  public dataProductAll :product;
-  datafilter:product[] = [];
-  filtertype:product[] = [];
-  pagenumber:number = 1;
-  sumProductNumber:number;
-  constructor(public alertController: AlertController,public activate: ActivatedRoute,public userApi:UserService, public productApi: ProductService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
+  public dataProductAll: product;
+  datafilter: product[] = [];
+  filtertype: product[] = [];
+  pagenumber: number = 1;
+  sumProductNumber: number;
+  isShowCloseTab: boolean = true;
+  isShowOpenTab: boolean = true;
+  constructor(private menu: MenuController, public alertController: AlertController, public activate: ActivatedRoute, public userApi: UserService, public productApi: ProductService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     console.log(this.userApi.statusAdmin);
     console.log(this.userApi.nameAdmin);
-    
-   }
+
+  }
+
+  async ConfirmLogout() {
+    const alert = await this.alertController.create({
+      message: 'ต้องการออกจากระบบหรือไม่ ? ',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            this.route.navigate(['/login'])
+          }
+        }, {
+          text: 'ยกเลิก',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  closeTab() {
+    this.menu.enable(false);
+    this.isShowOpenTab = false;
+    this.isShowCloseTab = false;
+  }
+  openTab() {
+    this.menu.enable(true);
+    this.isShowOpenTab = true;
+    this.isShowCloseTab = true;
+  }
 
   ngOnInit() {
     this.productApi.GetProductAll().subscribe((it) => {
@@ -36,15 +73,15 @@ export class ProductPage implements OnInit {
       console.log(this.filtertype);
       console.log(this.dataProductAll);
       console.log(this.datafilter);
-      
-      
-      
-      
+
+
+
+
     });
   }
 
   async ConfirmDelete(idProduct) {
-    const alert = await this.alertController.create({      
+    const alert = await this.alertController.create({
       message: 'ต้องการที่จะลบสินค้าหรือไม่ ?',
       buttons: [
         {
@@ -55,7 +92,7 @@ export class ProductPage implements OnInit {
           }
         }, {
           text: 'ยกเลิก',
-          role: 'cancel',          
+          role: 'cancel',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
@@ -65,7 +102,7 @@ export class ProductPage implements OnInit {
     await alert.present();
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     this.productApi.GetProductAll().subscribe((it) => {
       console.log(it);
       this.dataProductAll = it;
@@ -76,13 +113,13 @@ export class ProductPage implements OnInit {
       console.log(this.filtertype);
       console.log(this.dataProductAll);
       console.log(this.datafilter);
-      
-      
-      
-      
+
+
+
+
     });
   }
-  
+
   deleteDataProduct(idProduct) {
     this.productApi.DeleteDataPeoduct(idProduct).subscribe(it => {
       this.productApi.GetProductAll().subscribe((it) => {
@@ -98,8 +135,8 @@ export class ProductPage implements OnInit {
     this.route.navigate(['/edit-product', { _id: id }]);
   }
 
-  filter(){
+  filter() {
     this.datafilter = this.filtertype.filter(it => it.typeProduct == "อาหาร");
-    
+
   }
 }

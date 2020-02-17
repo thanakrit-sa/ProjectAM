@@ -2,14 +2,21 @@
   <ion-toolbar color="dark" text-center>
     <ion-row>
       <ion-col>
-        <ion-buttons>
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
+        <ion-button color="dark" class="btnTab" (click)="closeTab()" *ngIf="isShowCloseTab == true">
+          <ion-icon size="large" name="close-circle-outline"></ion-icon>
+        </ion-button>
+        <ion-button color="dark" class="btnTab" (click)="openTab()" *ngIf="isShowOpenTab == false">
+          <ion-icon size="large" name="menu"></ion-icon>
+        </ion-button>
       </ion-col>
       <ion-col>
-        <ion-title class="header-title">สินค้า</ion-title>
+        <ion-title>แผงควบคุม</ion-title>
       </ion-col>
-      <ion-col></ion-col>
+      <ion-col>
+        <ion-button color="dark" class="btnTabExit" (click)="ConfirmLogout()">
+          <ion-icon size="large" name="exit"></ion-icon>
+        </ion-button>
+      </ion-col>
     </ion-row>
   </ion-toolbar>
 </ion-header>
@@ -28,7 +35,17 @@
   </div>
   <br>
   <ion-card>
-    <ion-card-content>
+    <ion-card-header (click)="showcontentAdmin()" class="header" text-center>
+      <ion-row>        
+        <ion-col>
+          <ion-label>
+            <h2><b>ส่วนผู้ดูแลระบบ</b></h2>
+          </ion-label>
+        </ion-col>      
+      </ion-row>          
+    </ion-card-header>    
+    <ion-card-content class="content">
+      <br>
       <ion-row text-center style="border-bottom: groove">
         <ion-col>
           <ion-label>
@@ -120,5 +137,6 @@
       </ion-col>
     </ion-row>
   </div>
+  
 
 </ion-content>

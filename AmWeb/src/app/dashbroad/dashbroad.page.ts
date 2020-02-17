@@ -21,6 +21,8 @@ export class DashbroadPage implements OnInit {
   sumAmountProductInStore: number = 0;
   sumAmountProductSellInStore: number = 0;
   sumAmountProductTotalInStore: number = 0;
+  isShowCloseTab:boolean = true;
+  isShowOpenTab:boolean = true;
   sumSellPerProduct: number[] = [];
   sumSell: number = 0;
   sumCostPerProduct: number[] = [];
@@ -36,9 +38,21 @@ export class DashbroadPage implements OnInit {
   ngOnInit() {
     this.openChart();    
     this.productGetAll();
-    
-    
+    console.log(this.productApi.opentab);  
+    this.menu.enable(true); 
   }
+
+  closeTab(){
+    this.menu.enable(false);
+    this.isShowOpenTab = false;
+    this.isShowCloseTab = false;
+  }
+  openTab(){
+    this.menu.enable(true);
+    this.isShowOpenTab = true;
+    this.isShowCloseTab = true;
+  }
+
   // events on slice click
   public chartClicked(e: any): void {
     console.log(e);

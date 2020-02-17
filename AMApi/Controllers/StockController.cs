@@ -14,11 +14,20 @@ namespace AMApi.Controllers
     {
         public static List<Stock> Stock = new List<Stock>
         {
+
+        };
+        public static List<Product> Product = new List<Product>
+        {
         };
         [HttpGet]
         public ActionResult<IEnumerable<Stock>> GetStockAll()
         {
             return Stock.ToList();
+        }
+        [HttpGet]
+        public ActionResult<IEnumerable<Product>> GetProductAll()
+        {
+            return Product.ToList();
         }
 
 
@@ -32,9 +41,9 @@ namespace AMApi.Controllers
         [HttpGet("{month}/{year}")]
         public ActionResult<Stock> GetStock(string month, string year)
         {
-            DateTime now = DateTime.Now;    
+            DateTime now = DateTime.Now;
             return Stock.Find(it => DateTime.Parse(it.StockPerMonth).Month == now.Month && DateTime.Parse(it.StockPerMonth).Year == now.Year);
-            
+
         }
 
         [HttpPost]
@@ -42,6 +51,7 @@ namespace AMApi.Controllers
         {
             Guid id = Guid.NewGuid();
             var addDate = DateTime.Now;
+           
             var item = new Stock
             {
                 IdStock = id.ToString(),
@@ -49,6 +59,7 @@ namespace AMApi.Controllers
                 StockPerMonth = addDate.ToString()
             };
 
+            
             Stock.Add(item);
             return item;
 
@@ -58,13 +69,11 @@ namespace AMApi.Controllers
         public Stock UpdateStock(string id, [FromBody] Stock Stockx)
         {
             var _id = Stock.FirstOrDefault(it => it.IdStock == id.ToString());
-            var addDate = DateTime.Now;
-            var data = Stockx.DataProductPerMonth.ToArray();            
+            var addDate = DateTime.Now;                
             var item = new Stock
             {
-                IdStock = _id.IdStock,
-                
-                // DataProductPerMonth = Stockx.DataProductPerMonth.ToArray(),
+                IdStock = _id.IdStock,                
+                DataProductPerMonth = Stockx.DataProductPerMonth.ToArray(),
                 StockPerMonth = addDate.ToString()
             };
             Stock.Remove(_id);

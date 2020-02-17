@@ -7,6 +7,8 @@ import { FormGroup, FormBuilder, Validators, NgModel } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { product } from 'src/Models/product';
 import { ProductService } from "src/app/service/product.service";
+import { MenuController } from '@ionic/angular';
+
 @Component({
   selector: 'app-store',
   templateUrl: './store.page.html',
@@ -41,10 +43,13 @@ export class StorePage implements OnInit {
   datashowfilter: product[] = [];
   filtertype: store[] = [];  
 
+  isShowCloseTab:boolean = true;
+  isShowOpenTab:boolean = true;
+
   PageNumber: number = 1;
   sumProductNumber : number;
   
-  constructor(public api: ProductService, public alertController: AlertController, public activate: ActivatedRoute, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
+  constructor(private menu: MenuController,public api: ProductService, public alertController: AlertController, public activate: ActivatedRoute, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.dataStore = this.formbuilder.group({
       'idStore': [null, Validators.required],
       'idProduct': [null, Validators.required],
@@ -54,6 +59,17 @@ export class StorePage implements OnInit {
       'sellProduct': [null, Validators.required],
       'total': [null, Validators.required]
     });
+  }
+
+  closeTab(){
+    this.menu.enable(false);
+    this.isShowOpenTab = false;
+    this.isShowCloseTab = false;
+  }
+  openTab(){
+    this.menu.enable(true);
+    this.isShowOpenTab = true;
+    this.isShowCloseTab = true;
   }
 
   ngOnInit() {

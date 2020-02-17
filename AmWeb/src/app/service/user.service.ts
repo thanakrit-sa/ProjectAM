@@ -10,6 +10,7 @@ export class UserService {
 
   public statusAdmin:string;
   public nameAdmin:string;
+  public imageAdmin:string;
   public checkMenu:boolean = false;
   
   public static host: string = "https://localhost:5001/api/";

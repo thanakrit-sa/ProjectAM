@@ -5,6 +5,7 @@ import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.page.html',
@@ -19,7 +20,9 @@ export class AddProductPage implements OnInit {
   isShowValidateType: boolean = false;
   isShowValidatePrice: boolean = false;
   isShowValidateCost: boolean = false;
-  constructor(public alertController: AlertController, public productApi: ProductService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
+  isShowCloseTab: boolean = true;
+  isShowOpenTab: boolean = true;
+  constructor(private menu: MenuController, public alertController: AlertController, public productApi: ProductService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.dataProduct = this.formbuilder.group({
       'idProduct': [null, Validators.required],
       'nameProduct': [null, Validators.required],
@@ -30,6 +33,40 @@ export class AddProductPage implements OnInit {
   }
 
   get f() { return this.dataProduct.controls; }
+
+  async ConfirmLogout() {
+    const alert = await this.alertController.create({
+      message: 'ต้องการออกจากระบบหรือไม่ ? ',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            this.route.navigate(['/login'])
+          }
+        }, {
+          text: 'ยกเลิก',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  closeTab() {
+    this.menu.enable(false);
+    this.isShowOpenTab = false;
+    this.isShowCloseTab = false;
+  }
+  openTab() {
+    this.menu.enable(true);
+    this.isShowOpenTab = true;
+    this.isShowCloseTab = true;
+  }
 
   ngOnInit() {
   }
@@ -102,7 +139,7 @@ export class AddProductPage implements OnInit {
       this.isShowValidateName = false;
       this.isShowValidateType = false;
       this.isShowValidatePrice = false;
-      this.isShowValidateCost = true; 
+      this.isShowValidateCost = true;
       this.Alert();
     }
 

@@ -6,6 +6,7 @@ import { product } from 'src/Models/product';
 import { stock } from 'src/Models/stock';
 import { AlertController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-clear-store',
@@ -49,8 +50,14 @@ export class ClearStorePage implements OnInit {
   isShowButtonBack2: boolean = false;
   isShowContentStockDetail: boolean = false;
   isShowProductZero: boolean = false;
+  isShowProductZeroStock: boolean = false;
   isShowDate: boolean = false;
+  isShowTime: boolean = false;
+  isShowStatus: boolean = false;
   isShowButtonUpdate: boolean = false;
+  isTextStatus: boolean = false;
+  isShowCloseTab: boolean = true;
+  isShowOpenTab: boolean = true;
 
   sumProductList: number;
   sumProductIn: number;
@@ -59,6 +66,7 @@ export class ClearStorePage implements OnInit {
   productIn; productTotal; productSell;
 
   getShowStockAll;
+  getStock: stock;
   textPerStock: string;
   testStock;
   isIdStock;
@@ -79,10 +87,16 @@ export class ClearStorePage implements OnInit {
   testa: stock[] = [];
   showDate
 
-  splitted; isGetMonth; monthNow; dateNow; splittedYear; isGetYear; yearNow; updateData; updateId; updateDataAll: stock;
+  splitted; isGetMonth; monthNow; dateNow; splittedYear; isGetYear; yearNow;
+  // updateData; updateId; updateDataAll: stock;
 
+  dataStockOld;
+  allStock;
+  updateId: stock;
+  sss: stock;
+  fff: Date;
 
-  constructor(public actionSheetController: ActionSheetController, public alertController: AlertController, public storeapi: StoreService, public productApi: ProductService, public route: Router) {
+  constructor(private menu: MenuController, public actionSheetController: ActionSheetController, public alertController: AlertController, public storeapi: StoreService, public productApi: ProductService, public route: Router) {
     console.log(this.stockMounth);
     this.getShowStockAll = null;
   }
@@ -95,12 +109,12 @@ export class ClearStorePage implements OnInit {
           text: 'ตกลง',
           handler: () => {
             // if () {
-            this.getShowStock()
+
             this.getMonth();
             this.isShowButton = false;
             this.isShowButtonDisabled = true;
-            // }
-
+            this.showall()
+            this.getShowStock()
           }
         }, {
           text: 'ยกเลิก',
@@ -112,6 +126,39 @@ export class ClearStorePage implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  async ConfirmLogout() {
+    const alert = await this.alertController.create({
+      message: 'ต้องการออกจากระบบหรือไม่ ? ',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            this.route.navigate(['/login'])
+          }
+        }, {
+          text: 'ยกเลิก',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+  closeTab() {
+    this.menu.enable(false);
+    this.isShowOpenTab = false;
+    this.isShowCloseTab = false;
+  }
+  openTab() {
+    this.menu.enable(true);
+    this.isShowOpenTab = true;
+    this.isShowCloseTab = true;
   }
 
   checkMaster() {
@@ -144,35 +191,11 @@ export class ClearStorePage implements OnInit {
       this.yearNow = date.getFullYear();
       console.log(this.yearNow);
 
-      if (this.getShowStockAll.length == 0) {
-        this.filter();
-      } else if (this.isGetMonth == this.monthNow && this.isGetYear == this.yearNow) {
-        console.log("Success 1");
-      } else if (this.isGetMonth != this.monthNow && this.isGetYear != this.yearNow) {
-        this.filter();
-      }
-    })
-  }
 
-  checkUpdate() {
-    if (this.isGetMonth == this.monthNow && this.isGetYear == this.yearNow) {
-      this.updateData = this.datafilter.filter(it => it.statusCheck == true)
-      console.log(this.updateData);
-      this.productApi.GetStock(this.isGetMonth, this.isGetYear).subscribe(it => {
-        this.updateId = it
-        console.log(this.updateId.idStock);
-        this.updateDataAll = this.updateData;
-        console.log(this.updateDataAll);
-        
-        for (let index = 0; index < Object.keys(this.updateData).length; index++) {
-          this.stockMounth.dataProductPerMonth[index] = this.updateData[index];          
-        }
-        this.updateDataAll = this.stockMounth;
-        this.productApi.UpdateStock(this.updateId.idStock, this.updateDataAll).subscribe(it => {
-          console.log(it);
-        })
-      })      
-    }
+      this.filter();
+
+
+    })
   }
 
   checkEvent() {
@@ -208,14 +231,6 @@ export class ClearStorePage implements OnInit {
         this.isShowButtonUpdate = false
       }
     }
-    // else {
-    //   if(this.isGetMonth == this.monthNow && this.isGetYear == this.yearNow){
-    //     this.isShowButton = true        
-    //   } else if(this.isGetMonth != this.monthNow && this.isGetYear != this.yearNow){
-    //     this.isShowButton = false
-    //   }
-    // }
-
   }
 
   ngOnInit() {
@@ -226,53 +241,123 @@ export class ClearStorePage implements OnInit {
     this.sumProductNumber
     console.log(this.isShowButton);
     this.getShowStock();
-    // this.productApi.DeleteDataPeoduct(this.q).subscribe(it => {
-    //   console.log(it);
-    // });
+
+
+  }
+
+  getShowStock() {
+    this.getShowStockAll = null;
+    this.productApi.GetStockAll().subscribe(it => {
+      this.getShowStockAll = it
+      console.log(this.getShowStockAll);
+      if (this.getShowStockAll.length == 0) {
+        this.isShowProductZeroStock = false;
+      } else {
+        this.isShowProductZeroStock = true;
+      }
+    })
 
   }
 
   filter() {
 
-    console.log(this.stockMounth);
+    if (this.getShowStockAll.length == 0) {
+      console.log(this.stockMounth);
+      this.filterData = this.datafilter.filter(it => it.statusCheck == true)
+      console.log(this.filterData);
+      console.log(this.datafilter.filter(it => it.showTotal == 0));
 
-    this.filterData = this.datafilter.filter(it => it.statusCheck == true)
-    console.log(this.filterData);
-    console.log(this.datafilter.filter(it => it.showTotal == 0));
+      console.log(this.datafilter.filter(it => it.statusCheck));
+      for (let index = 0; index < Object.keys(this.filterData).length; index++) {
+        this.stockMounth.dataProductPerMonth[index] = this.filterData[index];
+        // this.stockMounth2 = this.stockMounth;
+        this.testa[index] = this.filterData[index].idProduct;
+        this.w[index] = this.filterData[index];
+        console.log(this.testa[index]);
+        this.q = this.testa[index];
+        this.e = this.w[index];
+        console.log(this.q);
+        console.log(this.e);
 
-    console.log(this.datafilter.filter(it => it.statusCheck));
-    for (let index = 0; index < Object.keys(this.filterData).length; index++) {
-      this.stockMounth.dataProductPerMonth[index] = this.filterData[index];
-      // this.stockMounth2 = this.stockMounth;
-      this.testa[index] = this.filterData[index].idProduct;
-      this.w[index] = this.filterData[index];
-      console.log(this.testa[index]);
-      this.q = this.testa[index];
-      this.e = this.w[index];
-      console.log(this.q);
-      console.log(this.e);
-
-      this.productApi.EditNumber(this.q, this.e).subscribe(it => {
+        this.productApi.EditNumber(this.q, this.e).subscribe(it => {
+          console.log(it);
+        });
+      }
+      // this.productApi.EditNumber(this.testa,this.filterData).subscribe(it => {
+      //   console.log(it);
+      // });
+      this.stockTest = this.stockMounth
+      console.log(this.stockTest);
+      this.productApi.AddStockTest(this.stockTest).subscribe(it => {
         console.log(it);
       });
+      this.getShowStock()
     }
 
+    // -------------------------------------------------------------------------------------------------
 
-    // this.productApi.EditNumber(this.testa,this.filterData).subscribe(it => {
-    //   console.log(it);
-    // });
-    this.stockTest = this.stockMounth
-    console.log(this.stockTest);
-    this.productApi.AddStockTest(this.stockTest).subscribe(it => {
-      console.log(it);
-    });
-    // this.closeContent();
-    // this.showContent();
-    // this.isShowButton = false;
-    this.getShowStock()
+    else if (this.isGetMonth == this.monthNow && this.isGetYear == this.yearNow) {
+      this.getShowStockAll = null;
+      this.productApi.GetStockAll().subscribe(it => {
+        this.getStock = it
+        console.log(this.getStock);
+        for (let index = 0; index < Object.keys(this.getStock).length; index++) {
+          this.dataStockOld = this.getStock[index].dataProductPerMonth;
+        }
+        console.log(this.dataStockOld);
 
 
+
+        for (let index = 0; index < this.dataStockOld.length; index++) {
+
+          this.stockMounth.dataProductPerMonth[index] = this.dataStockOld[index];
+
+        }
+
+        console.log(this.stockMounth);
+
+        this.filterData = this.datafilter.filter(it => it.statusCheck == true)
+        console.log(this.filterData);
+        for (let index = 0; index < this.filterData.length; index++) {
+          this.stockMounth.dataProductPerMonth.push(this.filterData[index]);
+          this.testa[index] = this.filterData[index].idProduct;
+          this.w[index] = this.filterData[index];
+          console.log(this.testa[index]);
+          this.q = this.testa[index];
+          this.e = this.w[index];
+          console.log(this.q);
+          console.log(this.e);
+
+          this.productApi.EditNumber(this.q, this.e).subscribe(it => {
+            console.log(it);
+          });
+        }
+        console.log(this.stockMounth);
+        this.productApi.GetStock(this.isGetMonth, this.isGetYear).subscribe(it => {
+          this.updateId = it
+          console.log(this.updateId.idStock);
+          console.log(this.getStock);
+
+          this.productApi.UpdateStock(this.updateId.idStock, this.stockMounth).subscribe(it => {
+            console.log(it);
+          })
+        })
+
+
+
+      })
+
+
+
+
+    }
+    // else if (this.isGetMonth != this.monthNow && this.isGetYear != this.yearNow) {
+    //   console.log("22222222222");
+
+    // }
   }
+
+
 
 
   ////////////////////////////////////////////////////////////////*//////////////////////
@@ -286,27 +371,30 @@ export class ClearStorePage implements OnInit {
         this.datafilter[index] = this.dataStoreAll[index];
         this.filtertype[index] = this.datafilter[index];
         this.sumProductNumber = Object.keys(this.datafilter).length;
-        console.log(this.filtertype[index]);
-        console.log(this.datafilter[index]);
-        console.log(this.datafilter[index].showTotal == 0);
-        this.showDataFilter[index] = this.datafilter[index].showTotal == 0;
-        console.log(this.showDataFilter[index]);
+        console.log(this.datafilter[index].totalShow);
 
-        // if (this.datafilter[index].showTotal == 1) {
-        //   this.datafilter[index].idProduct = "ตัดสต๊อกแล้ว"
-        //   this.datafilter[index].nameProduct  = "ตัดสต๊อกแล้ว"
-        //   this.datafilter[index].totalProduct  = "ตัดสต๊อกแล้ว"
-        //   this.datafilter[index].amountProduct  = "ตัดสต๊อกแล้ว"
-        //   this.datafilter[index].total  = "ตัดสต๊อกแล้ว"
-        //   this.datafilter[index].statusProduct  = "ตัดสต๊อกแล้ว"
-        // }
+
+        // this.showDataFilter[index] = this.datafilter[index].showTotal == 0;
+        // console.log(this.showDataFilter[index]);
+        console.log(this.datafilter[index].totalProduct);
+
+        if (this.datafilter[index].showTotal == 1) {
+          this.datafilter[index].totalShow = this.datafilter[index].totalProduct
+          this.datafilter[index].amountProduct = "0"
+          this.datafilter[index].totalProduct = this.datafilter[index].totalProduct
+          this.datafilter[index].buttonCheck = true;
+        }
+        // if (this.datafilter[index].showTotal == 0) {          
+        //   this.datafilter[index].totalShow  = this.datafilter[index].total
+        //   this.datafilter[index].amountProduct  = this.datafilter[index].amountProduct
+        //   this.datafilter[index].totalProduct  = this.datafilter[index].totalProduct      
+        // }    
       }
       this.showDataFilter = this.datafilter.filter(it => it.showTotal == 0);
       console.log(this.showDataFilter);
       console.log(this.showDataFilter.length);
       if (this.showDataFilter.length == 0) {
         this.isShowProductZero = true;
-
       }
 
       // if(){
@@ -369,6 +457,7 @@ export class ClearStorePage implements OnInit {
     console.log(statusinput);
     this.dataproduct = statusinput
     statusinput.buttonCheck = "check";
+    // this.isTextStatus = true;
   }
 
   dropdown(data) {
@@ -420,15 +509,7 @@ export class ClearStorePage implements OnInit {
     this.isShowButtonBack2 = true;
     this.isShowButton = false;
   }
-  getShowStock() {
-    this.getShowStockAll = null;
-    this.productApi.GetStockAll().subscribe(it => {
-      this.getShowStockAll = it
-      console.log(this.getShowStockAll);
 
-    })
-
-  }
   getShowDetailStock(id) {
     this.productApi.GetStockByid(id).subscribe(it => {
       this.dataStock = it

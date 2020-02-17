@@ -30,8 +30,8 @@ export class LoginPage implements OnInit {
   {
     this.usertApi.GetAdminAll().subscribe((it) => {      
       this.data = it; 
-      console.log(this.data);
-      
+      console.log(this.data);      
+      this.menu.enable(false);
     });
     
   }
@@ -45,6 +45,7 @@ export class LoginPage implements OnInit {
         console.log(this.data[index]);
         this.usertApi.statusAdmin = this.data[index].levelAdmin;
         this.usertApi.nameAdmin = this.data[index].nameAdmin;
+        this.usertApi.imageAdmin = this.data[index].file;
         console.log(this.usertApi.statusAdmin);
         console.log(this.usertApi.nameAdmin);
         this.route.navigate(['/dashbroad']);
