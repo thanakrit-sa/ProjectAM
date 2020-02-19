@@ -22,6 +22,15 @@ namespace AMApi.Models
         public string UserOrder {get; set;}
         public string StatusProduct { get; set; }
         public string CostProduct { get; set; }
+        
+    }
 
+    public class Receipt {
+
+        public string IdReceipt { get; set; }
+        public Order[] DataOrder { get; set; }
+        public string Date { get; set; }        
+        public string File { get; set; }
+        public string Status { get; set; }
     }
 }

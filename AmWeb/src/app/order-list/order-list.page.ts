@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from "src/app/service/product.service";
+import { ProductService } from "../service/product.service";
 import { product } from 'src/Models/product';
 import { admin } from 'src/Models/user';
 import { NavController } from '@ionic/angular';
@@ -149,6 +149,7 @@ export class OrderListPage implements OnInit {
   datafilter: Order[] = [];
   arrayfilter: Order[] = [];
   dataReturned: any;
+  DataOrder;
   constructor(
     public route: Router,
     public productApi: ProductService,
@@ -176,19 +177,38 @@ export class OrderListPage implements OnInit {
     this.getdataarray();
   }
 
-  async openModal() {
+  openModal(id) {
+    console.log(id);
+    
+    this.orderApi.GetProductById(id).subscribe(it => {
+      console.log(it);     
+      this.DataOrder = it
+      this.modal()
+    });   
+    
+  }
+
+  async modal() {
     const modal = await this.modalController.create({
-      component: DetailProductPage,
+      component: DetailProductPage,      
       componentProps: {
-        "paramID": 123,
-        "paramTitle": "Test Title"
+        "idOrder": this.DataOrder.idOrder,
+        "idProduct": this.DataOrder.idProduct,
+        "nameProduct": this.DataOrder.nameProduct,
+        "amount": this.DataOrder.amountProduct,
+        "price": this.DataOrder.priceOrder,
+        "nameUser": this.DataOrder.nameUser,
+        "tel": this.DataOrder.telUser,
+        "address": this.DataOrder.addressUser,
+        "date": this.DataOrder.dateOrder,
+        "status": this.DataOrder.status,
+        "file": this.DataOrder.file
       }
     });
 
     modal.onDidDismiss().then((dataReturned) => {
       if (dataReturned !== null) {
-        this.dataReturned = dataReturned.data;
-        //alert('Modal Sent Data :'+ dataReturned);
+        this.dataReturned = dataReturned.data;       
       }
     });
 

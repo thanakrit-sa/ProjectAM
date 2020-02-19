@@ -23,4 +23,21 @@ export class Order{
     userOrder:string
 
     status : string;
+
+    file : string;
 }
+
+export class receipt {
+    
+    idReceipt : string;
+
+    dataOrder : Order[];
+
+    status : string;
+
+    file : string;
+
+    date : string;
+
+}
+

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Product } from './Models/Product';
-import { Order } from './Models/Order';
+import { Order,receipt } from './Models/Order';
 import { User } from './Models/User'
 
 @Injectable({
@@ -33,6 +33,9 @@ export class CallApiService {
   public editsendorder(Id: string, data) {
     return this.http.put<Order>(CallApiService.host + 'Order/EditAcceptOrder/' + Id, data);
   }
+  public editAddFile(Id: string, data) {
+    return this.http.put<Order>(CallApiService.host + 'Order/EditAddFile/' + Id, data);
+  }
   public getallproduct() {
     return this.http.get<Product>(CallApiService.host + 'Product/GetProductAll');
   }
@@ -43,7 +46,7 @@ export class CallApiService {
     return this.http.get<Product>(CallApiService.host + 'Product/GetProductById/' + Id);
   }
   public CancelSellTotalProduct(id: string, data) {
-    return this.http.put<Order>(CallApiService.host + 'Order/CancelSellTotalProduct/' + id, data);
+    return this.http.put<Product>(CallApiService.host + 'Product/CancelSellTotalProduct/' + id, data);
   }
   public GetOrderbyUsername(data: string) {
     return this.http.get<Product>(CallApiService.host + 'Order/GetOrderbyUsername/' + data);
@@ -54,5 +57,14 @@ export class CallApiService {
   }
   public GetUserbyData(data: string) {
     return this.http.get<User>(CallApiService.host + 'User/GetUserBydata/' + data)
+  }
+  public AddReceipt(data: receipt) {    
+    return this.http.post<receipt>(CallApiService.host + 'Order/AddReceipt', data);
+  }
+  public GetReceiptAll() {
+    return this.http.get<receipt>(CallApiService.host + 'Order/GetReceiptAll')
+  }
+  public DeleteOrder(Id: string) {
+    return this.http.delete<Order>(CallApiService.host + 'Order/DeleteOrder/' + Id);
   }
 }

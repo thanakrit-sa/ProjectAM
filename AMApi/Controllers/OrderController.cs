@@ -28,7 +28,10 @@ namespace AMApi.Controllers
             // new Order {IdOrder = "100112" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "02/01/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="8000"},
         };
 
+        public static List<Receipt> Receipt = new List<Receipt>
+        {
 
+        };
         public static List<Product> DataProduct = new List<Product>
         {
 
@@ -51,10 +54,10 @@ namespace AMApi.Controllers
             return DataOrder.ToList().FindAll(it => it.UserOrder == data);
         }
 
-      [HttpGet("{data}/{data2}")]
+        [HttpGet("{data}/{data2}")]
         public ActionResult<IEnumerable<Order>> GetOrderdatebyfindallbyyrearandmonth(string data, string data2)
         {
-            return DataOrder.ToList().FindAll(it => (DateTime.Parse(it.DateOrder).Year.ToString() == data)&&((DateTime.Parse(it.DateOrder).Month.ToString() == data2)));
+            return DataOrder.ToList().FindAll(it => (DateTime.Parse(it.DateOrder).Year.ToString() == data) && ((DateTime.Parse(it.DateOrder).Month.ToString() == data2)));
         }
 
         [HttpGet("{data}")]
@@ -62,7 +65,7 @@ namespace AMApi.Controllers
         {
             return DataOrder.ToList().FindAll(it => DateTime.Parse(it.DateOrder).Month.ToString() == data);
         }
-         [HttpGet("{data}")]
+        [HttpGet("{data}")]
         public ActionResult<IEnumerable<Order>> GetOrderdatebyfindallbyyear(string data)
         {
             return DataOrder.ToList().FindAll(it => DateTime.Parse(it.DateOrder).Year.ToString() == data);
@@ -86,16 +89,41 @@ namespace AMApi.Controllers
                 NameProduct = Orderx.NameProduct,
                 AmountProduct = Orderx.AmountProduct,
                 PriceOrder = Orderx.PriceOrder,
-                NameUser = Orderx.NameUser,
-                AddressUser = Orderx.AddressUser,
-                TelUser = Orderx.TelUser,
+                // NameUser = Orderx.NameUser,
+                // AddressUser = Orderx.AddressUser,
+                // TelUser = Orderx.TelUser,
                 UserOrder = Orderx.UserOrder,
                 DateOrder = DateTime.Now.ToString("dd/MM/yyyy"),
-                Status = "สั่งซื้อ"
+                
             };
 
             DataOrder.Add(item);
             return item;
+        }
+
+        [HttpPut("{id}")]
+        public Order EditAddFile(string id, [FromBody] Order Orderx)
+        {
+            var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
+            var item = new Order
+            {
+                IdOrder = id,
+                IdProduct = Orderx.IdProduct,
+                NameProduct = Orderx.NameProduct,
+                AmountProduct = Orderx.AmountProduct,
+                PriceOrder = Orderx.PriceOrder,
+                NameUser = Orderx.NameUser,
+                AddressUser = Orderx.AddressUser,
+                TelUser = Orderx.TelUser,
+                DateOrder = Orderx.DateOrder,
+                UserOrder = Orderx.UserOrder,
+                Status = "รับสั่งซื้อ",
+
+            };
+            DataOrder.Remove(_id);
+            DataOrder.Add(item);
+            return item;
+
         }
 
         [HttpPut("{id}")]
@@ -114,12 +142,12 @@ namespace AMApi.Controllers
                 TelUser = Orderx.TelUser,
                 DateOrder = Orderx.DateOrder,
                 UserOrder = Orderx.UserOrder,
-                Status = "รับสั่งซื้อ"
+                Status = "รับสั่งซื้อ",
+
             };
             DataOrder.Remove(_id);
             DataOrder.Add(item);
             return item;
-
         }
 
         [HttpPut("{id}")]
@@ -139,7 +167,8 @@ namespace AMApi.Controllers
                 DateOrder = Orderx.DateOrder,
                 SendDate = DateTime.Now.ToString("dd/MM/yyyy"),
                 UserOrder = Orderx.UserOrder,
-                Status = "ส่งสินค้า"
+                Status = "ส่งสินค้า",
+
             };
             DataOrder.Remove(_id);
             DataOrder.Add(item);
@@ -163,6 +192,7 @@ namespace AMApi.Controllers
                 DateOrder = Orderx.DateOrder,
                 UserOrder = Orderx.UserOrder,
                 Status = "ยกเลิก"
+
             };
             DataOrder.Remove(_id);
             DataOrder.Add(item);
@@ -186,7 +216,8 @@ namespace AMApi.Controllers
                 DateOrder = Orderx.DateOrder,
                 SendDate = Orderx.SendDate,
                 UserOrder = Orderx.UserOrder,
-                Status = "ได้รับแล้ว"
+                Status = "ได้รับแล้ว",
+
             };
             DataOrder.Remove(_id);
             DataOrder.Add(item);
@@ -239,7 +270,53 @@ namespace AMApi.Controllers
             return item;
         }
 
+        [HttpDelete("{id}")]
+        public void DeleteOrder(string id)
+        {
+            var delete = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
+            DataOrder.Remove(delete);
+        }
 
+        // --------------------------------------------------------------------
+
+          [HttpGet]
+        public ActionResult<IEnumerable<Receipt>> GetReceiptAll()
+        {
+            return Receipt.ToList();
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Receipt> GetReceiptById(string id)
+        {
+            return Receipt.FirstOrDefault(it => it.IdReceipt == id.ToString());
+        }
+
+
+        [HttpPost]
+        public Receipt AddReceipt([FromBody] Receipt Receiptx)
+        {
+            var text = "OD";
+            var textsub = text.Substring(0, 1).ToString();
+            var id = Guid.NewGuid().ToString();
+            var textid = text + "-" + id.Substring(0, 4);
+            var addDate = DateTime.Now;
+
+            var item = new Receipt
+            {
+                IdReceipt = textid,
+                DataOrder = Receiptx.DataOrder.ToArray(),
+                Date = addDate.ToString(),
+                File = Receiptx.File,
+                Status = Receiptx.Status
+
+            };
+
+
+            Receipt.Add(item);
+            return item;
+
+        }
+      
     }
 
 }

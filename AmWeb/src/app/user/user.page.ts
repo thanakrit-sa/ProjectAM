@@ -130,8 +130,7 @@ export class UserPage implements OnInit {
     this.userApi.DeleteDataAdmin(idAdmin).subscribe(it => {
       this.userApi.GetAdminAll().subscribe((it) => {
         console.log(it);
-        this.dataAdminAll = it;        
-
+        this.dataAdminAll = it;   
       });
     });
   }

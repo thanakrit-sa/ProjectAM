@@ -297,6 +297,7 @@ namespace AMApi.Controllers
             var totalall = int.Parse(_id.TotalProduct) + int.Parse(amount);
             var item = new Product
             {
+                IdOrder = _id.IdOrder,
                 IdProduct = id,
                 NameProduct = _id.NameProduct,
                 TypeProduct = _id.TypeProduct,
@@ -307,6 +308,7 @@ namespace AMApi.Controllers
                 CostProduct = _id.CostProduct,
                 AmountProduct = amountall.ToString(),
                 // TotalProduct = _id.TotalProduct,
+                TotalShow = _id.Total,
                 Total = _id.Total,
 
             };

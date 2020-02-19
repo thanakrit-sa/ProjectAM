@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CallApiService } from '../call-api.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { ProductService } from "../product.service";
 
 @Component({
   selector: 'app-orderdetail',
@@ -16,7 +17,7 @@ export class OrderdetailPage implements OnInit {
   data: any;
 
 
-  constructor(public route: Router, public callApi: CallApiService, public activate: ActivatedRoute, public formbuilder: FormBuilder ,public alertController:AlertController) {
+  constructor(public api:ProductService,public route: Router, public callApi: CallApiService, public activate: ActivatedRoute, public formbuilder: FormBuilder ,public alertController:AlertController) {
     this.data = this.activate.snapshot.paramMap.get('_id');
   }
 
@@ -27,6 +28,17 @@ export class OrderdetailPage implements OnInit {
       console.log(this.dataOrder);
     });
 
+  } 
+
+  addFile(id) {
+    console.log(id);  
+    console.log(this.api.imageName);
+    console.log(this.dataOrder);
+    
+    this.dataOrder.file = this.api.imageName;
+    this.callApi.editAddFile(id,this.dataOrder).subscribe(it => {      
+      console.log(it);
+    });
   }
 
   editsendorder(id){
@@ -59,4 +71,30 @@ export class OrderdetailPage implements OnInit {
       
         await alert.present();
       }
+      async alertAddFile(id) {
+        const alert = await this.alertController.create({
+          header: 'ต้องการแนบหลักฐานการโอนเงินใช่หรือไม่ ?',
+      
+          buttons: [
+            {
+              text: 'ยกเลิก',
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: (blah) => {
+                console.log('ยกเลิก');
+              }
+            }, {
+              text: 'ตกลง',
+              handler: () => {
+               this.addFile(id)
+            
+              }
+            }
+          ]
+        });
+      
+        await alert.present();
+      }
+
+      
 }

@@ -1,17 +1,60 @@
 
-<ion-header>
-    <ion-toolbar text-center color="dark">
-      <ion-title>รายละเอียดสินค้า</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content padding>
-    <ion-grid>
-      <ion-row>
-        <ion-col text-center>
-          
-        </ion-col>
-      </ion-row>
+  <ion-header>
+  <ion-toolbar text-center color=dark>
+    <ion-title>รายละเอียดสินค้า</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-    </ion-grid>
-  </ion-content>
+<ion-content padding>
+  <ion-row>
+    <ion-col>
+      <b>รหัสการสั่งซื้อ : </b>{{idOrder}}
+    </ion-col>
+    <ion-col>
+      <b>ชื่อผู้สั่งซื้อ : </b>{{nameUser}}
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <b>รหัสสินค้า : </b>{{idProduct}}
+    </ion-col>
+    <ion-col>
+      <b>เบอร์โทรศัพท์ : </b>{{tel}}
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <b>ชื่อสินค้า : </b>{{nameProduct}}
+    </ion-col>
+    <ion-col>
+      <b>ที่อยู่ : </b>{{address}}
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <b>จำนวน : </b>{{amount}}
+    </ion-col>
+    <ion-col>
+      <b>วันที่ : </b>{{date}}
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <b>ราคา : </b>{{price}}
+    </ion-col>
+    <ion-col>
+      <b>สถานะ : </b>{{status}}
+    </ion-col>
+  </ion-row>
+  <br>
+  <ion-row>
+    <ion-col>
+      <b>รูปภาพหลักฐานการโอนเงิน</b>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <img src="{{file}}" class="img">
+    </ion-col>
+  </ion-row>
+</ion-content>
