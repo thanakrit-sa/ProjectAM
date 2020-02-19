@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from "@angular/router";
@@ -42,6 +42,7 @@ export class AppComponent {
     private statusBar: StatusBar,
     public route: Router,
     public callApi: CallApiService,
+    public menu: MenuController,
   ) {
 
 
@@ -59,7 +60,8 @@ export class AppComponent {
     this.route.navigate(['/login']);
     this.callApi.nameUser = null
     this.callApi.name = null
-
+    this.menu.close();
+    this.menu.enable(false);
 
   }
 }

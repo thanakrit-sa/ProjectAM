@@ -13,19 +13,10 @@ namespace AMApi.Controllers
     {
         public static List<Order> DataOrder = new List<Order>
         {
-            // new Order {IdOrder = "100201" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/12/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="1234"},
-            // new Order {IdOrder = "100101" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/12/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="6857"},
-            // new Order {IdOrder = "100102" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/11/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="7845"},
-            // new Order {IdOrder = "100103" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/10/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="7652"},
-            // new Order {IdOrder = "100104" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "02/09/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="2547"},
-            // new Order {IdOrder = "100105" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/08/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="3148"},
-            // new Order {IdOrder = "100106" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/07/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="2365"},
-            // new Order {IdOrder = "100107" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/06/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="4900"},
-            // new Order {IdOrder = "100108" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "02/05/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="6577"},
-            // new Order {IdOrder = "100109" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/04/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="7500"},
-            // new Order {IdOrder = "100110" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/03/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="7000"},
-            // new Order {IdOrder = "100111" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "03/02/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="5999"},
-            // new Order {IdOrder = "100112" , IdProduct = "1", NameProduct = "น้ำมนต์หลวงปู่เค็ม", AmountProduct="1",DateOrder =  "02/01/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="8000"},
+            new Order {IdOrder = "100201" , IdProduct = "1", NameProduct = "water", AmountProduct="1",DateOrder =  "03/12/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="1234"},
+            new Order {IdOrder = "100101" , IdProduct = "1", NameProduct = "par lad sod", AmountProduct="1",DateOrder =  "03/12/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="6857"},
+            new Order {IdOrder = "100102" , IdProduct = "1", NameProduct = "kaw pad", AmountProduct="1",DateOrder =  "03/11/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="7845"},
+            new Order {IdOrder = "100103" , IdProduct = "1", NameProduct = "pad thai", AmountProduct="1",DateOrder =  "03/10/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="7652"},
         };
 
         public static List<Receipt> Receipt = new List<Receipt>
