@@ -23,4 +23,5 @@ namespace AMApi.Models
         public string AddressUser { get; set; }
         public string CardUser { get; set; }
     }
+
 }

@@ -15,7 +15,7 @@ namespace AMApi.Controllers
     public class UserController : ControllerBase
     {
 
-        
+
         public static List<Admin> DataAdmin = new List<Admin>
         {
             new Admin { IdAdmin = "1", NameAdmin = "admin1" , UsernameAdmin =  "1234", PasswordAdmin = "1234" ,TelAdmin = "0165466516" , LevelAdmin = "Admin" ,AddressAdmin = "15/8 ขอนแก่น"},
@@ -85,10 +85,7 @@ namespace AMApi.Controllers
 
         public static List<User> DataUser = new List<User>
         {
-            new User { IdUser = "1", NameUser = "บอล" , Username =  "1234", Password = "1234" ,TelUser = "0838852052" , StatusUser = "พร้อมใช้งาน" ,AddressUser = "15/8 ขอนแก่น",CardUser = "1125533448652"},
-            new User { IdUser = "2", NameUser = "โฟล์ค" , Username =  "sophon", Password = "1234" ,TelUser = "0942910623" , StatusUser = "พร้อมใช้งาน" ,AddressUser = "16/123",CardUser = "1569874652135"},
-            new User { IdUser = "3", NameUser = "เอี่ยว" , Username =  "123456", Password = "123456" ,TelUser = "1233331234" , StatusUser = "ถูกระงับ" ,AddressUser = "123/4212",CardUser = "12333456788888"},
-            new User { IdUser = "4", NameUser = "อาทิตย์" , Username =  "12345", Password = "12345" ,TelUser = "1123444122" , StatusUser = "ไม่พร้อมใช้งาน" ,AddressUser = "444/555",CardUser = "1231234567854"},
+            new User { IdUser = "1", NameUser = "บอล" , Username =  "1234", Password = "1234",TelUser="dfgdfgdfg",AddressUser = "gfdgfdgfdg", StatusUser = "พร้อมใช้งาน",CardUser = "1125533448652"}
 
         };
         [HttpGet]
@@ -122,7 +119,7 @@ namespace AMApi.Controllers
                 StatusUser = Userx.StatusUser,
                 AddressUser = Userx.AddressUser,
                 CardUser = Userx.CardUser
-                
+
             };
 
             DataUser.Add(item);
@@ -156,7 +153,10 @@ namespace AMApi.Controllers
             var delete = DataUser.FirstOrDefault(it => it.IdUser == id.ToString());
             DataUser.Remove(delete);
         }
-            }
-    
+
+        
+
+    }
+
 
 }

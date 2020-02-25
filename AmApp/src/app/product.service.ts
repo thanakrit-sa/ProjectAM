@@ -8,6 +8,8 @@ import { Product } from "src/app//Models/Product";
 })
 export class ProductService {
 
+  imageName:string;
+
 
   public static host: string = "https://localhost:5001/api/";
   constructor(public http: HttpClient) { }

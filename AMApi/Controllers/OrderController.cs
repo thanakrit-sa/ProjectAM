@@ -13,17 +13,23 @@ namespace AMApi.Controllers
     {
         public static List<Order> DataOrder = new List<Order>
         {
-            new Order {IdOrder = "100201" , IdProduct = "1", NameProduct = "water", AmountProduct="1",DateOrder =  "03/12/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="1234"},
-            new Order {IdOrder = "100101" , IdProduct = "1", NameProduct = "par lad sod", AmountProduct="1",DateOrder =  "03/12/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="6857"},
-            new Order {IdOrder = "100102" , IdProduct = "1", NameProduct = "kaw pad", AmountProduct="1",DateOrder =  "03/11/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="7845"},
-            new Order {IdOrder = "100103" , IdProduct = "1", NameProduct = "pad thai", AmountProduct="1",DateOrder =  "03/10/2563 13:28:15",  Status = "สั่งซื้อ", UserOrder = "admin1",PriceOrder ="7652"},
+
         };
 
+        public static List<DataOrder> MirrorDataOrder = new List<DataOrder>
+        {
 
+        };
+
+        public static List<Receipt> Receipt = new List<Receipt>
+        {
+
+        };
         public static List<Product> DataProduct = new List<Product>
         {
 
         };
+
         [HttpGet]
         public ActionResult<IEnumerable<Order>> GetOrderAll()
         {
@@ -34,6 +40,18 @@ namespace AMApi.Controllers
         public ActionResult<Order> GetOrderById(string id)
         {
             return DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<DataOrder>> GetMirrorDataOrderAll()
+        {
+            return MirrorDataOrder.ToList();
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<DataOrder> GetDataMirrorOrderById(string id)
+        {
+            return MirrorDataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
         }
 
         [HttpGet("{data}")]
@@ -60,7 +78,7 @@ namespace AMApi.Controllers
         }
 
         [HttpPost]
-        public Order AddOrder([FromBody] Order Orderx)
+        public DataOrder AddOrder([FromBody] Order Orderx)
         {
 
             var text = "OD";
@@ -83,19 +101,12 @@ namespace AMApi.Controllers
                 UserOrder = Orderx.UserOrder,
                 DateOrder = DateTime.Now.ToString("dd/MM/yyyy"),
                 Status = "สั่งซื้อ"
+
             };
 
-            DataOrder.Add(item);
-            return item;
-        }
-
-        [HttpPut("{id}")]
-        public Order EditOkOrder(string id, [FromBody] Order Orderx)
-        {
-            var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
-            var item = new Order
+            var item2 = new DataOrder
             {
-                IdOrder = id,
+                IdOrder = textid,
                 IdProduct = Orderx.IdProduct,
                 NameProduct = Orderx.NameProduct,
                 AmountProduct = Orderx.AmountProduct,
@@ -103,86 +114,142 @@ namespace AMApi.Controllers
                 NameUser = Orderx.NameUser,
                 AddressUser = Orderx.AddressUser,
                 TelUser = Orderx.TelUser,
-                DateOrder = Orderx.DateOrder,
                 UserOrder = Orderx.UserOrder,
-                Status = "รับสั่งซื้อ"
-            };
-            DataOrder.Remove(_id);
-            DataOrder.Add(item);
-            return item;
+                DateOrder = DateTime.Now.ToString("dd/MM/yyyy"),
+                Status = "สั่งซื้อ"
 
+            };
+
+            MirrorDataOrder.Add(item2);
+            DataOrder.Add(item);
+            return item2;
         }
 
-        [HttpPut("{id}")]
-        public Order EditSendOrder(string id, [FromBody] Order Orderx)
-        {
-            var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
-            var item = new Order
-            {
-                IdOrder = id,
-                IdProduct = Orderx.IdProduct,
-                NameProduct = Orderx.NameProduct,
-                AmountProduct = Orderx.AmountProduct,
-                PriceOrder = Orderx.PriceOrder,
-                NameUser = Orderx.NameUser,
-                AddressUser = Orderx.AddressUser,
-                TelUser = Orderx.TelUser,
-                DateOrder = Orderx.DateOrder,
-                SendDate = DateTime.Now.ToString("dd/MM/yyyy"),
-                UserOrder = Orderx.UserOrder,
-                Status = "ส่งสินค้า"
-            };
-            DataOrder.Remove(_id);
-            DataOrder.Add(item);
-            return item;
-        }
+        [HttpPost]
 
-        [HttpPut("{id}")]
-        public Order EditCancelOrder(string id, [FromBody] Order Orderx)
-        {
-            var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
-            var item = new Order
-            {
-                IdOrder = id,
-                IdProduct = Orderx.IdProduct,
-                NameProduct = Orderx.NameProduct,
-                AmountProduct = Orderx.AmountProduct,
-                PriceOrder = Orderx.PriceOrder,
-                NameUser = Orderx.NameUser,
-                AddressUser = Orderx.AddressUser,
-                TelUser = Orderx.TelUser,
-                DateOrder = Orderx.DateOrder,
-                UserOrder = Orderx.UserOrder,
-                Status = "ยกเลิก"
-            };
-            DataOrder.Remove(_id);
-            DataOrder.Add(item);
-            return item;
-        }
 
-        [HttpPut("{id}")]
-        public Order EditAcceptOrder(string id, [FromBody] Order Orderx)
-        {
-            var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
-            var item = new Order
-            {
-                IdOrder = id,
-                IdProduct = Orderx.IdProduct,
-                NameProduct = Orderx.NameProduct,
-                AmountProduct = Orderx.AmountProduct,
-                PriceOrder = Orderx.PriceOrder,
-                NameUser = Orderx.NameUser,
-                AddressUser = Orderx.AddressUser,
-                TelUser = Orderx.TelUser,
-                DateOrder = Orderx.DateOrder,
-                SendDate = Orderx.SendDate,
-                UserOrder = Orderx.UserOrder,
-                Status = "ได้รับแล้ว"
-            };
-            DataOrder.Remove(_id);
-            DataOrder.Add(item);
-            return item;
-        }
+        // [HttpPut("{id}")]
+        // public Order EditAddFile(string id, [FromBody] Order Orderx)
+        // {
+        //     var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
+        //     var item = new Order
+        //     {
+        //         IdOrder = id,
+        //         IdProduct = Orderx.IdProduct,
+        //         NameProduct = Orderx.NameProduct,
+        //         AmountProduct = Orderx.AmountProduct,
+        //         PriceOrder = Orderx.PriceOrder,
+        //         NameUser = Orderx.NameUser,
+        //         AddressUser = Orderx.AddressUser,
+        //         TelUser = Orderx.TelUser,
+        //         DateOrder = Orderx.DateOrder,
+        //         UserOrder = Orderx.UserOrder,
+        //         Status = "รับสั่งซื้อ",
+
+        //     };
+        //     DataOrder.Remove(_id);
+        //     DataOrder.Add(item);
+        //     return item;
+
+        // }
+
+        // [HttpPut("{id}")]
+        // public Order EditOkOrder(string id, [FromBody] Order Orderx)
+        // {
+        //     var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
+        //     var item = new Order
+        //     {
+        //         IdOrder = id,
+        //         IdProduct = Orderx.IdProduct,
+        //         NameProduct = Orderx.NameProduct,
+        //         AmountProduct = Orderx.AmountProduct,
+        //         PriceOrder = Orderx.PriceOrder,
+        //         NameUser = Orderx.NameUser,
+        //         AddressUser = Orderx.AddressUser,
+        //         TelUser = Orderx.TelUser,
+        //         DateOrder = Orderx.DateOrder,
+        //         UserOrder = Orderx.UserOrder,
+        //         Status = "รับสั่งซื้อ",
+
+        //     };
+        //     DataOrder.Remove(_id);
+        //     DataOrder.Add(item);
+        //     return item;
+        // }
+
+        // [HttpPut("{id}")]
+        // public Order EditSendOrder(string id, [FromBody] Order Orderx)
+        // {
+        //     var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
+        //     var item = new Order
+        //     {
+        //         IdOrder = id,
+        //         IdProduct = Orderx.IdProduct,
+        //         NameProduct = Orderx.NameProduct,
+        //         AmountProduct = Orderx.AmountProduct,
+        //         PriceOrder = Orderx.PriceOrder,
+        //         NameUser = Orderx.NameUser,
+        //         AddressUser = Orderx.AddressUser,
+        //         TelUser = Orderx.TelUser,
+        //         DateOrder = Orderx.DateOrder,
+        //         SendDate = DateTime.Now.ToString("dd/MM/yyyy"),
+        //         UserOrder = Orderx.UserOrder,
+        //         Status = "ส่งสินค้า",
+
+        //     };
+        //     DataOrder.Remove(_id);
+        //     DataOrder.Add(item);
+        //     return item;
+        // }
+
+        // [HttpPut("{id}")]
+        // public Order EditCancelOrder(string id, [FromBody] Order Orderx)
+        // {
+        //     var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
+        //     var item = new Order
+        //     {
+        //         IdOrder = id,
+        //         IdProduct = Orderx.IdProduct,
+        //         NameProduct = Orderx.NameProduct,
+        //         AmountProduct = Orderx.AmountProduct,
+        //         PriceOrder = Orderx.PriceOrder,
+        //         NameUser = Orderx.NameUser,
+        //         AddressUser = Orderx.AddressUser,
+        //         TelUser = Orderx.TelUser,
+        //         DateOrder = Orderx.DateOrder,
+        //         UserOrder = Orderx.UserOrder,
+        //         Status = "ยกเลิก"
+
+        //     };
+        //     DataOrder.Remove(_id);
+        //     DataOrder.Add(item);
+        //     return item;
+        // }
+
+        // [HttpPut("{id}")]
+        // public Order EditAcceptOrder(string id, [FromBody] Order Orderx)
+        // {
+        //     var _id = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
+        //     var item = new Order
+        //     {
+        //         IdOrder = id,
+        //         IdProduct = Orderx.IdProduct,
+        //         NameProduct = Orderx.NameProduct,
+        //         AmountProduct = Orderx.AmountProduct,
+        //         PriceOrder = Orderx.PriceOrder,
+        //         NameUser = Orderx.NameUser,
+        //         AddressUser = Orderx.AddressUser,
+        //         TelUser = Orderx.TelUser,
+        //         DateOrder = Orderx.DateOrder,
+        //         SendDate = Orderx.SendDate,
+        //         UserOrder = Orderx.UserOrder,
+        //         Status = "ได้รับแล้ว",
+
+        //     };
+        //     DataOrder.Remove(_id);
+        //     DataOrder.Add(item);
+        //     return item;
+        // }
 
         [HttpPut("{id}")]
         public Order CancelSellTotalProduct(string id, [FromBody] Order Orderx)
@@ -227,6 +294,161 @@ namespace AMApi.Controllers
             };
             DataOrder.Remove(_id);
             DataOrder.Add(item);
+            return item;
+        }
+
+        [HttpDelete("{id}")]
+        public void DeleteOrder(string id)
+        {
+
+            var delete = DataOrder.FirstOrDefault(it => it.IdOrder == id.ToString());
+            DataOrder.Remove(delete);
+        }
+
+        [HttpDelete]
+        public void DeleteOrderAll()
+        {
+            DataOrder.Clear();
+        }
+
+        // --------------------------------------------------------------------
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Receipt>> GetReceiptAll()
+        {
+            return Receipt.ToList();
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Receipt> GetReceiptById(string id)
+        {
+            return Receipt.FirstOrDefault(it => it.IdReceipt == id.ToString());
+        }
+
+        // public ActionResult<Receipt> GetDataReceiptById(string id)
+        // {
+        //     return Receipt.FirstOrDefault(it => it.IdReceipt == id.ToString());
+        // }
+
+
+        [HttpPost]
+        public Receipt AddReceipt([FromBody] Receipt Receiptx)
+        {
+            var text = "OD";
+            var textsub = text.Substring(0, 1).ToString();
+            var id = Guid.NewGuid().ToString();
+            var textid = text + "-" + id.Substring(0, 4);
+            var addDate = DateTime.Now;
+
+            var item = new Receipt
+            {
+                IdReceipt = textid,
+                DataOrder = Receiptx.DataOrder.ToArray(),
+                Date = DateTime.Now.ToString("dd/MM/yyyy"),
+                File = Receiptx.File,
+                Status = "สั่งซื้อ",
+                StatusFile = "ไม่พบไฟล์"
+            };
+
+
+            Receipt.Add(item);
+            return item;
+
+        }
+
+        [HttpPut("{id}")]
+        public Receipt EditAddFile(string id, [FromBody] Receipt Receiptx)
+        {
+            var _id = Receipt.FirstOrDefault(it => it.IdReceipt == id.ToString());
+            var item = new Receipt
+            {
+                IdReceipt = Receiptx.IdReceipt,
+                DataOrder = Receiptx.DataOrder.ToArray(),
+                Date = DateTime.Now.ToString("dd/MM/yyyy"),
+                File = Receiptx.File,
+                Status = "รับสั่งซื้อ",
+                StatusFile = "แนบแล้ว"
+
+            };
+            Receipt.Remove(_id);
+            Receipt.Add(item);
+            return item;
+
+        }
+
+        [HttpPut("{id}")]
+        public Receipt EditOkOrder(string id, [FromBody] Receipt Receiptx)
+        {
+            var _id = Receipt.FirstOrDefault(it => it.IdReceipt == id.ToString());
+            var item = new Receipt
+            {
+                IdReceipt = Receiptx.IdReceipt,
+                DataOrder = Receiptx.DataOrder.ToArray(),
+                Date = DateTime.Now.ToString("dd/MM/yyyy"),
+                File = Receiptx.File,
+                Status = "รับสั่งซื้อ",
+                StatusFile = Receiptx.StatusFile
+            };
+            Receipt.Remove(_id);
+            Receipt.Add(item);
+            return item;
+        }
+
+        [HttpPut("{id}")]
+        public Receipt EditSendOrder(string id, [FromBody] Receipt Receiptx)
+        {
+            var _id = Receipt.FirstOrDefault(it => it.IdReceipt == id.ToString());
+            var item = new Receipt
+            {
+                IdReceipt = Receiptx.IdReceipt,
+                DataOrder = Receiptx.DataOrder.ToArray(),
+                Date = DateTime.Now.ToString("dd/MM/yyyy"),
+                File = Receiptx.File,
+                SendDate = DateTime.Now.ToString("dd/MM/yyyy"),
+                Status = "ส่งสินค้า",
+                StatusFile = Receiptx.StatusFile
+
+            };
+            Receipt.Remove(_id);
+            Receipt.Add(item);
+            return item;
+        }
+
+        [HttpPut("{id}")]
+        public Receipt EditCancelOrder(string id, [FromBody] Receipt Receiptx)
+        {
+            var _id = Receipt.FirstOrDefault(it => it.IdReceipt == id.ToString());
+            var item = new Receipt
+            {
+                IdReceipt = Receiptx.IdReceipt,
+                DataOrder = Receiptx.DataOrder.ToArray(),
+                Date = DateTime.Now.ToString("dd/MM/yyyy"),
+                File = Receiptx.File,
+                Status = "ยกเลิก",
+                StatusFile = Receiptx.StatusFile
+
+            };
+            Receipt.Remove(_id);
+            Receipt.Add(item);
+            return item;
+        }
+
+        [HttpPut("{id}")]
+        public Receipt EditAcceptOrder(string id, [FromBody] Receipt Receiptx)
+        {
+            var _id = Receipt.FirstOrDefault(it => it.IdReceipt == id.ToString());
+            var item = new Receipt
+            {
+                IdReceipt = Receiptx.IdReceipt,
+                DataOrder = Receiptx.DataOrder.ToArray(),
+                Date = DateTime.Now.ToString("dd/MM/yyyy"),
+                File = Receiptx.File,
+                SendDate = DateTime.Now.ToString("dd/MM/yyyy"),
+                Status = "ได้รับแล้ว",
+                StatusFile = Receiptx.StatusFile
+            };
+            Receipt.Remove(_id);
+            Receipt.Add(item);
             return item;
         }
 
