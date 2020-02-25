@@ -78,8 +78,7 @@ export class HomePage {
               [
                 { text: 'Description', style: 'itemsTableHeader' },
                 { text: 'Quantity', style: 'itemsTableHeader' },
-                { text: 'Price', style: 'itemsTableHeader' },
-
+                { text: 'Price', style: 'itemsTableHeader' }
               ]
             ]
           }
