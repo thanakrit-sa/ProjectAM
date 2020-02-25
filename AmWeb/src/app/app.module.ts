@@ -25,8 +25,7 @@ import { DetailProductPageModule } from 'src/app/detail-product/detail-product.m
     AppRoutingModule,
     HttpClientModule,
     NgxPaginationModule,
-    DetailProductPageModule
-   
+    DetailProductPageModule   
   ],
 
   providers: [

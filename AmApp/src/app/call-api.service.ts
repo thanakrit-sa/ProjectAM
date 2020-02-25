@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Product } from './Models/Product';
-import { Order,receipt } from './Models/Order';
+import { Order,receipt,DataOrder } from './Models/Order';
 import { User } from './Models/User'
 
 @Injectable({
@@ -12,6 +12,7 @@ export class CallApiService {
 
   public nameUser: string;
   public name: string;
+  public ref:boolean;
 
   // public static host: string = "https://bosjazz555.appspot.com/api/";
   public static host: string = "https://localhost:5001/api/"
@@ -23,6 +24,10 @@ export class CallApiService {
   public AddOrder(data: Order) {
     console.log(data);
     return this.http.post<Order>(CallApiService.host + 'Order/AddOrder', data);
+  }
+  public AddMirrorOrder(data: DataOrder) {
+    console.log(data);
+    return this.http.post<DataOrder>(CallApiService.host + 'Order/AddMirrorOrder', data);
   }
   public GetProductById(Id: string) {
     return this.http.get<Order>(CallApiService.host + 'Order/GetOrderById/' + Id);
@@ -67,4 +72,23 @@ export class CallApiService {
   public DeleteOrder(Id: string) {
     return this.http.delete<Order>(CallApiService.host + 'Order/DeleteOrder/' + Id);
   }
+  public GetUserByid(Id: string) {
+    return this.http.get<User>(CallApiService.host + 'User/GetUserByid/' + Id);
+  }
+  public EditDataUser(Id: string, data) {
+    return this.http.put<User>(CallApiService.host + 'User/EditUser/' + Id, data);
+  }
+  public GetReceiptById(Id: string) {
+    return this.http.get<receipt>(CallApiService.host + 'Order/GetReceiptById/' + Id);
+  }
+  public DeleteOrderAll() {
+    return this.http.delete<Order>(CallApiService.host + 'Order/DeleteOrderAll');
+  }
+  public GetDataMirrorOrderById(Id: string) {
+    return this.http.get<DataOrder>(CallApiService.host + 'Order/GetDataMirrorOrderById/' + Id)
+  }
+  public GetMirrorDataOrderAll() {
+    return this.http.get<DataOrder>(CallApiService.host + 'Order/GetMirrorDataOrderAll');
+  }
+
 }

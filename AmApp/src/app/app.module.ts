@@ -12,9 +12,11 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { EditProfilePageModule } from 'src/app/edit-profile/edit-profile.module';
+import { ChangePassPageModule } from 'src/app/change-pass/change-pass.module';
+import { DetailOrderPageModule } from 'src/app/detail-order/detail-order.module';
 
-import { File } from '@ionic-native/file/ngx';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
+
 @NgModule({
   declarations: [AppComponent,],
   entryComponents: [],
@@ -23,10 +25,13 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
     IonicModule.forRoot(), AppRoutingModule,
     HttpClientModule,
     NgxPaginationModule,
-    Ng2SearchPipeModule],
+    Ng2SearchPipeModule,
+    EditProfilePageModule,
+    ChangePassPageModule,
+    DetailOrderPageModule
+  ],
   providers: [
-    File,
-    FileOpener,
+
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

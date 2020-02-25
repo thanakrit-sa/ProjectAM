@@ -12,29 +12,36 @@
 </ion-header>
 
 <ion-content>
-
-  <h4 text-center>ข้อมูลบัญชีผู้ใช้</h4>
-  <div>
-    <ion-card *ngIf="datauser != null">
-      <ion-item>
-        ชื่อผู้ใช้งาน : {{datauser.nameUser}}
-      </ion-item>
-      <ion-item>
-        เบอร์โทร : {{datauser.telUser}}
-      </ion-item>
-      <ion-item>
-        ที่อยู่ : {{datauser.addressUser}}
-      </ion-item>
-      <ion-item *ngIf="datauser.statusUser == 'ไม่พร้อมใช้งาน'" >
-        สถานะการใช้งาน :&nbsp;<label class="no"> {{datauser.statusUser}}</label>
-      </ion-item>
-      <ion-item *ngIf="datauser.statusUser == 'พร้อมใช้งาน'">
-        สถานะการใช้งาน :&nbsp;<label class="ready"> {{  datauser.statusUser}}</label>
-      </ion-item>
-    </ion-card>
-  </div>
-
-
+  <ion-card *ngIf="datauser != null">
+    <ion-card-header text-center>
+      <ion-label>
+        <h2><b>บัญชีผู้ใช้</b></h2>
+      </ion-label>
+    </ion-card-header>
+    <ion-item>
+      <b>ชื่อผู้ใช้งาน : </b>{{datauser.nameUser}}
+    </ion-item>
+    <ion-item>
+      <b>เบอร์โทร : </b>{{datauser.telUser}}
+    </ion-item>
+    <ion-item>
+      <b>ที่อยู่ : </b>{{datauser.addressUser}}
+    </ion-item>
+    <ion-item *ngIf="datauser.statusUser == 'ไม่พร้อมใช้งาน'">
+      <b>สถานะการใช้งาน :</b>&nbsp;<label class="no"> {{datauser.statusUser}}</label>
+    </ion-item>
+    <ion-item *ngIf="datauser.statusUser == 'พร้อมใช้งาน'">
+      <b>สถานะการใช้งาน :</b>&nbsp;<label class="ready"> {{  datauser.statusUser}}</label>
+    </ion-item>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" color="dark" (click)="modal(datauser.idUser)">แก้ไขข้อมูลส่วนตัว</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" color="dark" (click)="modalPass(datauser.idUser)">เปลี่ยนรหัสผ่าน</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 
 
 

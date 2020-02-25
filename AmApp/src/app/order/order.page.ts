@@ -3,9 +3,11 @@ import { AlertController, NavController, ToastController } from '@ionic/angular'
 import { Router } from '@angular/router';
 import { CallApiService } from '../call-api.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Order, receipt } from '../Models/Order';
+import { Order, receipt, DataOrder } from '../Models/Order';
 import { Product } from '../Models/Product';
 import { ProductService } from '../product.service';
+import { User } from '../Models/User';
+
 
 
 
@@ -35,17 +37,27 @@ export class OrderPage implements OnInit {
   isShowValidatetelUser: any = false
   isShowValidateaddressUser: any = false
   isShowValidateamountProduct: any = false
-  mirrorTotalProduct
+  isShowForm: boolean = true
+  mirrorTotalProduct;
+  mirrorReceipt: DataOrder;
   dataReceipt = {
     "idReceipt": null,
     "dataOrder": [],
     "date": null,
     "file": null,
-    "status": null
+    "status": null,
+    "statusFile": null
   }
   dataReceiptInArray: receipt;
-  oderReceipt: Order ;
+  oderReceipt: Order;
   oderReceiptById: Order;
+  userName: any;
+  datauser: User;
+  dataAll;
+  nameNG; addressNG; telNG;
+  test1: any;
+  dataSumAmount; dataSumPrice; lengthData;
+  sumAmount: number = 0; sumPrice: number = 0;
   constructor(public productapi: ProductService, public tost: ToastController, public alertController: AlertController, public alertController1: AlertController, public route: Router, public callApi: CallApiService, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.order = this.formbuilder.group({
       'idOrder': [null],
@@ -63,6 +75,19 @@ export class OrderPage implements OnInit {
       'totalProduct': [""]
     })
   }
+
+  calldataUser() {
+    this.userName = this.callApi.nameUser
+    console.log(this.userName);
+    this.callApi.GetUserbyData(this.userName).subscribe(it => {
+      console.log(it);
+      this.datauser = it
+      this.order.value.addressUser = this.datauser.addressUser
+      console.log(this.order.value.addressUser);
+
+    });
+  }
+
   get f() { return this.order.controls; }
   gotolist() {
     this.route.navigate(['/list']);
@@ -126,12 +151,19 @@ export class OrderPage implements OnInit {
       console.log(it);
       this.oderReceipt = it
     })
+    this.callApi.GetMirrorDataOrderAll().subscribe(it => {
+      console.log(it);
+      this.mirrorReceipt = it
+    })
   }
 
   AddList(data, amountp) {
+    this.dataAll = data
+    console.log(this.dataAll);
 
     this.order.value.userOrder = this.callApi.nameUser
     console.log(this.order.value.userOrder);
+    console.log(this.order.value);
 
     this.dataorder = this.order.value;
     console.log(this.dataorder);
@@ -154,90 +186,112 @@ export class OrderPage implements OnInit {
 
       this.callApi.GetProductBydata(data).subscribe(it => {
         this.data1 = it
-        this.data1.totalProduct = parseInt(this.data1.totalProduct) - amountp
-
+        this.data1.totalProduct = this.data1.totalProduct
+        console.log(this.amountnumber);
+        console.log(this.total);        
         if (this.amountnumber <= this.total && this.amountnumber != 0) {
-          // console.log('dai');
-          // this.total = 0;
-          // this.amountnumber = 0;
-          // this.dataReceipt.dataOrder.push(this.order.value)
-          // console.log(this.dataReceipt);
-          // this.dataReceipt.dataOrder;
-          // this.order.reset()
-          this.callApi.AddOrder(this.dataorder).subscribe(it => {
-            this.showOrderReceipt()    
-            // console.log(it);
-            // console.log(this.order.value.idProduct);
-            // console.log(this.order.value);
-          });
-          this.productapi.AddSellTotalProduct(this.order.value.idProduct, this.order.value).subscribe(it => {
-            console.log(it);
-          });
-          // this.amountp = null
-          // this.sum = null
-          // this.presentToast1();            
-          this.showOrderReceipt()
+          this.order.value.idOrder = '_' + Math.random().toString(36).substr(2, 9);
 
+          this.dataReceipt.dataOrder.push(this.order.value)
+          console.log(this.dataReceipt.dataOrder);
+          this.amountnumber = 0
+          this.total = 0
+          this.lengthData = this.dataReceipt.dataOrder.length
+          console.log(this.lengthData);
+          this.dataSumAmount = this.dataReceipt.dataOrder.map(it => it.amountProduct);
+          console.log(this.dataSumAmount);
+          this.sumAmount = 0;
+          for (let index = 0; index < this.dataSumAmount.length; index++) {
+            this.sumAmount += parseInt(this.dataSumAmount[index]);
+          }
+          console.log(this.sumAmount);
+
+          this.dataSumPrice = this.dataReceipt.dataOrder.map(it => it.priceOrder);
+          console.log(this.dataSumPrice);
+          this.sumPrice = 0;
+          for (let index = 0; index < this.dataSumPrice.length; index++) {
+            this.sumPrice += parseInt(this.dataSumPrice[index]);
+          }
+          console.log(this.sumPrice);
+
+          this.showOrderReceipt()
+          console.log(data);
+          this.order.reset()
+          this.isShowForm = true;
         }
         else if (this.amountnumber == 0) {
           this.presentAlert2();
-
-
           this.total = 0;
           this.amountnumber = 0;
         }
         else if (amountp > this.data1.totalProduct) {
+          console.log(amountp);
+          console.log(this.data1.totalProduct);
           this.presentAlert1();
-          // this.total = 0;
-          // this.amountnumber = 0;
         }
-
-        // if (this.amountnumber < this.ttotal) {
-        //   this.data1.totalProduct = parseInt(this.data1.totalProduct) - amountp
-        // }      
-
+        console.log(this.data1);
+        this.callApi.GetProductBydata(data).subscribe(it => {
+          console.log(it);
+          this.order.reset();
+          this.data1 = null;
+        })
       });
-      // else if (this.amountnumber > this.data1.totalProduct) {
-      //   this.presentAlert1();
-
-      //   this.total = 0;
-      //   // this.amountnumber = 0;
-      // }
     });
   }
 
   addReceipt() {
-    this.showOrderReceipt()   
-    console.log(this.oderReceipt); 
-    this.dataReceipt.file = "ไม่พบไฟล์"    
-    for (let index = 0; index < Object.keys(this.oderReceipt).length; index++) {      
-      this.dataReceipt.dataOrder[index] = this.oderReceipt[index]      
-    }
-    this.dataReceiptInArray = this.dataReceipt
-    console.log(this.dataReceiptInArray);    
-    this.callApi.AddReceipt(this.dataReceiptInArray).subscribe(it => {
+    this.showOrderReceipt()
+    console.log(this.oderReceipt);
+    this.dataReceipt.file = "ไม่พบไฟล์"
+    this.sumAmount = 0;
+    this.sumPrice = 0;
+    // console.log(this.dataReceipt);
+    // console.log(this.mirrorReceipt);
+    // this.dataorder = this.order.value;
+    // console.log(this.dataorder);
+    console.log(this.dataReceipt.dataOrder);
+
+
+    // for (let index = 0; index < Object.keys(this.mirrorReceipt).length; index++) {
+    //   this.dataReceipt.dataOrder[index] = this.mirrorReceipt[index]
+    // }
+    // this.dataReceiptInArray = this.dataReceipt
+    // console.log(this.dataReceiptInArray);
+    this.callApi.AddReceipt(this.dataReceipt).subscribe(it => {
       console.log(it);
+      console.log(this.order.value.idProduct);
+      console.log(this.order.value);
+      for (let index = 0; index < this.dataReceipt.dataOrder.length; index++) {
+        this.test1 = this.dataReceipt.dataOrder[index];
+        console.log(this.test1.idProduct);
+        this.productapi.AddSellTotalProduct(this.test1.idProduct, this.test1).subscribe(it => {
+          console.log(it);
+        });
+      }
+      this.dataReceipt.dataOrder.length = 0;
+      this.route.navigate(['/list']);
     });
+    // this.callApi.DeleteOrderAll().subscribe(it => {
+    //   this.showOrderReceipt()
+    // })
   }
 
   PopList(id) {
-    console.log(id);    
-    this.callApi.GetProductById(id).subscribe(it => {
-      console.log(it);
-      this.oderReceiptById = it
-      console.log(this.oderReceiptById);
-      
-      this.productapi.CancelSellTotalProduct(this.oderReceiptById.idProduct, this.oderReceiptById.amountProduct).subscribe(it => {      
-      console.log(it);
+    console.log(id);
+    this.dataReceipt.dataOrder.length;
+    // this.callApi.GetProductById(id).subscribe(it => {
+    //   console.log(it);
+    //   this.oderReceiptById = it
+    //   console.log(this.oderReceiptById);
 
-      this.callApi.DeleteOrder(id).subscribe(it => {
-        this.showOrderReceipt()      
-      });
-    });
-    })
-    
-    
-    
+    //   this.productapi.CancelSellTotalProduct(this.oderReceiptById.idProduct, this.oderReceiptById.amountProduct).subscribe(it => {
+    //     console.log(it);
+
+    //     this.callApi.DeleteOrder(id).subscribe(it => {
+    //       this.showOrderReceipt()
+    //     });
+    //   });
+    // })
   }
 
 
@@ -350,6 +404,12 @@ export class OrderPage implements OnInit {
     this.showOrderReceipt()
   }
 
+  clear() {
+    this.sumAmount = 0;
+    this.sumPrice = 0;
+    this.dataReceipt.dataOrder.length = 0;
+  }
+
   listdata() {
     this.callApi.getallproduct().subscribe(it => {
 
@@ -376,10 +436,23 @@ export class OrderPage implements OnInit {
     });
   }
   onChange(data) {
+    this.isShowForm = false
     this.amountp = null
     this.sum = null
     this.getbydata(data)
+    this.userName = this.callApi.nameUser
+    console.log(this.userName);
+    this.callApi.GetUserbyData(this.userName).subscribe(it => {
+      console.log(it);
+      this.datauser = it
+      this.order.value.nameUser = this.datauser.nameUser
+      this.order.value.addressUser = this.datauser.addressUser
+      this.order.value.telUser = this.datauser.telUser
+      this.nameNG = this.order.value.nameUser
+      this.addressNG = this.order.value.addressUser
+      this.telNG = this.order.value.telUser
 
+    });
   }
   amount(qs) {
     this.amountp = qs
@@ -387,7 +460,8 @@ export class OrderPage implements OnInit {
 
     // console.log(this.datasum);
     // console.log(q);
-    this.sum = qs * this.datasum.priceProduct
+    this.sum = qs * this.datasum.priceProduct;
+
     // console.log(this.sum);
 
   }

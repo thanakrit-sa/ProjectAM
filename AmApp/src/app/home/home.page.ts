@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { File } from '@ionic-native/file/ngx';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
-import pdfMake from 'pdfmake/build/pdfMake'
-import pdfFonts from 'pdfmake/build/vfs_fonts'
+
 import { CallApiService } from '../call-api.service';
 import { Order } from '../Models/Order';
 import { concat } from 'rxjs';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -37,7 +34,7 @@ export class HomePage {
   datadatebill: Date
   datadate: any
   pdfObj = null;
-  constructor(private plt: Platform, private file: File, private fileopener: FileOpener, public callapi: CallApiService) { }
+  constructor(private plt: Platform, private file: File, public callapi: CallApiService) { }
   ngOnInit() {
     this.getdatafilter()
     this.datadate = new Date().toLocaleString()
@@ -142,7 +139,7 @@ export class HomePage {
         }
       }
     }
-    this.pdfObj = pdfMake.createPdf(docDefinition);
+    
   }
 
   downloadPdf() {
@@ -151,10 +148,7 @@ export class HomePage {
         var blob = new Blob([buffer], { type: 'application/pdf' });
 
         // Save the PDF to the data Directory of our App
-        this.file.writeFile(this.file.dataDirectory, 'myletter.pdf', blob, { replace: true }).then(fileEntry => {
-          // Open the PDf with the correct OS tools
-          this.fileopener.open(this.file.dataDirectory + 'myletter.pdf', 'application/pdf');
-        })
+        
       });
     }
     else {
