@@ -14,12 +14,12 @@ namespace AMApi.Controllers
     {
         public static List<Product> DataProduct = new List<Product>
         {
-            new Product {IdOrder = "100101",IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TypeProduct = "เครื่องราง",PriceProduct = "5999",CostProduct = "2999" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0,TotalShow = "0"},
-            new Product {IdOrder = "100102",IdProduct = "B7784",NameProduct = "น้ำยาล้างจานปู่เค็ม",TypeProduct = "ของใช้",PriceProduct = "299",CostProduct = "199" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0,TotalShow = "0"},
-            new Product {IdProduct = "R5596",NameProduct = "ไข่แดงเค็มปู่เค็ม",TypeProduct = "อาหาร",PriceProduct = "9",CostProduct = "1" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0,TotalShow = "0"},
-            new Product {IdProduct = "H8897",NameProduct = "ขนมปู่เค็ม",TypeProduct = "ขนม",PriceProduct = "99",CostProduct = "29" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0,TotalShow = "0"},
-            new Product {IdProduct = "S0015",NameProduct = "ครีมหลวงปู่เค็ม",TypeProduct = "เครื่องสำอาง",PriceProduct = "999",CostProduct = "499" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0,TotalShow = "0"},
-            new Product {IdProduct = "A8895",NameProduct = "เสื้อยืดหลวงปู่เค็ม",TypeProduct = "เสื้อผ้า",PriceProduct = "999",CostProduct = "299" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0,TotalShow = "0"}
+            // new Product {IdOrder = "100101",IdProduct = "C0015",NameProduct = "น้ำมนต์หลวงปู่เค็ม",TypeProduct = "เครื่องราง",PriceProduct = "5999",CostProduct = "2999" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0,TotalShow = "0"},
+            // new Product {IdOrder = "100102",IdProduct = "B7784",NameProduct = "น้ำยาล้างจานปู่เค็ม",TypeProduct = "ของใช้",PriceProduct = "299",CostProduct = "199" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0,TotalShow = "0"},
+            // new Product {IdProduct = "R5596",NameProduct = "ไข่แดงเค็มปู่เค็ม",TypeProduct = "อาหาร",PriceProduct = "9",CostProduct = "1" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0,TotalShow = "0"},
+            // new Product {IdProduct = "H8897",NameProduct = "ขนมปู่เค็ม",TypeProduct = "ขนม",PriceProduct = "99",CostProduct = "29" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0,TotalShow = "0"},
+            // new Product {IdProduct = "S0015",NameProduct = "ครีมหลวงปู่เค็ม",TypeProduct = "เครื่องสำอาง",PriceProduct = "999",CostProduct = "499" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0,TotalShow = "0"},
+            // new Product {IdProduct = "A8895",NameProduct = "เสื้อยืดหลวงปู่เค็ม",TypeProduct = "เสื้อผ้า",PriceProduct = "999",CostProduct = "299" ,TotalProduct = "0",Total="0",AmountProduct="0",StatusProduct = "กรุณาเลือกสถานะ",ShowTotal = 0,TotalShow = "0"}
         };
 
         [HttpGet]

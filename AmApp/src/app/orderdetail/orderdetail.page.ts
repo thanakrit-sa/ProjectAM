@@ -22,6 +22,7 @@ export class OrderdetailPage implements OnInit {
   isShowDataOrder: boolean = true;
   showDataOrderAdd: boolean = true;
   showDataOrderRemove: boolean = true;
+  
   dataOrderById: receipt;
   OrderById: DataOrder;
   // dataTest;
@@ -41,6 +42,7 @@ export class OrderdetailPage implements OnInit {
   ngOnInit() {
     this.showDataReceipt()
   }
+ 
 
   showDataOrderById(idReceipt, idProduct) {
     console.log(idProduct);

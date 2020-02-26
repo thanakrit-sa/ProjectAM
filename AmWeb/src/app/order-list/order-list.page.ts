@@ -38,6 +38,8 @@ export class OrderListPage implements OnInit {
   DataOrder;
   DataReceipt;
   name;address;tel;
+  isShowText:boolean = true;
+
   constructor(
     public route: Router,
     public productApi: ProductService,
@@ -70,6 +72,8 @@ export class OrderListPage implements OnInit {
     this.orderApi.GetReceiptById(id).subscribe(it => {
       console.log(it);
       this.DataOrder = it
+      console.log(this.DataOrder.senddate);
+      
       for (let index = 0; index < this.DataOrder.dataOrder.length; index++) {
         this.dataReceiptAll[index] = this.DataOrder.dataOrder[index];    
         console.log(this.dataReceiptAll[index].nameUser);            
@@ -80,6 +84,15 @@ export class OrderListPage implements OnInit {
       this.modal()
     });
 
+  }
+
+  cancel(id){
+    console.log(id);
+    this.orderApi.DeleteReceipt(id).subscribe(it => {
+      console.log(it);
+      this.showDataReceript()
+    })
+    
   }
 
   async modal() {
@@ -96,7 +109,7 @@ export class OrderListPage implements OnInit {
         "status": this.DataOrder.status,
         "file": this.DataOrder.file,
         "date": this.DataOrder.date,
-        "senddate": this.DataOrder.senddate,
+        "senddate": this.DataOrder.sendDate,
         "statusFile": this.DataOrder.statusFile
       }
     });
@@ -141,8 +154,7 @@ export class OrderListPage implements OnInit {
       this.datafilter = this.arrayfilter.filter(it =>
         it.status == data
 
-      )
-      this.countdata = Object.keys(this.datafilter).length
+      )     
     }
   }
 
@@ -259,6 +271,12 @@ export class OrderListPage implements OnInit {
     this.orderApi.getAllReceipt().subscribe(it => {
       console.log(it);
       this.DataReceipt = it
+      this.countdata = Object.keys(this.DataReceipt).length
+      if(Object.keys(this.DataReceipt).length == 0){
+        this.isShowText = true
+      } else {
+        this.isShowText = false
+      }
     })
   }
 

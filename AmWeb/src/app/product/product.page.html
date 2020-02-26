@@ -80,6 +80,12 @@
 
 
       </ion-row>
+      <div *ngIf="isShowText == true" text-center>
+        <br>
+        <ion-label>
+          <h1><b>ไม่มีรายการสินค้า</b></h1>
+        </ion-label>
+      </div>
       <ion-row  *ngFor="let p of datafilter | paginate: { itemsPerPage: 10, currentPage: PageNumber }" text-center style="border-bottom: groove">
 
         <ion-col class="pad">

@@ -19,8 +19,8 @@ namespace AMApi.Controllers
         public static List<Admin> DataAdmin = new List<Admin>
         {
             new Admin { IdAdmin = "1", NameAdmin = "admin1" , UsernameAdmin =  "1234", PasswordAdmin = "1234" ,TelAdmin = "0165466516" , LevelAdmin = "Admin" ,AddressAdmin = "15/8 ขอนแก่น"},
-            new Admin { IdAdmin = "2", NameAdmin = "admin2" , UsernameAdmin =  "12345", PasswordAdmin = "12345" ,TelAdmin = "0665606411" , LevelAdmin = "Meneger" ,AddressAdmin = "8/1 นครพนม"},
-            new Admin { IdAdmin = "3", NameAdmin = "admin3" , UsernameAdmin =  "123456", PasswordAdmin = "123456" ,TelAdmin = "0916113237" , LevelAdmin = "Head" ,AddressAdmin = "15/8 นครราชสีมา"}
+            // new Admin { IdAdmin = "2", NameAdmin = "admin2" , UsernameAdmin =  "12345", PasswordAdmin = "12345" ,TelAdmin = "0665606411" , LevelAdmin = "Meneger" ,AddressAdmin = "8/1 นครพนม"},
+            // new Admin { IdAdmin = "3", NameAdmin = "admin3" , UsernameAdmin =  "123456", PasswordAdmin = "123456" ,TelAdmin = "0916113237" , LevelAdmin = "Head" ,AddressAdmin = "15/8 นครราชสีมา"}
         };
 
         [HttpGet]
@@ -85,7 +85,7 @@ namespace AMApi.Controllers
 
         public static List<User> DataUser = new List<User>
         {
-            new User { IdUser = "1", NameUser = "บอล" , Username =  "1234", Password = "1234",TelUser="dfgdfgdfg",AddressUser = "gfdgfdgfdg", StatusUser = "พร้อมใช้งาน",CardUser = "1125533448652"}
+            // new User { IdUser = "1", NameUser = "บอล" , Username =  "1234", Password = "1234",TelUser="dfgdfgdfg",AddressUser = "gfdgfdgfdg", StatusUser = "พร้อมใช้งาน",CardUser = "1125533448652"}
 
         };
         [HttpGet]

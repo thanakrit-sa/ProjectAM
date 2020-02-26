@@ -207,7 +207,8 @@ export class AddStorePage implements OnInit {
     console.log(this.dataStore);
     this.productApi.EditAddTotalProduct(this.dataStore.value.idProduct, this.dataStore.value).subscribe(it => {
     });
-    this.route.navigate(['/store']);
+    
+    this.route.navigate(['/clear-store']);
   }
 
 

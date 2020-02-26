@@ -25,7 +25,7 @@
   <div class="menu">
     <ion-row text-right>
       <ion-col>
-        <ion-button class="btn-addProduct" [routerLink]="['/add-store']">
+        <ion-button class="btn-addProduct" (click)="check()">
           <ion-label>
             <h2><b>เพิ่มสินค้า</b></h2>
           </ion-label>
@@ -36,8 +36,14 @@
   <br>
   <ion-card>
     <ion-card-content>
+      <div *ngIf="isShowText == true" text-center>
+        <ion-label>
+          <h1><b>ไม่มีรายการสินค้า</b></h1>
+        </ion-label>
+      </div>
       <ion-row>
         <ion-col size="2" *ngFor="let ii of datasss;let i = index">
+
           <div *ngIf="i < 6">
             <ion-card class="a">
               <ion-card-content text-center>
@@ -77,7 +83,7 @@
     </ion-item>
   </ion-card>
   <ion-card>
-    <ion-card-content>
+    <ion-card-content>      
       <ion-row text-center style="border-bottom: groove">
         <ion-col>
           <ion-label>
@@ -106,8 +112,13 @@
         </ion-col>
 
       </ion-row>
-      <ion-row text-center style="border-bottom: groove"
-        *ngFor="let s of datafilter | paginate: { itemsPerPage: 6, currentPage: PageNumber }">
+      <div *ngIf="isShowTextDown == true" text-center>
+        <br>
+        <ion-label>
+          <h1><b>ไม่มีรายการสินค้า</b></h1>
+        </ion-label>
+      </div>
+      <ion-row text-center style="border-bottom: groove" *ngFor="let s of datafilter | paginate: { itemsPerPage: 6, currentPage: PageNumber }">
         <ion-col class="aa">
           <ion-label>
             {{s.idProduct}}

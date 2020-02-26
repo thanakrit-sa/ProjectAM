@@ -21,6 +21,8 @@ export class ProductPage implements OnInit {
   sumProductNumber: number;
   isShowCloseTab: boolean = true;
   isShowOpenTab: boolean = true;
+  isShowText: boolean = true;
+  
   constructor(private menu: MenuController, public alertController: AlertController, public activate: ActivatedRoute, public userApi: UserService, public productApi: ProductService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     console.log(this.userApi.statusAdmin);
     console.log(this.userApi.nameAdmin);
@@ -73,7 +75,11 @@ export class ProductPage implements OnInit {
       console.log(this.filtertype);
       console.log(this.dataProductAll);
       console.log(this.datafilter);
-
+      if (this.datafilter.length == 0) {
+        this.isShowText = true
+      } else {
+        this.isShowText = false
+      }
 
 
 

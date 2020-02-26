@@ -10,8 +10,12 @@ import { Order, receipt } from '../Models/Order';
 })
 export class DetailOrderPage implements OnInit {
 
-  id;idProduct;nameProduct;amountProduct;priceOrder;nameUser;telUser;addressUser;
-  dataOrder:Order;
+  id; idProduct; nameProduct; amountProduct; priceOrder; nameUser; telUser; addressUser;
+  dataOrder: Order;
+  isShowText: boolean = true;
+  isShowForm: boolean = true;
+  isShowEdit: boolean = true;
+  isShowCon: boolean = true;
 
   constructor
     (private modalController: ModalController, private navParams: NavParams, public callApi: CallApiService) {
@@ -21,6 +25,20 @@ export class DetailOrderPage implements OnInit {
 
   ngOnInit() {
     this.showData()
+  }
+
+  update() {
+    this.isShowText = true
+    this.isShowForm = true
+    this.isShowEdit = true
+    this.isShowCon = true
+  }
+
+  toUpdate() {
+    this.isShowText = false
+    this.isShowForm = false
+    this.isShowEdit = false
+    this.isShowCon = false
   }
 
   showData() {

@@ -27,11 +27,13 @@ export class ListPage implements OnInit {
   datafilter: Order[] = [];
   dataarray: Order[] = [];
   showReceiptData;
+  ReceiptData;
   dataOrderById: receipt;
   dataTest = {
     "dataid": [],
     "dataamount": [],
   }
+  isShowText:boolean = true;
   // serarch :any;
   // serarch2 :Order[] = [];
   constructor(public actived: ActivatedRoute, public menuCtrl: MenuController, public productapi: ProductService, public route: Router, public callApi: CallApiService, public alertController: AlertController, public tost: ToastController) {
@@ -62,19 +64,16 @@ export class ListPage implements OnInit {
 
     });
     this.showReceipt()
-
-
-
   }
 
   ionViewDidEnter() {
     this.menuCtrl.enable(true);
     this.userName = this.callApi.nameUser
     console.log(this.userName);
-
     this.showdatafilter();
     this.getdataarray()
     this.showdatafilter();
+    this.showReceipt()
     this.callApi.GetUserbyData(this.userName).subscribe(it => {
       if (it != null) {
         this.datausercheckstatus = it.statusUser
@@ -129,7 +128,7 @@ export class ListPage implements OnInit {
       for (let index = 0; index < Object.keys(this.dataUser).length; index++) {
         this.datafilter[index] = this.dataUser[index]
       }
-      this.countdata = Object.keys(this.datafilter).length
+      
     });
 
   }
@@ -160,14 +159,31 @@ export class ListPage implements OnInit {
       console.log(this.data);
       this.cancelmorder(id)
     });
+  }
 
+  sendid(id) {
+    this.callApi.GetReceiptById(id).subscribe(it => {
+      console.log(it);
+      this.data = it
+      console.log(this.data);
+      this.editsendorder(id)      
+    });
   }
 
   showReceipt() {
     this.callApi.GetReceiptAll().subscribe(it => {
       console.log(it);
-      this.showReceiptData = it
-      console.log(this.showReceiptData.dataOrder);
+      this.ReceiptData = it
+      this.showReceiptData = this.ReceiptData.filter(it => it.status != "ยกเลิก")
+      console.log(this.showReceiptData);
+      this.countdata = this.showReceiptData.length
+      if (this.showReceiptData.length == 0) {
+        this.isShowText = true;
+      } else {
+        this.isShowText = false;
+      }
+      
+      // console.log(this.showReceiptData.dataOrder.filter(it => it.status == "ยกเลิก"));
 
     })
   }
@@ -177,11 +193,12 @@ export class ListPage implements OnInit {
     this.callApi.editokorder(id, this.data).subscribe(it => {
       this.data = it;
       console.log(this.data);
+      this.showReceipt()
     });
+
     this.callApi.GetReceiptById(id).subscribe(it => {
       console.log(it);
-      this.dataOrderById = it
-      console.log(this.dataOrderById);
+      this.dataOrderById = it      
       for (let index = 0; index < this.dataOrderById.dataOrder.length; index++) {
         this.dataTest.dataid[index] = this.dataOrderById.dataOrder[index].idProduct
         this.dataTest.dataamount[index] = this.dataOrderById.dataOrder[index].amountProduct
@@ -192,12 +209,12 @@ export class ListPage implements OnInit {
           console.log(this.data);
           console.log(this.data.amountProduct);
           this.getdataarray();
-
+          this.showReceipt()
         });
       }
 
     })
-
+    this.showReceipt()
 
 
   }
@@ -264,19 +281,12 @@ export class ListPage implements OnInit {
     });
     await alert.present();
   }
-  sendid(id) {
-    this.callApi.GetReceiptById(id).subscribe(it => {
-      console.log(it);
-      this.data = it
-      console.log(this.data);
-      this.editsendorder(id)
-    });
-  }
+ 
   editsendorder(id) {
     this.callApi.editsendorder(id, this.data).subscribe(it => {
       this.data = it;
       console.log(it);
-      this.getdataarray();
+      this.showReceipt()
     });
   }
   /////////////////////////////////////////////////////////////////////////

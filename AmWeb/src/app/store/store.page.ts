@@ -45,9 +45,11 @@ export class StorePage implements OnInit {
 
   isShowCloseTab:boolean = true;
   isShowOpenTab:boolean = true;
-
+  isShowText:boolean = true;
+  isShowTextDown:boolean = true;
   PageNumber: number = 1;
   sumProductNumber : number;
+  
   
   constructor(private menu: MenuController,public api: ProductService, public alertController: AlertController, public activate: ActivatedRoute, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.dataStore = this.formbuilder.group({
@@ -100,15 +102,28 @@ export class StorePage implements OnInit {
         this.datass[index] = this.datas[index];
         this.datasss = this.datass;
       }
-      console.log(this.datasss);
+      if(this.datasss.length == 0){
+        this.isShowText = true
+      } else {
+        this.isShowText = false
+      }
     });
   }
 
   // -------------------------------------------------------------------------------
 
   get() {
-    this.storeApi.GetProductStore().subscribe((it) => {      
-      this.dataStoreAll = it;
+    this.storeApi.GetProductStore().subscribe((it) => {   
+      console.log(it);
+         
+      this.dataStoreAll = it;      
+      console.log(this.datafilter.length);
+      
+      if(this.datafilter.length == 0){
+        this.isShowTextDown = true
+      } else {
+        this.isShowTextDown = false
+      }
       for (let index = 0; index < Object.keys(this.dataStoreAll).length; index++) {
         this.datafilter[index] = this.dataStoreAll[index];
         this.total = this.datafilter[index].unitProduct;        
@@ -145,7 +160,7 @@ export class StorePage implements OnInit {
     });
     console.log(this.sumAmountProductInStore);    
     console.log(this.datafilter);    
-    console.log(this.sumAmountProductSellInStore);
+    console.log(this.sumAmountProductSellInStore);    
   }
 
   // ----------------------------------------------------------------------------------
@@ -199,6 +214,40 @@ export class StorePage implements OnInit {
         it.idProduct == data)      
     }
   }
-}
+
+  // --------------------------------------------------------------------------
+
+  check() {
+    console.log(this.datasss.length);    
+    if(this.datasss.length == 0){
+      this.alert()
+    } else {
+      this.route.navigate(['/add-store']);
+    }
+  }
+
+  async alert() {     
+      const alert = await this.alertController.create({        
+        message: 'ยังไม่มีรายการสินค้า ต้องการเพิ่มรายการสินค้าหรือไม่ ?',
+        buttons: [
+          {
+            text: 'เพิ่มสินค้า',         
+            handler: () => {
+              this.route.navigate(['/add-product']);
+            }
+          }, {
+            text: 'ยกเลิก',
+            handler: () => {
+              
+            }
+          }
+        ]
+      });
+  
+      await alert.present();
+    }
+  }
+  
+
 
 

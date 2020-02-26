@@ -55,7 +55,12 @@
       <ion-label></ion-label>
     </ion-col>
   </ion-row>
-
+  <div *ngIf="isShowText == true" text-center>
+    <br>
+    <ion-label>
+      <h1><b>ไม่มีรายการสินค้า</b></h1>
+    </ion-label>
+  </div>
   <ion-row  *ngFor="let a of DataReceipt | paginate: { itemsPerPage: 8, currentPage: p }" text-center style="border-bottom: groove">
     <ion-col  class="co">
       <ion-label>{{a.idReceipt}}</ion-label>
@@ -82,7 +87,7 @@
         <ion-button  color="secondary" (click)="okorder(a.idReceipt)" *ngIf="a.status == 'สั่งซื้อ'" class="a">รับคำสั่งซื้อ</ion-button>
         <ion-button  color="success" disabled *ngIf="a.status == 'รับสั่งซื้อ' && a.statusFile == 'ไม่พบไฟล์'" class="a">รับสั่งซื้อ</ion-button>     
         <ion-button  color="success" (click)="sendorder(a.idReceipt)" *ngIf="a.status == 'รับสั่งซื้อ' && a.statusFile != 'ไม่พบไฟล์'" class="a">รับสั่งซื้อ</ion-button>  
-        <ion-button  color="danger" disabled (click)="sendorder(a.idReceipt)" *ngIf="a.status == 'ยกเลิก'" class="a">ยกเลิก</ion-button>     
+        <ion-button  color="danger" (click)="cancel(a.idReceipt)" *ngIf="a.status == 'ยกเลิก'" class="a">ยกเลิก</ion-button>     
         <ion-button  color="warning"  disabled (click)="sendorder(a.idReceipt)" *ngIf="a.status == 'ส่งสินค้า'" class="a">ส่งสินค้า</ion-button> 
         <ion-button  color="dark" disabled (click)="sendorder(a.idReceipt)" *ngIf="a.status == 'ได้รับแล้ว'" class="a">ได้รับแล้ว</ion-button> 
     </ion-col>

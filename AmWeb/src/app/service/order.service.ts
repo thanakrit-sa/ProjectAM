@@ -49,6 +49,8 @@ export class OrderService {
   public GetReceiptById(Id: string) {
     return this.http.get<receipt>(OrderService.host + 'Order/GetReceiptById/' + Id);
   }
-
+  public DeleteReceipt(Id: string) {
+    return this.http.delete<receipt>(OrderService.host + 'Order/DeleteReceipt/' + Id);
+  }  
 }
 
