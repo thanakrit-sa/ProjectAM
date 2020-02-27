@@ -1,26 +1,26 @@
 <ion-header>
-  <ion-toolbar color="dark" text-center>
-    <ion-title>
-      List
-    </ion-title>
+  <ion-toolbar text-center>
+   
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-button (click)="gotoOrder1()" color="light" slot="end" class="buttton"
+    <!-- <ion-button (click)="gotoOrder1()" color="light" slot="end" class="buttton"
       *ngIf="datausercheckstatus =='ไม่พร้อมใช้งาน'">
       <ion-icon name="add-circle"> </ion-icon>
       สั่งซื้อ
-    </ion-button>
+    </ion-button>  -->
+    <ion-button slot="end"   *ngIf="datausercheckstatus =='พร้อมใช้งาน'" (click)="gotoOrder()">
+    
+      สั่งซื้อ
+    
+  </ion-button>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-button class="btn" *ngIf="datausercheckstatus =='พร้อมใช้งาน'" (click)="gotoOrder()">
-    <ion-label>
-      <h2><b>สั่งซื้อ</b></h2>
-    </ion-label>
-  </ion-button>
-  <br><br>
+ 
+  
   <div text-center>
     <div class="panel panel-primary">
       <div class="panel-heading">
@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <ion-searchbar placeholder="ค้นหาสินค้า" [(ngModel)]="search"></ion-searchbar>
+  <ion-searchbar  *ngIf="datausercheckstatus =='ไม่พร้อมใช้งาน'" placeholder="ค้นหาสินค้า" [(ngModel)]="search"></ion-searchbar>
   <br>
   <ion-card>
     <ion-card-content>

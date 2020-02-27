@@ -85,7 +85,7 @@ namespace AMApi.Controllers
 
         public static List<User> DataUser = new List<User>
         {
-            // new User { IdUser = "1", NameUser = "บอล" , Username =  "1234", Password = "1234",TelUser="dfgdfgdfg",AddressUser = "gfdgfdgfdg", StatusUser = "พร้อมใช้งาน",CardUser = "1125533448652"}
+             new User { IdUser = "1", NameUser = "บอล" , Username =  "1234", Password = "1234",TelUser="dfgdfgdfg",AddressUser = "gfdgfdgfdg", StatusUser = "พร้อมใช้งาน",CardUser = "1125533448652"}
 
         };
         [HttpGet]
