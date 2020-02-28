@@ -8,8 +8,10 @@ import { UserService } from '../service/user.service';
 import { MenuController } from '@ionic/angular';
 import { OrderService } from '../service/order.service';
 import { Order } from 'src/Models/order';
+import { receipt } from 'src/Models/order';
 import { store } from 'src/Models/stroe';
 import { asapScheduler } from 'rxjs';
+import { CallApiService } from '../service/call-api.service';
 
 @Component({
   selector: 'app-dashbroad',
@@ -33,8 +35,8 @@ export class DashbroadPage implements OnInit {
   sumAmountProductInStore: number = 0;
   sumAmountProductSellInStore: number = 0;
   sumAmountProductTotalInStore: number = 0;
-  isShowCloseTab:boolean = true;
-  isShowOpenTab:boolean = true;
+  isShowCloseTab: boolean = true;
+  isShowOpenTab: boolean = true;
   sumSellPerProduct: number[] = [];
   sumSell: number = 0;
   sumCostPerProduct: number[] = [];
@@ -42,8 +44,11 @@ export class DashbroadPage implements OnInit {
   sumTotal: number = 0;
   datafilterrevenue: Order[] = []
   dataorderbydate: Order[] = []
+
   datastorebydate: store[] = []
   totalsellinmonth: number = 0;
+
+  datarevenueorder: number = 0;
   revenue: number = 0;
   public chartLabel: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   public chartproductlabel: product[] = []
@@ -56,8 +61,59 @@ export class DashbroadPage implements OnInit {
   datenow: Date
   getDataAll: Order[] = [];
   showClose: boolean = false;
-  constructor(public orderApi: OrderService, public productApi: ProductService, public storeApi: StoreService, public UserApi: UserService, private menu: MenuController) { }
+  constructor(public callapi: CallApiService, public orderApi: OrderService, public productApi: ProductService, public storeApi: StoreService, public UserApi: UserService, private menu: MenuController) { }
 
+
+  datareceipt1
+  datajson
+  dataOrderReceipt: Order[] = []
+  dataorderarray: Order[] = []
+  datareceipt: receipt[] = []
+  dataOrederr
+  dataorder1
+  dataorder2: Order
+  dataorder3: number = 0
+  /////////////////////////////////
+
+  sumrevenue() {
+    this.callapi.GetReceiptAll().subscribe(it => {
+      this.dataOrederr = it
+      this.dataorderarray = []
+      this.dataOrderReceipt = []
+      this.datarevenueorder = 0
+      this.totalsellinmonth = 0
+      for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+        this.datareceipt[index] = this.dataOrederr[index]
+        this.datajson = this.datareceipt[index].dataOrder
+        this.dataorderarray.push(this.datajson)
+        console.log(this.dataorderarray);
+      }
+      for (let index = 0; index < this.dataorderarray.length; index++) {
+        var data = Object.values(this.dataorderarray[index])
+        for (let x = 0; x < data.length; x++) {
+          this.datareceipt1 = data[x]
+          this.dataOrderReceipt.push(this.datareceipt1)
+          console.log(this.dataOrderReceipt);
+        }
+      }
+      this.dataorder1 = this.dataOrderReceipt
+      this.dataorder2 = this.dataorder1
+      for (let a = 0; a < Object.keys(this.dataorder2).length; a++) {
+        this.datarevenueorder = this.datarevenueorder + parseInt(this.dataorder2[a].priceOrder)
+      }
+      for (let a = 0; a < Object.keys(this.dataorder2).length; a++) {
+        this.totalsellinmonth = this.totalsellinmonth + parseInt(this.dataorder2[a].amountProduct)
+        this.testsell = this.totalsellinmonth
+        console.log(this.dataorder2[a].amountProduct);
+
+      }
+      console.log(this.datarevenueorder);
+      console.log(this.totalsellinmonth);
+    })
+  }
+
+
+  /////////////////////////////////
   ngOnInit() {
     this.getyearnow();
     this.openChart();
@@ -68,30 +124,32 @@ export class DashbroadPage implements OnInit {
     this.getalldatastore();
     this.showexpenditure();
     this.totalstockinmonth();
+    this.sumrevenue();
     this.netprofit();
-  
+
   }
   ionViewWillEnter() {
     this.getyearnow();
     this.openChart();
     this.productGetAll();
-    console.log(this.productApi.opentab);  
-    this.menu.enable(true); 
     this.getnameproduct();
     this.getdataorderall()
     this.showrevennue();
     this.getalldatastore();
+    this.showexpenditure();
     this.totalstockinmonth();
+    this.sumrevenue();
     this.netprofit();
 
+    this.menu.enable(true);
   }
 
-  closeTab(){
+  closeTab() {
     this.menu.enable(false);
     this.isShowOpenTab = false;
     this.isShowCloseTab = false;
   }
-  openTab(){
+  openTab() {
     this.menu.enable(true);
     this.isShowOpenTab = true;
     this.isShowCloseTab = true;
@@ -123,13 +181,13 @@ export class DashbroadPage implements OnInit {
 
       for (let index = 0; index < Object.keys(it).length; index++) {
         this.datastorebydate[index] = it[index]
-
       }
 
     })
     this.dataexpenditure()
   }
-
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -149,18 +207,47 @@ export class DashbroadPage implements OnInit {
     this.yearnow = data
     console.log(this.year);
     console.log(this.yearnow);
-   
-  }
 
+  }
+  testsell: number = 0
   onChange(data) {
     if (data == "ทั้งหมด") {
       this.datastorebydate = [];
       this.dataorderbydate = [];
       this.totalstock = 0
-      this.orderApi.getorderallyear(this.year).subscribe(it => {
-        for (let index = 0; index < Object.keys(it).length; index++) {
-          this.dataorderbydate[index] = it[index]
+      this.dataorderarray = []
+      this.dataOrderReceipt = []
+      this.datarevenueorder = 0
+      this.totalsellinmonth = 0
+      this.testsell = 0
+      this.orderApi.getReceiptallyear(this.year).subscribe(it => {
+        this.dataOrederr = it
+        for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+          this.datareceipt[index] = this.dataOrederr[index]
+          this.datajson = this.datareceipt[index].dataOrder
+          this.dataorderarray.push(this.datajson)
         }
+        for (let index = 0; index < this.dataorderarray.length; index++) {
+          var data = Object.values(this.dataorderarray[index])
+          for (let x = 0; x < data.length; x++) {
+            this.datareceipt1 = data[x]
+            this.dataOrderReceipt.push(this.datareceipt1)
+            console.log(this.dataOrderReceipt);
+          }
+        }
+        this.dataorder1 = this.dataOrderReceipt
+        this.dataorder2 = this.dataorder1
+        for (let a = 0; a < Object.keys(this.dataorder2).length; a++) {
+          this.datarevenueorder = this.datarevenueorder + parseInt(this.dataorder2[a].priceOrder)
+        }
+        for (let a = 0; a < Object.keys(this.dataorder2).length; a++) {
+          this.totalsellinmonth = this.totalsellinmonth + parseInt(this.dataorder2[a].amountProduct)
+          this.testsell = this.totalsellinmonth
+          console.log(this.dataorder2[a].amountProduct);
+
+        }
+        console.log(this.datarevenueorder);
+        console.log(this.totalsellinmonth);
         this.datarevenue();
         this.totalstockinmonth()
         this.netprofit()
@@ -180,11 +267,38 @@ export class DashbroadPage implements OnInit {
       this.datastorebydate = [];
       this.dataorderbydate = [];
       this.totalstock = 0
-      this.orderApi.getorderlistbydateyear(this.year, data).subscribe(it => {
-        for (let index = 0; index < Object.keys(it).length; index++) {
-          this.dataorderbydate[index] = it[index]
+      this.dataorderarray = []
+      this.dataOrderReceipt = []
+      this.datarevenueorder = 0
+      this.totalsellinmonth = 0
+      this.testsell = 0
+      this.orderApi.getReceiptlistbydateyear(this.year, data).subscribe(it => {
+        this.dataOrederr = it
+        for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+          this.datareceipt[index] = this.dataOrederr[index]
+          this.datajson = this.datareceipt[index].dataOrder
+          this.dataorderarray.push(this.datajson)
         }
-        console.log(this.dataorderbydate);
+        for (let index = 0; index < this.dataorderarray.length; index++) {
+          var data = Object.values(this.dataorderarray[index])
+          for (let x = 0; x < data.length; x++) {
+            this.datareceipt1 = data[x]
+            this.dataOrderReceipt.push(this.datareceipt1)
+            console.log(this.dataOrderReceipt);
+          }
+        }
+        this.dataorder1 = this.dataOrderReceipt
+        this.dataorder2 = this.dataorder1
+        for (let a = 0; a < Object.keys(this.dataorder2).length; a++) {
+          this.datarevenueorder = this.datarevenueorder + parseInt(this.dataorder2[a].priceOrder)
+        }
+        for (let a = 0; a < Object.keys(this.dataorder2).length; a++) {
+          this.totalsellinmonth = this.totalsellinmonth + parseInt(this.dataorder2[a].amountProduct)
+          this.testsell = this.totalsellinmonth
+          console.log(this.dataorder2[a].amountProduct);
+        }
+        console.log(this.datarevenueorder);
+        console.log(this.totalsellinmonth);
         this.datarevenue();
         this.totalstockinmonth()
         this.netprofit()
@@ -243,15 +357,20 @@ export class DashbroadPage implements OnInit {
   }
 
   netprofit() {
-    this.netprofitinmonth = this.revenue - this.expenditure
+    this.netprofitinmonth = this.datarevenueorder - this.expenditure
+  }
+  check() {
+    this.totalstockinmonth()
   }
 
+
   totalstockinmonth() {
+
     this.totalstock = 0
-    this.totalstock = this.total1 - this.total2
+
+    this.totalstock = this.total1 - this.testsell
     console.log(this.totalstock);
-    console.log(this.total1);
-    console.log(this.total2);
+
 
 
   }
@@ -261,9 +380,7 @@ export class DashbroadPage implements OnInit {
     console.log(this.yearnow);
   }
 
-  check() {
-    console.log(this.yearnow);
-  }
+
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -564,13 +681,29 @@ export class DashbroadPage implements OnInit {
     this.getOrdernovember();
     this.getOrderdecem();
   }
+
   /////////////////////////////////////////monthrevenue////////////////////////////////////////////
+
+
+
+  dataorderarrayjan: Order[] = []
   getOrderjan() {
-    this.orderApi.getorderlistbydateyear(this.yearnow, "1").subscribe(it => {
-      for (let index = 0; index < Object.keys(it).length; index++) {
-        this.janrevenue[index] = it[index]
+    this.dataorderarrayjan = []
+    this.janrevenue = []
+    this.orderApi.getReceiptlistbydateyear(this.yearnow, "1").subscribe(it => {
+      this.dataOrederr = it
+      for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+        this.datareceipt[index] = this.dataOrederr[index]
+        this.datajson = this.datareceipt[index].dataOrder
+        this.dataorderarrayjan.push(this.datajson)
       }
-      console.log(this.janrevenue);
+      for (let index = 0; index < this.dataorderarrayjan.length; index++) {
+        var data = Object.values(this.dataorderarrayjan[index])
+        for (let x = 0; x < data.length; x++) {
+          this.datareceipt1 = data[x]
+          this.janrevenue.push(this.datareceipt1)
+        }
+      }
       this.datarevenueinmonth()
     })
   }
@@ -583,10 +716,24 @@ export class DashbroadPage implements OnInit {
     console.log(this.revenuejan);
 
   }
+  dataorderarrayfeb: Order[] = []
   getOrderfeb() {
-    this.orderApi.getorderlistbydateyear(this.yearnow, "2").subscribe(it => {
-      for (let index = 0; index < Object.keys(it).length; index++) {
-        this.febrevenue[index] = it[index]
+
+    this.orderApi.getReceiptlistbydateyear(this.yearnow, "2").subscribe(it => {
+      this.dataorderarrayfeb = []
+      this.febrevenue = []
+      this.dataOrederr = it
+      for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+        this.datareceipt[index] = this.dataOrederr[index]
+        this.datajson = this.datareceipt[index].dataOrder
+        this.dataorderarrayfeb.push(this.datajson)
+      }
+      for (let index = 0; index < this.dataorderarrayfeb.length; index++) {
+        var data = Object.values(this.dataorderarrayfeb[index])
+        for (let x = 0; x < data.length; x++) {
+          this.datareceipt1 = data[x]
+          this.febrevenue.push(this.datareceipt1)
+        }
       }
       console.log(this.febrevenue);
       this.datarevenueinfeb()
@@ -601,10 +748,24 @@ export class DashbroadPage implements OnInit {
     console.log(this.revenuefeb);
 
   }
+  dataorderarraymar: Order[] = []
   getOrdermar() {
-    this.orderApi.getorderlistbydateyear(this.yearnow, "3").subscribe(it => {
-      for (let index = 0; index < Object.keys(it).length; index++) {
-        this.marrevenue[index] = it[index]
+    this.dataorderarraymar = []
+    this.marrevenue = []
+    this.orderApi.getReceiptlistbydateyear(this.yearnow, "3").subscribe(it => {
+      this.dataOrederr = it
+      console.log(it);
+      for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+        this.datareceipt[index] = this.dataOrederr[index]
+        this.datajson = this.datareceipt[index].dataOrder
+        this.dataorderarraymar.push(this.datajson)
+      }
+      for (let index = 0; index < this.dataorderarraymar.length; index++) {
+        var data = Object.values(this.dataorderarraymar[index])
+        for (let x = 0; x < data.length; x++) {
+          this.datareceipt1 = data[x]
+          this.marrevenue.push(this.datareceipt1)
+        }
       }
       this.datarevenueinmar()
     })
@@ -618,10 +779,24 @@ export class DashbroadPage implements OnInit {
     console.log(this.revenuemar);
 
   }
+  dataorderarrayapril: Order[] = []
   getOrderapril() {
-    this.orderApi.getorderlistbydateyear(this.yearnow, "4").subscribe(it => {
-      for (let index = 0; index < Object.keys(it).length; index++) {
-        this.aprilrevenue[index] = it[index]
+    this.dataorderarrayapril = []
+    this.aprilrevenue = []
+    this.orderApi.getReceiptlistbydateyear(this.yearnow, "4").subscribe(it => {
+      this.dataOrederr = it
+      console.log(it);
+      for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+        this.datareceipt[index] = this.dataOrederr[index]
+        this.datajson = this.datareceipt[index].dataOrder
+        this.dataorderarrayapril.push(this.datajson)
+      }
+      for (let index = 0; index < this.dataorderarrayapril.length; index++) {
+        var data = Object.values(this.dataorderarrayapril[index])
+        for (let x = 0; x < data.length; x++) {
+          this.datareceipt1 = data[x]
+          this.aprilrevenue.push(this.datareceipt1)
+        }
       }
       this.datarevenueinapril()
     })
@@ -633,14 +808,27 @@ export class DashbroadPage implements OnInit {
     }
 
   }
+  dataorderarraymay: Order[] = []
   getOrdermay() {
-    this.orderApi.getorderlistbydateyear(this.yearnow, "5").subscribe(it => {
-      for (let index = 0; index < Object.keys(it).length; index++) {
-        this.mayrevenue[index] = it[index]
+    this.dataorderarraymay = []
+    this.mayrevenue = []
+    this.orderApi.getReceiptlistbydateyear(this.yearnow, "5").subscribe(it => {
+      this.dataOrederr = it
+      console.log(it);
+      for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+        this.datareceipt[index] = this.dataOrederr[index]
+        this.datajson = this.datareceipt[index].dataOrder
+        this.dataorderarraymay.push(this.datajson)
+      }
+      for (let index = 0; index < this.dataorderarraymay.length; index++) {
+        var data = Object.values(this.dataorderarraymay[index])
+        for (let x = 0; x < data.length; x++) {
+          this.datareceipt1 = data[x]
+          this.mayrevenue.push(this.datareceipt1)
+        }
       }
       this.datarevenueinmay()
       console.log(it);
-
     })
   }
   datarevenueinmay() {
@@ -650,10 +838,24 @@ export class DashbroadPage implements OnInit {
     }
 
   }
+  dataorderarrayjune: Order[] = []
   getOrderjune() {
-    this.orderApi.getorderlistbydateyear(this.yearnow, "6").subscribe(it => {
-      for (let index = 0; index < Object.keys(it).length; index++) {
-        this.junerevenue[index] = it[index]
+    this.dataorderarrayjune = []
+    this.junerevenue = []
+    this.orderApi.getReceiptlistbydateyear(this.yearnow, "6").subscribe(it => {
+      this.dataOrederr = it
+      console.log(it);
+      for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+        this.datareceipt[index] = this.dataOrederr[index]
+        this.datajson = this.datareceipt[index].dataOrder
+        this.dataorderarrayjune.push(this.datajson)
+      }
+      for (let index = 0; index < this.dataorderarrayjune.length; index++) {
+        var data = Object.values(this.dataorderarrayjune[index])
+        for (let x = 0; x < data.length; x++) {
+          this.datareceipt1 = data[x]
+          this.junerevenue.push(this.datareceipt1)
+        }
       }
       this.datarevenueinjune()
       console.log(it);
@@ -667,10 +869,24 @@ export class DashbroadPage implements OnInit {
     }
 
   }
+  dataorderarrayjuly: Order[] = []
   getOrderjuly() {
-    this.orderApi.getorderlistbydateyear(this.yearnow, "7").subscribe(it => {
-      for (let index = 0; index < Object.keys(it).length; index++) {
-        this.julyrevenue[index] = it[index]
+    this.dataorderarrayjuly = []
+    this.julyrevenue = []
+    this.orderApi.getReceiptlistbydateyear(this.yearnow, "7").subscribe(it => {
+      this.dataOrederr = it
+      console.log(it);
+      for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+        this.datareceipt[index] = this.dataOrederr[index]
+        this.datajson = this.datareceipt[index].dataOrder
+        this.dataorderarrayjuly.push(this.datajson)
+      }
+      for (let index = 0; index < this.dataorderarrayjuly.length; index++) {
+        var data = Object.values(this.dataorderarrayjuly[index])
+        for (let x = 0; x < data.length; x++) {
+          this.datareceipt1 = data[x]
+          this.julyrevenue.push(this.datareceipt1)
+        }
       }
       this.datarevenueinjuly()
       console.log(it);
@@ -684,10 +900,25 @@ export class DashbroadPage implements OnInit {
     }
 
   }
+  dataorderarrayaug: Order[] = []
   getOrderaug() {
-    this.orderApi.getorderlistbydateyear(this.yearnow, "8").subscribe(it => {
-      for (let index = 0; index < Object.keys(it).length; index++) {
-        this.augrevenue[index] = it[index]
+    this.dataorderarrayaug = []
+    this.augrevenue = []
+    this.orderApi.getReceiptlistbydateyear(this.yearnow, "8").subscribe(it => {
+
+      this.dataOrederr = it
+      console.log(it);
+      for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+        this.datareceipt[index] = this.dataOrederr[index]
+        this.datajson = this.datareceipt[index].dataOrder
+        this.dataorderarrayaug.push(this.datajson)
+      }
+      for (let index = 0; index < this.dataorderarrayaug.length; index++) {
+        var data = Object.values(this.dataorderarrayaug[index])
+        for (let x = 0; x < data.length; x++) {
+          this.datareceipt1 = data[x]
+          this.augrevenue.push(this.datareceipt1)
+        }
       }
       this.datarevenueinaug()
       console.log(it);
@@ -700,10 +931,23 @@ export class DashbroadPage implements OnInit {
     }
 
   }
+  dataorderarrayseptember: Order[] = []
   getOrderseptember() {
-    this.orderApi.getorderlistbydateyear(this.yearnow, "9").subscribe(it => {
-      for (let index = 0; index < Object.keys(it).length; index++) {
-        this.septemberrevenue[index] = it[index]
+    this.dataorderarrayseptember = []
+    this.septemberrevenue = []
+    this.orderApi.getReceiptlistbydateyear(this.yearnow, "9").subscribe(it => {
+      this.dataOrederr = it
+      for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+        this.datareceipt[index] = this.dataOrederr[index]
+        this.datajson = this.datareceipt[index].dataOrder
+        this.dataorderarrayseptember.push(this.datajson)
+      }
+      for (let index = 0; index < this.dataorderarrayseptember.length; index++) {
+        var data = Object.values(this.dataorderarrayseptember[index])
+        for (let x = 0; x < data.length; x++) {
+          this.datareceipt1 = data[x]
+          this.septemberrevenue.push(this.datareceipt1)
+        }
       }
       this.datarevenueinseptemberrevenue()
       console.log(it);
@@ -716,10 +960,23 @@ export class DashbroadPage implements OnInit {
     }
 
   }
+  dataorderarrayoct: Order[] = []
   getOrderoct() {
-    this.orderApi.getorderlistbydateyear(this.yearnow, "10").subscribe(it => {
-      for (let index = 0; index < Object.keys(it).length; index++) {
-        this.octrevenue[index] = it[index]
+    this.orderApi.getReceiptlistbydateyear(this.yearnow, "10").subscribe(it => {
+      this.dataorderarrayoct = []
+      this.octrevenue = []
+      this.dataOrederr = it
+      for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+        this.datareceipt[index] = this.dataOrederr[index]
+        this.datajson = this.datareceipt[index].dataOrder
+        this.dataorderarrayoct.push(this.datajson)
+      }
+      for (let index = 0; index < this.dataorderarrayoct.length; index++) {
+        var data = Object.values(this.dataorderarrayoct[index])
+        for (let x = 0; x < data.length; x++) {
+          this.datareceipt1 = data[x]
+          this.octrevenue.push(this.datareceipt1)
+        }
       }
       this.datarevenueoct()
       console.log(it);
@@ -731,10 +988,23 @@ export class DashbroadPage implements OnInit {
       this.revenueoct = this.revenueoct + parseInt(this.octrevenue[index].priceOrder);
     }
   }
+  dataorderarraynovember: Order[] = []
   getOrdernovember() {
-    this.orderApi.getorderlistbydateyear(this.yearnow, "11").subscribe(it => {
-      for (let index = 0; index < Object.keys(it).length; index++) {
-        this.novemberrevenue[index] = it[index]
+    this.orderApi.getReceiptlistbydateyear(this.yearnow, "11").subscribe(it => {
+      this.dataorderarraynovember = []
+      this.novemberrevenue = []
+      this.dataOrederr = it
+      for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+        this.datareceipt[index] = this.dataOrederr[index]
+        this.datajson = this.datareceipt[index].dataOrder
+        this.dataorderarraynovember.push(this.datajson)
+      }
+      for (let index = 0; index < this.dataorderarraynovember.length; index++) {
+        var data = Object.values(this.dataorderarraynovember[index])
+        for (let x = 0; x < data.length; x++) {
+          this.datareceipt1 = data[x]
+          this.novemberrevenue.push(this.datareceipt1)
+        }
       }
       this.datarevenuenovember()
       console.log(it);
@@ -747,10 +1017,24 @@ export class DashbroadPage implements OnInit {
     }
 
   }
+  dataorderarraydecem: Order[] = []
   getOrderdecem() {
-    this.orderApi.getorderlistbydateyear(this.yearnow, "12").subscribe(it => {
-      for (let index = 0; index < Object.keys(it).length; index++) {
-        this.decemberrevenue[index] = it[index]
+
+    this.orderApi.getReceiptlistbydateyear(this.yearnow, "12").subscribe(it => {
+      this.dataorderarraydecem = []
+      this.decemberrevenue = []
+      this.dataOrederr = it
+      for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
+        this.datareceipt[index] = this.dataOrederr[index]
+        this.datajson = this.datareceipt[index].dataOrder
+        this.dataorderarraydecem.push(this.datajson)
+      }
+      for (let index = 0; index < this.dataorderarraydecem.length; index++) {
+        var data = Object.values(this.dataorderarraydecem[index])
+        for (let x = 0; x < data.length; x++) {
+          this.datareceipt1 = data[x]
+          this.decemberrevenue.push(this.datareceipt1)
+        }
       }
       this.datarevenuedecem()
       console.log(it);

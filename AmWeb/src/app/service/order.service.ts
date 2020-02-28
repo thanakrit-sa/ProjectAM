@@ -49,6 +49,11 @@ export class OrderService {
   public GetReceiptById(Id: string) {
     return this.http.get<receipt>(OrderService.host + 'Order/GetReceiptById/' + Id);
   }
-
+  public getReceiptlistbydateyear(data: string, data2: string) {
+    return this.http.get<receipt>(OrderService.host + 'Order/GetReceiptdatebyfindallbyyrearandmonth/' + data + '/' + data2);
+  }
+  public getReceiptallyear(data) {
+    return this.http.get<receipt>(OrderService.host + 'Order/GetReceiptdatebyfindallbyyear/' + data);
+  }
 }
 

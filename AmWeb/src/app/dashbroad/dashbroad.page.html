@@ -100,7 +100,7 @@
                 <ion-col text-center>
                   <br>
                   <ion-label>
-                    <h2>{{totalsellinmonth | number}}</h2>
+                    <h2>{{testsell | number}}</h2>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -146,7 +146,7 @@
                 <ion-col text-center>
                   <br>
                   <ion-label>
-                    <h2>{{revenue | number}} THB</h2>
+                    <h2>{{datarevenueorder | number}} THB</h2>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -191,13 +191,13 @@
               <ion-row>
                 <ion-col text-center>
                   <br>
-                  <ion-label *ngIf="expenditure < revenue" color="success"> 
+                  <ion-label *ngIf="expenditure < datarevenueorder" color="success"> 
                     <h2 >{{netprofitinmonth | number}} THB</h2>
                   </ion-label>
-                  <ion-label *ngIf="expenditure > revenue" color="danger"> 
+                  <ion-label *ngIf="expenditure > datarevenueorder" color="danger"> 
                     <h2 >{{netprofitinmonth | number}} THB</h2>
                   </ion-label>
-                  <ion-label *ngIf="expenditure == revenue" > 
+                  <ion-label *ngIf="expenditure == datarevenueorder" > 
                     <h2 >{{netprofitinmonth | number}} THB</h2>
                   </ion-label>
                 </ion-col>

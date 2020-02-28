@@ -330,6 +330,19 @@ namespace AMApi.Controllers
         //     return Receipt.FirstOrDefault(it => it.IdReceipt == id.ToString());
         // }
 
+    [HttpGet("{data}/{data2}")]
+        public ActionResult<IEnumerable<Receipt>> GetReceiptdatebyfindallbyyrearandmonth(string data, string data2)
+        {
+            return Receipt.ToList().FindAll(it => (DateTime.Parse(it.Date).Year.ToString() == data) && ((DateTime.Parse(it.Date).Month.ToString() == data2)));
+        }
+  [HttpGet("{data}")]
+        public ActionResult<IEnumerable<Receipt>> GetReceiptdatebyfindallbyyear(string data)
+        {
+            return Receipt.ToList().FindAll(it => DateTime.Parse(it.Date).Year.ToString() == data);
+        }
+
+
+
 
         [HttpPost]
         public Receipt AddReceipt([FromBody] Receipt Receiptx)

@@ -41,4 +41,8 @@ export class CallApiService {
   return this.http.put<Order>(CallApiService.host+'Order/CancelSellTotalProduct/'+ id,data);
  }
 
+
+ public GetReceiptAll(){
+  return this.http.get<Order>(CallApiService.host+'Order/GetReceiptAll');
+ }
 }
