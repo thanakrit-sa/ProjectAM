@@ -178,6 +178,6 @@ export class AddProductPage implements OnInit {
     this.productApi.AddDataProduct(this.dataPd).subscribe(it => {
       console.log(it);
     });
-    this.route.navigate(['/product']);
+    this.route.navigate(['/store']);
   }
 }

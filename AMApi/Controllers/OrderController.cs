@@ -359,7 +359,7 @@ namespace AMApi.Controllers
                 DataOrder = Receiptx.DataOrder.ToArray(),
                 Date = DateTime.Now.ToString("dd/MM/yyyy"),
                 File = Receiptx.File,
-                Status = "สั่งซื้อ",
+                Status = "รับสั่งซื้อ",
                 StatusFile = "ไม่พบไฟล์"
             };
 
@@ -367,6 +367,14 @@ namespace AMApi.Controllers
             Receipt.Add(item);
             return item;
 
+        }
+
+        [HttpDelete("{id}")]
+        public void DeleteReceipt(string id)
+        {
+
+            var delete = Receipt.FirstOrDefault(it => it.IdReceipt == id.ToString());
+            Receipt.Remove(delete);
         }
 
         [HttpPut("{id}")]

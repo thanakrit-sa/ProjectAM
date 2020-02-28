@@ -150,6 +150,10 @@ export class LoginPage implements OnInit {
 
   }
 
+  eiei(){
+console.log(54135131);
+  
+  }
 
 
 

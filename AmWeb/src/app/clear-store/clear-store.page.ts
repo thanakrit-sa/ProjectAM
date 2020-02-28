@@ -74,6 +74,7 @@ export class ClearStorePage implements OnInit {
   ttt; q;
   w: stock[] = [];
   e;
+  sumProduct;
 
   dataStock: stock;
 
@@ -249,7 +250,8 @@ export class ClearStorePage implements OnInit {
     this.getShowStockAll = null;
     this.productApi.GetStockAll().subscribe(it => {
       this.getShowStockAll = it
-      console.log(this.getShowStockAll);
+      this.sumProduct = this.getShowStockAll.length
+      console.log(this.getShowStockAll.length);
       if (this.getShowStockAll.length == 0) {
         this.isShowProductZeroStock = false;
       } else {
@@ -390,11 +392,14 @@ export class ClearStorePage implements OnInit {
         //   this.datafilter[index].totalProduct  = this.datafilter[index].totalProduct      
         // }    
       }
-      this.showDataFilter = this.datafilter.filter(it => it.showTotal == 0);
-      console.log(this.showDataFilter);
-      console.log(this.showDataFilter.length);
-      if (this.showDataFilter.length == 0) {
+      // this.showDataFilter = this.datafilter.filter(it => it.showTotal == 0);
+      console.log(this.datafilter);
+      console.log(this.datafilter.length);
+      if (this.datafilter.length == 0) {
         this.isShowProductZero = true;
+      }
+      else if (this.datafilter.length == 1) {
+        this.isShowProductZero = false;
       }
 
       // if(){

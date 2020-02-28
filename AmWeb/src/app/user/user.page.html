@@ -157,6 +157,12 @@
               </ion-label>
             </ion-col>
           </ion-row>
+          <div *ngIf="isShowText == true" text-center>
+            <br>
+            <ion-label>
+              <h1><b>ไม่มีรายการสินค้า</b></h1>
+            </ion-label>
+          </div>
           <ion-row style="border-bottom:groove;" *ngFor="let u of dataUserAll" text-center>
             <ion-col class="a">
               <ion-label>

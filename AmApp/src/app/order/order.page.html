@@ -38,29 +38,31 @@
 
   <ion-item>
     <ion-label>จำนวนสินค้า :</ion-label>
-    <ion-input formControlName="amountProduct" (ionChange)="amount(amountp)"[(ngModel)]="amountp"placeholder="กรอกจำนวนสินค้า"*ngIf="data != null" clearInput >
+    <ion-input formControlName="amountProduct" (ionChange)="amount(amountp)"[(ngModel)]="amountp"placeholder="กรอกจำนวนสินค้า"*ngIf="data != null && checkTotal == 0 && checkTotalProduct != '0'" clearInput >
     </ion-input>
   </ion-item>
   <div *ngIf="isShowValidateamountProduct == true">
     <ion-label color="danger">* กรุณากรอกจำนวนสินค้า !!</ion-label>
   </div>   
+  
   <ion-item>
     <ion-label >ราคารวม : </ion-label>
-    <ion-input *ngIf="data != null" placeholder="ราคารวม" formControlName="priceOrder"[(ngModel)]="sum" readonly></ion-input>
+    <ion-input *ngIf="data != null && checkTotal == 0 && checkTotalProduct != '0'" placeholder="ราคารวม" formControlName="priceOrder"[(ngModel)]="sum" readonly></ion-input>
   </ion-item>
   <ion-item>
     <ion-label >ชื่อ : </ion-label>
-    <ion-input *ngIf="data != null" placeholder="ราคารวม" formControlName="nameUser" [(ngModel)]="nameNG" readonly></ion-input>
+    <ion-input *ngIf="data != null && checkTotal == 0 && checkTotalProduct != '0'" placeholder="ชื่อ" formControlName="nameUser" [(ngModel)]="nameNG" readonly></ion-input>
   </ion-item>
   <ion-item>
     <ion-label >ที่อยู่ : </ion-label>
-    <ion-input *ngIf="data != null" formControlName="addressUser" [(ngModel)]="addressNG"  readonly></ion-input>
+    <ion-input *ngIf="data != null && checkTotal == 0 && checkTotalProduct != '0'"  placeholder="ที่อยู่" formControlName="addressUser" [(ngModel)]="addressNG"  readonly></ion-input>
   </ion-item>
   <ion-item>
     <ion-label >เบอร์โทร : </ion-label>
-    <ion-input *ngIf="data != null" formControlName="telUser" [(ngModel)]="telNG" readonly></ion-input>
+    <ion-input *ngIf="data != null && checkTotal == 0 && checkTotalProduct != '0'"  placeholder="เบอร์โทร" formControlName="telUser" [(ngModel)]="telNG" readonly></ion-input>
   </ion-item><br>
-  <ion-button type="submit" color="dark" class="button" expand="block">เพิ่มลงลิสต์รายการ</ion-button>
+  <ion-button *ngIf="amountp != null" type="submit" color="dark" class="button" expand="block">เพิ่มลงลิสต์รายการ</ion-button>
+  <ion-button *ngIf="amountp == null" type="submit" color="dark" disabled class="button" expand="block">เพิ่มลงลิสต์รายการ</ion-button>
 </ion-card>
 <ion-card>
   <ion-card-content>
@@ -100,7 +102,7 @@
         <ion-label>{{a.priceOrder}}</ion-label>
       </ion-col>
       <ion-col size="2">
-        <ion-icon size="large" color="danger" name="close-circle" md="md-close-circle" (click)="PopList(a.idProduct)"></ion-icon>
+        <ion-icon size="large"  color="danger" name="close-circle" md="md-close-circle" (click)="PopList(a.idProduct)"></ion-icon>
       </ion-col>
     </ion-row>       
     <ion-row *ngIf="lengthData != 0" text-center style="border-top: groove;">
@@ -118,7 +120,8 @@
       </ion-col>
     </ion-row>
   </ion-card-content>
-  <ion-button (click)="addReceipt()" color="dark" class="button" expand="block">เพิ่มลงลิสต์รายการ</ion-button>
+  <ion-button (click)="addReceipt()" *ngIf="lengthData == 0" disabled color="dark" class="button" expand="block">ยืนยันการเพิ่มรายการ</ion-button>
+  <ion-button (click)="addReceipt()" *ngIf="lengthData != 0" color="dark" class="button" expand="block">ยืนยันการเพิ่มรายการ</ion-button>
 </ion-card>
 
 

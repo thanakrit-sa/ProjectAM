@@ -54,10 +54,12 @@ export class OrderPage implements OnInit {
   userName: any;
   datauser: User;
   dataAll;
+  showReceiptData: receipt[] = [];
   nameNG; addressNG; telNG;
   test1: any;
   dataSumAmount; dataSumPrice; lengthData;
   sumAmount: number = 0; sumPrice: number = 0;
+  checkTotal:number = 0;checkTotalProduct:string;
   constructor(public productapi: ProductService, public tost: ToastController, public alertController: AlertController, public alertController1: AlertController, public route: Router, public callApi: CallApiService, public navCtrl: NavController, public formbuilder: FormBuilder) {
     this.order = this.formbuilder.group({
       'idOrder': [null],
@@ -145,6 +147,16 @@ export class OrderPage implements OnInit {
 
     await alert.present();
   }
+  async stock() {
+    const alert = await this.alertController1.create({
+      header: 'เตือน',
+
+      message: 'อยู่ระหว่างการตัดสต๊อก',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
 
   showOrderReceipt() {
     this.callApi.GetListAllProduct().subscribe(it => {
@@ -188,7 +200,7 @@ export class OrderPage implements OnInit {
         this.data1 = it
         this.data1.totalProduct = this.data1.totalProduct
         console.log(this.amountnumber);
-        console.log(this.total);        
+        console.log(this.total);
         if (this.amountnumber <= this.total && this.amountnumber != 0) {
           this.order.value.idOrder = '_' + Math.random().toString(36).substr(2, 9);
 
@@ -239,24 +251,16 @@ export class OrderPage implements OnInit {
     });
   }
 
-  addReceipt() {
+  addReceipt(id) {
+    console.log(id);
+
     this.showOrderReceipt()
     console.log(this.oderReceipt);
     this.dataReceipt.file = "ไม่พบไฟล์"
     this.sumAmount = 0;
-    this.sumPrice = 0;
-    // console.log(this.dataReceipt);
-    // console.log(this.mirrorReceipt);
-    // this.dataorder = this.order.value;
-    // console.log(this.dataorder);
+    this.sumPrice = 0;   
     console.log(this.dataReceipt.dataOrder);
 
-
-    // for (let index = 0; index < Object.keys(this.mirrorReceipt).length; index++) {
-    //   this.dataReceipt.dataOrder[index] = this.mirrorReceipt[index]
-    // }
-    // this.dataReceiptInArray = this.dataReceipt
-    // console.log(this.dataReceiptInArray);
     this.callApi.AddReceipt(this.dataReceipt).subscribe(it => {
       console.log(it);
       console.log(this.order.value.idProduct);
@@ -270,138 +274,19 @@ export class OrderPage implements OnInit {
       }
       this.dataReceipt.dataOrder.length = 0;
       this.route.navigate(['/list']);
-    });
-    // this.callApi.DeleteOrderAll().subscribe(it => {
-    //   this.showOrderReceipt()
-    // })
+    });   
   }
 
   PopList(id) {
     console.log(id);
-    this.dataReceipt.dataOrder.length;
-    // this.callApi.GetProductById(id).subscribe(it => {
-    //   console.log(it);
-    //   this.oderReceiptById = it
-    //   console.log(this.oderReceiptById);
-
-    //   this.productapi.CancelSellTotalProduct(this.oderReceiptById.idProduct, this.oderReceiptById.amountProduct).subscribe(it => {
-    //     console.log(it);
-
-    //     this.callApi.DeleteOrder(id).subscribe(it => {
-    //       this.showOrderReceipt()
-    //     });
-    //   });
-    // })
+    this.dataReceipt.dataOrder.pop();   
   }
-
-
-  // async presentAlertConfirm() {
-  //   const alert = await this.alertController.create({
-  //     header: '',
-  //     message: '<strong>ยืนยันการสั่งซื้อ</strong>',
-  //     buttons: [
-  //       {
-  //         text: 'Cancel',
-  //         role: 'cancel',
-  //         cssClass: 'secondary',
-  //         handler: (blah) => {
-  //           console.log('Confirm Cancel: blah');
-  //         }
-  //       }, {
-  //         text: 'ok',
-  //         handler: () => {
-  //           this.order.value.userOrder = this.callApi.nameUser
-  //           console.log(this.order.value.userOrder);
-
-  //           this.dataorder = this.order.value;
-  //           console.log(this.dataorder);
-
-  //           this.callApi.GetProductid(this.dataorder.idProduct).subscribe(it => {
-  //             this.ttotal = it.totalProduct
-  //             this.aamount = this.dataorder.amountProduct
-  //             this.amountnumber = parseInt(this.aamount, this.amountnumber)
-  //             this.total = parseInt(this.ttotal, this.total)
-  //             console.log(it);
-  //             this.isShowValidateName = false;
-  //             this.isShowValidatetelUser = false;
-  //              this.isShowValidateaddressUser = false;
-  //             this.isShowValidateamountProduct = false;
-  //             console.log("จำนวน " + this.amountnumber);
-  //             console.log("คงเหลือ " + this.total);
-
-  //             if (this.amountnumber <= this.total && this.amountnumber != 0 && this.dataorder.nameUser != "" && this.dataorder.telUser != "" && this.dataorder.addressUser != "") {
-  //               // console.log('dai');
-  //               this.total = 0;
-  //               this.amountnumber = 0;                 
-  //               this.dataReceipt.dataOrder.push(this.order.value) 
-  //               console.log(this.dataReceipt);
-  //               this.dataReceipt.dataOrder;            
-  //               // this.callApi.AddOrder(this.dataorder).subscribe(it => {
-  //               //   // console.log(it);
-  //               //   // console.log(this.order.value.idProduct);
-  //               //   // console.log(this.order.value);
-  //               // });
-  //               // this.productapi.AddSellTotalProduct(this.order.value.idProduct, this.order.value).subscribe(it => {
-  //               //   // console.log(it);
-  //               // });
-  //               // this.amountp = null
-  //               // this.sum = null
-  //               // this.presentToast1();
-  //               // this.route.navigate(['/list']);
-
-
-  //             }
-  //             else if (this.amountnumber == 0) {
-  //               this.presentAlert2();
-
-
-  //               this.total = 0;
-  //               this.amountnumber = 0;
-  //             }
-  //             else if (this.amountnumber > this.total) {
-  //               this.presentAlert1();
-
-  //               this.total = 0;
-  //               this.amountnumber = 0;
-  //             }
-  //             else {
-  //               this.presentAlert3();
-  //               if (this.dataorder.nameUser == "") {
-  //                 console.log("name");
-  //                 this.isShowValidateName = true;
-  //               }
-  //               if (this.dataorder.telUser == "") {
-  //                 console.log("เทล");
-  //                 this.isShowValidatetelUser = true;
-  //               }
-  //               if (this.dataorder.addressUser == "") {
-  //                 console.log("แอดเดส");
-  //                 this.isShowValidateaddressUser = true;
-  //               }
-  //               if(this.dataorder.amountProduct == ""){
-  //                 this.isShowValidateamountProduct = true
-  //                 console.log("amount");
-  //               }
-  //               if(this.dataorder.amountProduct == null){
-  //                 this.isShowValidateamountProduct = true
-  //                 console.log("amount");
-  //               }
-
-  //             }
-
-  //           });
-
-
-  //         }
-  //       }
-  //     ]
-  //   });
-  //   await alert.present();
-  // }
 
   ngOnInit() {
     this.listdata()
-    this.showOrderReceipt()
+    this.showOrderReceipt()    
+    this.lengthData = this.dataReceipt.dataOrder.length
+    console.log(this.lengthData);
   }
 
   clear() {
@@ -423,19 +308,25 @@ export class OrderPage implements OnInit {
   getbydata(data) {
     this.callApi.GetProductBydata(data).subscribe(it => {
       this.data1 = it
-      console.log(it);
-
       this.datasum = it
+      this.checkTotal = it.showTotal
+      this.checkTotalProduct = it.totalProduct
+      console.log(it);      
       if (it.totalProduct == "0") {
         this.sold()
         console.log("สินค้าหมดแล้ว");
-
+        this.data1 = null;
       }
-      console.log(this.data1)
-
+      else if(it.showTotal == 1) {
+        this.stock()        
+        this.data1 = null;        
+      }
+     
     });
   }
+
   onChange(data) {
+
     this.isShowForm = false
     this.amountp = null
     this.sum = null
@@ -458,7 +349,7 @@ export class OrderPage implements OnInit {
     this.amountp = qs
     console.log(qs);
 
-    // console.log(this.datasum);
+    
     // console.log(q);
     this.sum = qs * this.datasum.priceProduct;
 

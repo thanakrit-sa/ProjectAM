@@ -1,26 +1,26 @@
 <ion-header>
-  <ion-toolbar color="dark" text-center>
-    <ion-title>
-      List
-    </ion-title>
+  <ion-toolbar text-center>
+   
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-button (click)="gotoOrder1()" color="light" slot="end" class="buttton"
+    <!-- <ion-button (click)="gotoOrder1()" color="light" slot="end" class="buttton"
       *ngIf="datausercheckstatus =='ไม่พร้อมใช้งาน'">
       <ion-icon name="add-circle"> </ion-icon>
       สั่งซื้อ
-    </ion-button>
+    </ion-button>  -->
+    <ion-button slot="end"   *ngIf="datausercheckstatus =='พร้อมใช้งาน'" (click)="gotoOrder()">
+    
+      สั่งซื้อ
+    
+  </ion-button>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-button class="btn" *ngIf="datausercheckstatus =='พร้อมใช้งาน'" (click)="gotoOrder()">
-    <ion-label>
-      <h2><b>สั่งซื้อ</b></h2>
-    </ion-label>
-  </ion-button>
-  <br><br>
+ 
+  
   <div text-center>
     <div class="panel panel-primary">
       <div class="panel-heading">
@@ -29,24 +29,24 @@
     </div>
   </div>
 
-  <ion-searchbar placeholder="ค้นหาสินค้า" [(ngModel)]="search"></ion-searchbar>
+  <ion-searchbar  *ngIf="datausercheckstatus =='ไม่พร้อมใช้งาน'" placeholder="ค้นหาสินค้า" [(ngModel)]="search"></ion-searchbar>
   <br>
   <ion-card>
     <ion-card-content>
       <ion-row style="border-bottom: groove;">
-        <ion-col color="dark" text-center>
+        <ion-col size="2" color="dark" text-center>
           <ion-label><b>รหัสออเดอร์</b></ion-label>
         </ion-col>
 
-        <ion-col text-center>
+        <ion-col size="2" text-center>
           <ion-label><b>วันที่</b></ion-label>
         </ion-col>
 
-        <ion-col text-center>
+        <ion-col size="3" text-center>
           <ion-label><b>หลักฐานการโอน</b></ion-label>
         </ion-col>
 
-        <ion-col text-center>
+        <ion-col size="5" text-center>
           <ion-label><b>สถานะ</b></ion-label>
         </ion-col>
 
@@ -55,30 +55,47 @@
     </ion-col> -->
 
       </ion-row>
-
-      <ion-row *ngFor="let a of showReceiptData |filter:search| paginate: { itemsPerPage: 5, currentPage: p }">
+      <div *ngIf="isShowText == true" text-center>
+        <br>
+        <ion-label>
+          <h1><b>ไม่มีรายการสต๊อก</b></h1>
+        </ion-label>
+      </div>
+      <ion-row *ngFor="let a of this.showReceiptData |filter:search| paginate: { itemsPerPage: 5, currentPage: p }"
+        text-center>
         <ion-item-sliding>
           <ion-item (click)="gotoOrderdetail(a.idReceipt)">
-            <ion-col text-center>
+            <ion-col size="2" text-center>
               <ion-label>{{a.idReceipt}}</ion-label>
             </ion-col>
 
-            <ion-col text-center>
+            <ion-col size="2" text-center>
               <ion-label>{{a.date}}</ion-label>
             </ion-col>
 
-            <ion-col text-center>
+            <ion-col size="3" text-center>
               <ion-label>{{a.statusFile}}</ion-label>
             </ion-col>
 
-            <ion-col text-center *ngIf="a.status != 'รับสั่งซื้อ'">
+            <ion-col size="5" text-center
+              *ngIf="a.status != 'รับสั่งซื้อ' && a.status != 'ส่งสินค้า' && a.status != 'ได้รับแล้ว'  && a.status != 'ยกเลิก'">
               <ion-label>{{a.status}}</ion-label>
             </ion-col>
 
-            <ion-col text-center *ngIf="a.status == 'รับสั่งซื้อ'">
+            <ion-col size="5" text-center *ngIf="a.status == 'รับสั่งซื้อ'">
+              <ion-label>กรุณาแนบหลักฐานการโอนเงิน</ion-label>
+            </ion-col>
 
-              <ion-label>แนบหลักฐานการโอนเงิน</ion-label>
+            <ion-col size="5" text-center *ngIf="a.status == 'ส่งสินค้า'">
+              <ion-label>กำลังดำเนินการจัดส่งสินค้า</ion-label>
+            </ion-col>
 
+            <ion-col size="5" text-center *ngIf="a.status == 'ได้รับแล้ว'">
+              <ion-label>ทำการรับสินค้าเสร็จสิ้น</ion-label>
+            </ion-col>
+
+            <ion-col size="5" text-center *ngIf="a.status == 'ยกเลิก'">
+              <ion-label>ยกเลิกสินค้าเสร็จสิ้น</ion-label>
             </ion-col>
 
           </ion-item>

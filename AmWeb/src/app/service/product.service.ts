@@ -13,6 +13,7 @@ export class ProductService {
   public chartDataProductTotalInStore: number[] = [];
   public opentab: boolean = true;
   public imageName : string;
+  
 
   public static host: string = "https://localhost:5001/api/";
   constructor(public http: HttpClient) { }

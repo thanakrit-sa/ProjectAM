@@ -21,6 +21,7 @@ export class UserPage implements OnInit {
   isShowUser: boolean = false;
   isShowCloseTab: boolean = true;
   isShowOpenTab: boolean = true;
+  isShowText: boolean = true;
   response: { 'dbPath': '' };
   user = {
     "imgPath": ''
@@ -123,6 +124,11 @@ export class UserPage implements OnInit {
       console.log(it);
       this.dataUserAll = it;
       console.log(this.dataUserAll);
+      if(Object.keys(this.dataUserAll).length == 0){
+        this.isShowText = true
+      } else {
+        this.isShowText = false
+      }
     });
   }
 
