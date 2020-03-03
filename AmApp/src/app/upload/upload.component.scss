@@ -9,15 +9,18 @@
     height: 100px;
 }
 ion-row {
-    width: 100%;
+    // width: 100%;
 }
 .left {   
     padding-top: 5px;
-    padding-right: 130px;
+    padding-right: 200px;
 }
-.right {
-    padding-bottom: 20px;
-}
+// .right {
+//     padding-top: 10px;
+
+//     padding-bottom: 10px;
+//     padding-right: 150px;
+// }
 .select {
     background-color: green($color: #000000);
 }
@@ -27,3 +30,54 @@ ion-row {
 ion-button {
     margin-left: 0px;
 }
+
+
+@media (max-width: 1024px) {
+    .right {
+        padding-top: 10px;
+    
+        padding-bottom: 10px;
+        padding-right: 150px;
+    }
+    
+  }
+  
+  
+  @media (max-width: 768px) {
+    .right {
+        padding-top: 10px;
+    
+        padding-bottom: 10px;
+        padding-right: 150px;
+    }
+    
+   
+  }
+  
+  @media (max-width: 576px) {
+    .right {
+        padding-top: 10px;
+    
+        padding-bottom: 10px;
+        padding-right: 350px;
+    }
+    
+  }
+  
+  @media (max-width: 414px) {
+    .right {
+        padding-top: 10px;
+    
+        padding-bottom: 10px;
+        padding-right: 260px;
+    }
+  
+  }
+  @media (max-width: 375px) {
+    .right {
+        padding-top: 10px;
+    
+        padding-bottom: 10px;
+        padding-right: 170px;
+    }
+  }

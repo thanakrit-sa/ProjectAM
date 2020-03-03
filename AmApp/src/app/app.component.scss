@@ -7,9 +7,7 @@
     
     
   }
-.button{
-  margin: auto;
-}
+
 
 ion-list{
   --background: blue;
@@ -34,4 +32,8 @@ ion-content{
 *{
   font-family: Prompt,Poppins-Regular;
   
+}
+fa-icon{
+  color: red;
+  font-size: large;
 }

@@ -7,13 +7,19 @@ import { log } from 'util';
 import { AlertController, ToastController, MenuController } from '@ionic/angular';
 import { ProductService } from '../product.service';
 import { User } from '../Models/User';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons' 
+
+
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.page.html',
   styleUrls: ['./list.page.scss']
-})
+}) 
 export class ListPage implements OnInit {
+  faSignOutAlt=faSignOutAlt;
+  faAngleDoubleLeft=faAngleDoubleLeft;
   p: number = 1
   dataOrder: Order;
   data;

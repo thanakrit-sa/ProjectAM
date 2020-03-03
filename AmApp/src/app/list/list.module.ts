@@ -6,6 +6,11 @@ import { IonicModule } from '@ionic/angular';
 import { ListPage } from './list.page';
 import {NgxPaginationModule} from 'ngx-pagination';
 import{ Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+
+
+
 const routes: Routes = [
   {
     path: '',
@@ -21,6 +26,8 @@ const routes: Routes = [
     IonicModule,
     NgxPaginationModule,
     Ng2SearchPipeModule,
+    FontAwesomeModule,
+    
     RouterModule.forChild(routes)
   ],
   declarations: [ListPage]

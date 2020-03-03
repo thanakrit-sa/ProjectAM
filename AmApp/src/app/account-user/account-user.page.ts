@@ -6,6 +6,10 @@ import { ModalController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { EditProfilePage } from 'src/app/edit-profile/edit-profile.page';
 import { ChangePassPage } from 'src/app/change-pass/change-pass.page';
+import { faUserLock } from '@fortawesome/free-solid-svg-icons' 
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons' 
+
+
 
 @Component({
   selector: 'app-account-user',
@@ -16,6 +20,8 @@ export class AccountUserPage implements OnInit {
   userName: any;
   datauser: User;
   dataReturned: any;
+  faUserLock=faUserLock;
+  faUserCircle=faUserCircle;
 
 
 
@@ -56,7 +62,7 @@ export class AccountUserPage implements OnInit {
     // this.route.navigate(['/edit-profile', { _id: id }]);
     const modal = await this.modalController.create({
       component: EditProfilePage,
-      cssClass: 'my-custom-modal-css',
+      //cssClass: 'my-custom-modal-css',
       componentProps: {
         "id": id
       }

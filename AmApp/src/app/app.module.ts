@@ -15,8 +15,14 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { EditProfilePageModule } from 'src/app/edit-profile/edit-profile.module';
 import { ChangePassPageModule } from 'src/app/change-pass/change-pass.module';
 import { DetailOrderPageModule } from 'src/app/detail-order/detail-order.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core'
 
+import { far } from '@fortawesome/free-regular-svg-icons'
 
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fas,far);
 @NgModule({
   declarations: [AppComponent,],
   entryComponents: [],
@@ -28,7 +34,8 @@ import { DetailOrderPageModule } from 'src/app/detail-order/detail-order.module'
     Ng2SearchPipeModule,
     EditProfilePageModule,
     ChangePassPageModule,
-    DetailOrderPageModule
+    DetailOrderPageModule,
+    FontAwesomeModule
   ],
   providers: [
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { CallApiService } from '../call-api.service';
 import { Order, receipt } from '../Models/Order';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-detail-order',
@@ -18,7 +19,7 @@ export class DetailOrderPage implements OnInit {
   isShowCon: boolean = true;
 
   constructor
-    (private modalController: ModalController, private navParams: NavParams, public callApi: CallApiService) {
+    (private modalController: ModalController, private navParams: NavParams, public callApi: CallApiService,public Location:Location) {
     this.id = this.navParams.data.id;
     console.log(this.id);
   }
@@ -55,5 +56,9 @@ export class DetailOrderPage implements OnInit {
       this.addressUser = this.navParams.data.addressUser;
     })
   }
+goback(){
+  this.modalController.dismiss();
+ 
 
+}
 }

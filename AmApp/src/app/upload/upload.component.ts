@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpEventType, HttpClient } from '@angular/common/http';
 import { ProductService } from "../product.service";
+import { faFileUpload } from '@fortawesome/free-solid-svg-icons' 
+
 
 @Component({
   selector: 'app-upload',
@@ -11,6 +13,7 @@ export class UploadComponent implements OnInit {
   public progress: number;
   public message: string;
   @Output() public onUploadFinished = new EventEmitter();
+  faFileUpload=faFileUpload;
 
   selectedImage: any;
   imageUrl: any;

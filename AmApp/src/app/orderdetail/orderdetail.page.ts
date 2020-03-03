@@ -3,10 +3,13 @@ import { Order, receipt, DataOrder } from '../Models/Order';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CallApiService } from '../call-api.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ActionSheetController } from '@ionic/angular';
 import { ProductService } from "../product.service";
 import { DetailOrderPage } from 'src/app/detail-order/detail-order.page';
 import { ModalController } from '@ionic/angular';
+import { faFileUpload } from '@fortawesome/free-solid-svg-icons' 
+
+
 
 @Component({
   selector: 'app-orderdetail',
@@ -14,7 +17,7 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./orderdetail.page.scss'],
 })
 export class OrderdetailPage implements OnInit {
-
+  faFileUpload=faFileUpload;
   dataOrder: receipt;
   data: any;
   dataReturned: any;
@@ -32,7 +35,14 @@ export class OrderdetailPage implements OnInit {
   dataFilter: any;
   dataFilterSuccess: any;
   idProduct; nameProduct; amountProduct; priceOrder; nameUser; telUser; addressUser;
-  constructor(private modalController: ModalController, public api: ProductService, public route: Router, public callApi: CallApiService, public activate: ActivatedRoute, public formbuilder: FormBuilder, public alertController: AlertController) {
+  constructor(private modalController: ModalController,
+     public api: ProductService,
+      public route: Router,
+       public callApi: CallApiService,
+        public activate: ActivatedRoute,
+         public formbuilder: FormBuilder,
+          public alertController: AlertController,
+          public actionSheetController: ActionSheetController) {
     this.data = this.activate.snapshot.paramMap.get('_id');
     console.log(this.data);
 
@@ -42,6 +52,58 @@ export class OrderdetailPage implements OnInit {
   ngOnInit() {
     this.showDataReceipt()
   }
+
+test(idReceipt, idProduct){
+ console.log(idProduct);
+    console.log(idReceipt);
+    this.callApi.GetReceiptById(idReceipt).subscribe(it => {
+      console.log(it);
+      this.dataOrderById = it
+      console.log(this.dataOrderById);
+      for (let index = 0; index < this.dataOrderById.dataOrder.length; index++) {
+        this.dataTest.data[index] = this.dataOrderById.dataOrder[index]
+        console.log(this.dataTest);
+      }
+      this.dataFilter = this.dataTest.data.filter(it => it.idProduct == idProduct);
+      this.dataFilterSuccess = this.dataFilter[0]
+      console.log(this.dataFilterSuccess.idProduct);
+      this.presentActionSheet()
+    })
+
+
+}
+
+  async presentActionSheet() {
+   
+
+   
+    
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'รายละเอียดสินค้า',
+      
+     cssClass:'a',
+      buttons: [{
+        text:  'รหัสสินค้า :'+this.dataFilterSuccess.idProduct,
+        cssClass:'actionSheet',
+        role:'dismiss'
+      }, {
+        text: 'ชื่อ :'+this.dataFilterSuccess.nameProduct,
+        cssClass:'actionSheet'
+        
+        
+      }, {
+        text: 'จำนวน :'+this.dataFilterSuccess.amountProduct,
+        cssClass:'actionSheet'
+      }, {
+        text: 'ราคา :'+this.dataFilterSuccess.priceOrder,
+        cssClass:'actionSheet'
+      }]
+    });
+    await actionSheet.present();
+  }
+
+
  
 
   showDataOrderById(idReceipt, idProduct) {
@@ -73,6 +135,7 @@ export class OrderdetailPage implements OnInit {
 
     const modal = await this.modalController.create({
       component: DetailOrderPage,
+      cssClass: 'my-custom-modal-css',
       componentProps: {
 
         "idProduct": this.dataFilterSuccess.idProduct,

@@ -1,21 +1,20 @@
-<ion-app>  
-  <ion-split-pane >
+<ion-app>
+  <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 
-  
+  <ion-split-pane disabled="true">
 
-  
-    <ion-menu  type="overlay" >
-      <ion-header  >
-        <ion-toolbar text-center  class="a">
+    <ion-menu type="overlay">
+      <ion-header>
+        <ion-toolbar text-center class="a">
           <p style="color: red;">Menu</p>
         </ion-toolbar>
       </ion-header>
 
       <ion-content>
-        <ion-list >
-          <ion-menu-toggle  auto-hide="false" *ngFor="let p of appPages">
-            <ion-item  [routerDirection]="'root'" [routerLink]="[p.url]" >
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" lines="none">
+              <ion-icon slot="start" [name]="p.icon" ></ion-icon>
               <ion-label style="font-family: Prompt;">
                 {{p.title}}
               </ion-label>
@@ -25,7 +24,7 @@
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
-      <ion-footer>
+      <ion-footer text-center>
         <ion-row text-center>
           <ion-col>
             <ion-label>
@@ -34,11 +33,14 @@
           </ion-col>
         </ion-row>
         <ion-menu-toggle>
-          <ion-button expand="block" (click)="logout()" class="button">Logout</ion-button>
+         
+            <fa-icon (click)="logout()"  [icon]="faSignOutAlt"></fa-icon>
+           
+        
         </ion-menu-toggle>
       </ion-footer>
 
-    </ion-menu>  
+    </ion-menu>
     <ion-router-outlet main></ion-router-outlet>
   </ion-split-pane>
 

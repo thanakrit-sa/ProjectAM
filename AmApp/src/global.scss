@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -25,10 +25,70 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-
-
 :host(.show-menu) {
-    display: block;
-    border-radius: 0px 20px 20px 0px ;
+  display: block;
+  border-radius: 0px 20px 20px 0px;
+}
+
+
+.my-custom-modal-css .modal-wrapper {
+  // height: 50%;
+  // top: 50%;
+  // position: absolute;
+  // display: block;
+  display: grid;
+  width: 100%;
+  height: 50%;
+  align-items: bottom;
+  justify-content: bottom;
+
+ 
+  // border-radius: 20px;
+
+
+}
+ion-modal {
+  left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+  contain: strict;
+    display: flex;
+    justify-content: bottom;
+    align-items: bottom;
+}
+
+// }
+// .share-modal .modal-wrapper {
+//   --height: 20%;
+//   position: absolute; 
+//   top: 80%;
+//   display: block;
+// }
+
+
+.actionSheet{
+
+
+   // --color:blue;
+    --font-size: 0px !important;
   
+ 
+ 
+  
+ // background: blue;
+}
+.a{
+
+    // --color:#cfcfcf;
+    .actionSheet{
+      --color : black;
+     
+      font-size: 15px;
+    
+      
+    }
   }
+  
+  
