@@ -22,7 +22,8 @@ const routes: Routes = [
   { path: 'dashbroad', loadChildren: './dashbroad/dashbroad.module#DashbroadPageModule' },
   { path: 'addusernotadmin', loadChildren: './addusernotadmin/addusernotadmin.module#AddusernotadminPageModule' },
   { path: 'edit-usernotadmin', loadChildren: './edit-usernotadmin/edit-usernotadmin.module#EditUsernotadminPageModule' },
-  { path: 'detail', loadChildren: './detail/detail.module#DetailPageModule' },  { path: 'test', loadChildren: './test/test.module#TestPageModule' },
+  { path: 'detail', loadChildren: './detail/detail.module#DetailPageModule' },
+  { path: 'test', loadChildren: './test/test.module#TestPageModule' },
   { path: 'detail-product', loadChildren: './detail-product/detail-product.module#DetailProductPageModule' },
 
 

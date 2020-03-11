@@ -156,6 +156,7 @@ export class UserPage implements OnInit {
       this.isShowAdmin = true;
     }
   }
+  
   showcontentUser() {
     if (this.isShowUser == true) {
       this.isShowUser = false;

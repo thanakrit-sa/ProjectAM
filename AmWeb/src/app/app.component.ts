@@ -57,17 +57,27 @@ export class AppComponent {
     private menu: MenuController,
     public api:ProductService
   ) {
-    
-    this.initializeApp();
+      // this.loading2()
+    this.initializeApp()
+ 
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      
     });
   }
  
 
+  loading3(){
+    window.addEventListener('load', function load() {
+      const loader = document.getElementById('loader');
+      setTimeout(function() {
+        loader.classList.add('fadeOut');
+      }, 3000);
+    });
+  }
 
 }

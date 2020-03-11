@@ -1,28 +1,17 @@
-<ion-header>
-  <ion-toolbar color="dark" text-center>
+<ion-header  style="padding-bottom: 6px;">
+  <ion-toolbar text-center>
     <ion-row>
+     
       <ion-col>
-        <ion-button color="dark" class="btnTab" (click)="closeTab()" *ngIf="isShowCloseTab == true">
-          <ion-icon size="large" name="close-circle-outline"></ion-icon>
-        </ion-button>
-        <ion-button color="dark" class="btnTab" (click)="openTab()" *ngIf="isShowOpenTab == false">
-          <ion-icon size="large" name="menu"></ion-icon>
-        </ion-button>
+        <ion-title>เพิ่มข้อมูลสมาชิก</ion-title>
       </ion-col>
-      <ion-col>
-        <ion-title>แผงควบคุม</ion-title>
-      </ion-col>
-      <ion-col>
-        <ion-button color="dark" class="btnTabExit" (click)="ConfirmLogout()">
-          <ion-icon size="large" name="exit"></ion-icon>
-        </ion-button>
-      </ion-col>
+      
     </ion-row>
   </ion-toolbar>
 </ion-header>
 
-<ion-content><br>
-  <ion-card>
+<ion-content>
+  <ion-card class="cardborder">
     <ion-card-content>
       <form [formGroup]="datauser" (ngSubmit)="check()">
         <ion-item [class.invalid]="submit && f.username.errors">
@@ -60,11 +49,17 @@
         </div>      
         <ion-item>
           <ion-label>สถานะ</ion-label>
-          <ion-select aria-placeholder="เลือกสถานะ" formControlName="statususer">
+          <select   formControlName="statususer" >
+            <option value="พร้อมใช้งาน">พร้อมใช้งาน</option>
+            <option value="ไม่พร้อมใช้งาน">ไม่พร้อมใช้งาน</option>
+            <option value="ถูกระงับ">ระงับการใช้งาน</option>
+           
+          </select>       
+          <!-- <ion-select aria-placeholder="เลือกสถานะ" formControlName="statususer">
             <ion-select-option value="พร้อมใช้งาน">พร้อมใช้งาน</ion-select-option>
             <ion-select-option value="ไม่พร้อมใช้งาน">ไม่พร้อมใช้งาน</ion-select-option>
             <ion-select-option value="ถูกระงับ">ระงับการใช้งาน</ion-select-option>
-          </ion-select>
+          </ion-select> -->
         </ion-item>     
         <div *ngIf="isShowValidateStatus == true">
           <ion-label color="danger">* กรุณาเลือกสถานะ !!</ion-label>
@@ -89,7 +84,7 @@
           </div>
         </div> 
         <br>
-        <ion-button expand="full" color="dark" type="submit">เพิ่มข้อมูลสมาชิก</ion-button>
+        <ion-button expand="full"  type="submit">เพิ่มข้อมูลสมาชิก</ion-button>
       </form>
     </ion-card-content>
   </ion-card>

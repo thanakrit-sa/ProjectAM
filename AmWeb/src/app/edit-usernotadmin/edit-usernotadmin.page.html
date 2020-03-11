@@ -1,5 +1,5 @@
-<ion-header>
-  <ion-toolbar color="dark" text-center>
+<ion-header  style="padding-bottom: 6px;">
+  <ion-toolbar text-center>
     <ion-row>
       <ion-col>
         <ion-buttons>
@@ -14,8 +14,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content><br>
-  <ion-card>
+<ion-content>
+  <ion-card class="cardborder" >
     <ion-card-content>
       <form [formGroup]="dataUser" (ngSubmit)="log()">
         <ion-item [class.invalid]="submit && f.username.errors">
@@ -35,12 +35,14 @@
           <ion-input placeholder="ชื่อ-นามสกุล" formControlName="nameUser"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>สถานะ</ion-label>
-          <ion-select aria-placeholder="เลือกสถานะ" formControlName="statusUser">
-            <ion-select-option value="พร้อมใช้งาน">พร้อมใช้งาน</ion-select-option>
-            <ion-select-option value="ไม่พร้อมใช้งาน">ไม่พร้อมใช้งาน</ion-select-option>
-            <ion-select-option value="ถูกระงับ">ระงับการใช้งาน</ion-select-option>
-          </ion-select>
+          <ion-label>เลือกสถานะ</ion-label>
+          <select   formControlName="statusUser" >
+            <option value="พร้อมใช้งาน">พร้อมใช้งาน</option>
+            <option value="ไม่พร้อมใช้งาน">ไม่พร้อมใช้งาน</option>
+            <option value="ถูกระงับ">ระงับการใช้งาน</option>
+           
+          </select>       
+         
         </ion-item>
         <ion-item [class.invalid]="submit && f.addressUser.errors">
           <ion-label>ที่อยู่</ion-label>
@@ -50,7 +52,7 @@
           <ion-label>เบอร์โทรศัพท์</ion-label>
           <ion-input placeholder="เบอร์โทรศัพท์" formControlName="telUser"></ion-input>
         </ion-item>
-        <ion-button expand="full" color="dark" type="submit">เพิ่มข้อมูลสมาชิก</ion-button>
+        <ion-button expand="full"  type="submit">เพิ่มข้อมูลสมาชิก</ion-button>
       </form>
     </ion-card-content>
   </ion-card>

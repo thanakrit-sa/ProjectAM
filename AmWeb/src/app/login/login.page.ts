@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
 import { admin } from 'src/Models/user';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MenuController } from '@ionic/angular';
+import { MenuController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -18,13 +18,20 @@ export class LoginPage implements OnInit {
   data:admin;
   isShowValidate:boolean = false;
   isShowValidateNull:boolean = false;
+  public loading;
   
-  constructor(public usertApi: UserService, public formbuilder: FormBuilder, public route: Router,private menu: MenuController) {    
+  constructor(public usertApi: UserService,
+     public formbuilder: FormBuilder,
+      public route: Router,
+      private menu: MenuController,
+      public loadingCtrl: LoadingController) {   
+
     this.datauser = this.formbuilder.group({
       'user':[null,Validators.required],
       'pass':[null,Validators.required]
     });
    }
+
  
   ngOnInit() 
   {
@@ -35,6 +42,24 @@ export class LoginPage implements OnInit {
     });
     
   }
+  // Loading(){
+
+  //   this.loadingCtrl.create({
+  //     //showBackdrop:false,
+  //     message:'555'
+  //   }).then((overlay)=>{
+  //     this.loading =overlay;
+  //     this.loading.present();
+  //   });
+
+  //   setTimeout(()=>{
+
+  //     this.loading.dismiss();
+  //     this.route.navigate(['/dashbroad']);
+      
+  //   },4000);
+
+  // }
 
   login(){
     console.log(this.datauser.value);
@@ -48,11 +73,15 @@ export class LoginPage implements OnInit {
         this.usertApi.imageAdmin = this.data[index].file;
         console.log(this.usertApi.statusAdmin);
         console.log(this.usertApi.nameAdmin);
-        this.route.navigate(['/dashbroad']);
+        //this.Loading();
+       this.route.navigate(['/dashbroad']);
+       // window.location.href = ('dashbroad');
+       
         
       }
       else if(this.datauser.value.user == null && this.datauser.value.pass == null){
         this.isShowValidateNull = true;
+        this.isShowValidate = false;
       }
       else if(this.datauser.value.user != null && this.datauser.value.pass != null){
         this.isShowValidateNull = false;

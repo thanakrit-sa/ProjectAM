@@ -1,29 +1,18 @@
-<ion-header>
-  <ion-toolbar color="dark" text-center>
+<ion-header  style="padding-bottom: 6px;">
+  <ion-toolbar text-center>
     <ion-row>
+      
       <ion-col>
-        <ion-button color="dark" class="btnTab" (click)="closeTab()" *ngIf="isShowCloseTab == true">
-          <ion-icon size="large" name="close-circle-outline"></ion-icon>
-        </ion-button>
-        <ion-button color="dark" class="btnTab" (click)="openTab()" *ngIf="isShowOpenTab == false">
-          <ion-icon size="large" name="menu"></ion-icon>
-        </ion-button>
+        <ion-title>เพิ่มข้อมูลสินค้า</ion-title>
       </ion-col>
-      <ion-col>
-        <ion-title>แผงควบคุม</ion-title>
-      </ion-col>
-      <ion-col>
-        <ion-button color="dark" class="btnTabExit" (click)="ConfirmLogout()">
-          <ion-icon size="large" name="exit"></ion-icon>
-        </ion-button>
-      </ion-col>
+      
     </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <br>
-  <ion-card>
+  <ion-card class="cardborder">
     <ion-card-content>
       <form [formGroup]="dataProduct" (ngSubmit)="check()">
         <ion-item [class.invalid]="submit && f.idProduct.errors">
@@ -77,7 +66,7 @@
           </div>
         </div>        
         <br>
-        <ion-button expand="full" color="dark" type="submit">เพิ่มข้อมูลสินค้า</ion-button>
+        <ion-button expand="full" type="submit">เพิ่มข้อมูลสินค้า</ion-button>
 
       </form>
     </ion-card-content>

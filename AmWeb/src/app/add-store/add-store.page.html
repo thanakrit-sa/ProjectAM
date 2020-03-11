@@ -1,36 +1,26 @@
-<ion-header>
-  <ion-toolbar color="dark" text-center>
+<ion-header style="padding-bottom: 6px;">
+  <ion-toolbar text-center>
     <ion-row>
+
       <ion-col>
-        <ion-button color="dark" class="btnTab" (click)="closeTab()" *ngIf="isShowCloseTab == true">
-          <ion-icon size="large" name="close-circle-outline"></ion-icon>
-        </ion-button>
-        <ion-button color="dark" class="btnTab" (click)="openTab()" *ngIf="isShowOpenTab == false">
-          <ion-icon size="large" name="menu"></ion-icon>
-        </ion-button>
+        <ion-title>เพิ่มสินค้า</ion-title>
       </ion-col>
-      <ion-col>
-        <ion-title>แผงควบคุม</ion-title>
-      </ion-col>
-      <ion-col>
-        <ion-button color="dark" class="btnTabExit" (click)="ConfirmLogout()">
-          <ion-icon size="large" name="exit"></ion-icon>
-        </ion-button>
-      </ion-col>
+
     </ion-row>
   </ion-toolbar>
 </ion-header>
 <ion-content><br>
-  <ion-card>
+  <ion-card class="cardborder">
     <ion-card-content>
       <form [formGroup]="dataStore" (ngSubmit)="check()">
         <ion-item>
           <ion-label>ชื่อสินค้า</ion-label>
-          <ion-select placeholder="ชื่อสินค้า" formControlName="nameProduct" [(ngModel)]="dataIdProduct" (ionChange)=data(dataIdProduct)>
-            <ion-select-option *ngFor="let p of dataProductAll" value="{{ p.idProduct }}">{{p.nameProduct}}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>        
+          <select formControlName="nameProduct" [(ngModel)]="dataIdProduct" (ionChange)=data(dataIdProduct)>
+            <option *ngFor="let p of dataProductAll" value="{{ p.idProduct }}">{{p.nameProduct}}</option>
+
+          </select>
+
+        </ion-item>
         <div *ngFor="let error of errorMessages.nameProduct">
           <div *ngIf="nameProduct.hasError(error.type) && (nameProduct.dirty || nameProduct.touched)">
             <ion-label color="danger">* {{error.message}}</ion-label>
@@ -44,16 +34,16 @@
         <ion-item *ngIf="dataIdProduct == null">
           <ion-label>รหัสสินค้า :</ion-label>
         </ion-item>
-        
+
         <ion-item>
           <ion-label>จำนวนสินค้า</ion-label>
           <ion-input placeholder="จำนวน" formControlName="totalProduct"></ion-input>
-        </ion-item>    
+        </ion-item>
         <div *ngFor="let error of errorMessages.totalProduct">
           <div *ngIf="totalProduct.hasError(error.type) && (totalProduct.dirty || totalProduct.touched)">
             <ion-label color="danger">* {{error.message}}</ion-label>
           </div>
-        </div>    
+        </div>
         <!-- <ion-row>
           <ion-col text-left>
             <ion-label *ngIf="isShowValidate == true"><br><b class="text">กรุณากรอกข้อมูลให้ครบถ้วน !!</b></ion-label>            
@@ -64,8 +54,14 @@
           <ion-label color="danger">* กรุณากรอกข้อมูลให้ครบถ้วน !!</ion-label>
         </div>
         <br>
-        <ion-button expand="full"  color="dark" type="submit">เพิ่มสินค้า</ion-button>
+        <ion-button expand="full" type="submit">เพิ่มสินค้า</ion-button>
+        <ion-select placeholder="ชื่อสินค้า" formControlName="nameProduct" [(ngModel)]="dataIdProduct"
+    (ionChange)=data(dataIdProduct)>
+    <ion-select-option *ngFor="let p of dataProductAll" value="{{ p.idProduct }}">{{p.nameProduct}}
+    </ion-select-option>
+  </ion-select>
       </form>
     </ion-card-content>
   </ion-card>
+  
 </ion-content>

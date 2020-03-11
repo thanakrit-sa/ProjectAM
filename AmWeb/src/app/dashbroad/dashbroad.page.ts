@@ -5,7 +5,7 @@ import { StoreService } from "src/app/service/store.service";
 import { product } from 'src/Models/product';
 import { month } from 'src/Models/month';
 import { UserService } from '../service/user.service';
-import { MenuController } from '@ionic/angular';
+import { MenuController, LoadingController } from '@ionic/angular';
 import { OrderService } from '../service/order.service';
 import { Order } from 'src/Models/order';
 import { receipt } from 'src/Models/order';
@@ -57,11 +57,25 @@ export class DashbroadPage implements OnInit {
   public chartDataProductInStore: number[] = [];
   public chartDataProductSellInStore: number[] = [];
   public chartDataProductTotalInStore: number[] = [];
-
+  a: any =0;
   datenow: Date
   getDataAll: Order[] = [];
   showClose: boolean = false;
-  constructor(public callapi: CallApiService, public orderApi: OrderService, public productApi: ProductService, public storeApi: StoreService, public UserApi: UserService, private menu: MenuController) { }
+  public loading;
+
+  constructor(public callapi: CallApiService,
+    public orderApi: OrderService,
+    public productApi: ProductService,
+    public storeApi: StoreService,
+    public UserApi: UserService,
+    private menu: MenuController,
+    public loadingCtrl: LoadingController) {
+      //this.Loading();
+
+     // this.loading2();
+
+   
+  }
 
 
   datareceipt1
@@ -74,6 +88,39 @@ export class DashbroadPage implements OnInit {
   dataorder2: Order
   dataorder3: number = 0
   /////////////////////////////////
+  
+  Loading() {
+
+
+    this.loadingCtrl.create({
+
+      backdropDismiss:false,
+      message: ' <div class="sk-cube-grid"><div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div><div class="sk-cube sk-cube3"></div><div class="sk-cube sk-cube4"></div><div class="sk-cube sk-cube5"></div><div class="sk-cube sk-cube6"></div><div class="sk-cube sk-cube7"></div><div class="sk-cube sk-cube8"></div><div class="sk-cube sk-cube9"></div></div>',
+     // spinner: "bubbles",
+      showBackdrop:true,
+      spinner: null,
+      
+      cssClass:'sk-cube-grid .sk-cube-grid .sk-cube sk-cube-grid .sk-cube1',
+       translucent: true,
+
+
+
+    }).then((overlay) => {
+      this.loading = overlay;
+      this.loading.present(); 
+
+    });
+
+    setTimeout(() => {
+
+      this.loading.dismiss();
+       this.ngOnInit();
+       this.ionViewWillEnter();
+     
+
+    }, 5000);
+
+  }
 
   sumrevenue() {
     this.callapi.GetReceiptAll().subscribe(it => {
@@ -85,7 +132,7 @@ export class DashbroadPage implements OnInit {
       for (let index = 0; index < Object.keys(this.dataOrederr).length; index++) {
         this.datareceipt[index] = this.dataOrederr[index]
         this.datajson = this.datareceipt[index].dataOrder
-        this.dataorderarray.push(this.datajson)
+        // this.dataorderarray.push(this.datajson)
         console.log(this.dataorderarray);
       }
       for (let index = 0; index < this.dataorderarray.length; index++) {
@@ -127,8 +174,23 @@ export class DashbroadPage implements OnInit {
     this.sumrevenue();
     this.netprofit();
 
+    
+     //this.loading2();
+    
+
+  }
+  
+
+  loading2(){
+    window.addEventListener('load', function load() {
+      const loader = document.getElementById('sk-cube-grid');
+      setTimeout(function() {
+        loader.classList.add('fadeOut');
+      }, 300);
+    });
   }
   ionViewWillEnter() {
+    this.loading2();
     this.getyearnow();
     this.openChart();
     this.productGetAll();
@@ -142,6 +204,9 @@ export class DashbroadPage implements OnInit {
     this.netprofit();
 
     this.menu.enable(true);
+    
+    
+   
   }
 
   closeTab() {
@@ -153,6 +218,10 @@ export class DashbroadPage implements OnInit {
     this.menu.enable(true);
     this.isShowOpenTab = true;
     this.isShowCloseTab = true;
+  }
+  goback() {
+    console.log(5555);
+
   }
 
   // events on slice click
@@ -358,9 +427,6 @@ export class DashbroadPage implements OnInit {
 
   netprofit() {
     this.netprofitinmonth = this.datarevenueorder - this.expenditure
-  }
-  check() {
-    this.totalstockinmonth()
   }
 
 
@@ -716,6 +782,11 @@ export class DashbroadPage implements OnInit {
     console.log(this.revenuejan);
 
   }
+
+  check() {
+    this.getOrdermar()
+  }
+
   dataorderarrayfeb: Order[] = []
   getOrderfeb() {
 
@@ -1114,6 +1185,7 @@ export class DashbroadPage implements OnInit {
   }
   openChart() {
 
+    Chart.defaults.global.defaultFontFamily = "'Prompt','Poppins-Regular'";
     var ctx = (<any>document.getElementById('mychart')).getContext('2d');
     var chart = new Chart(ctx, {
 
@@ -1123,20 +1195,30 @@ export class DashbroadPage implements OnInit {
         datasets: [{
           data: this.productApi.chartDataProductInStore,
           label: "จำนวนสินค้านำเข้า",
-          borderColor: "#212F3C",
-          backgroundColor: "#212F3C",
+          backgroundColor: "#ECF3FF",
+          borderColor: "#3880ff",
+
+          borderWidth: "1",
+          hoverBackgroundColor: "#B6D0FF",
+          hoverBorderColor: "#B6D0FF",
           // fill: false
         }, {
           data: this.productApi.chartDataProductSellInStore,
           label: "จำนวนสินค้าที่ขาย",
-          borderColor: "#0E6655",
-          backgroundColor: "#0E6655",
+          borderColor: "#0cd1e8",
+          backgroundColor: "#E8FAFC",
+          borderWidth: "1",
+          hoverBackgroundColor: "#A6EEF6",
+          hoverBorderColor: "#A6EEF6",
           // fill: false
         }, {
           data: this.productApi.chartDataProductTotalInStore,
           label: "จำนวนสินค้าคงเหลือ",
-          borderColor: "#900C3F",
-          backgroundColor: "#900C3F",
+          borderColor: "#7044ff",
+          backgroundColor: "#F2EEFF",
+          borderWidth: "1",
+          hoverBackgroundColor: "#CBBBFF",
+          hoverBorderColor: "#CBBBFF",
           // fill: false
         }
         ]
@@ -1161,8 +1243,11 @@ export class DashbroadPage implements OnInit {
         datasets: [
           {
             label: "รายรับ",
-            backgroundColor: "#1A5276",
-            borderColor: "#1A5276",
+            backgroundColor: "#E9FBF0",
+            borderColor: "#10dc60",
+            borderWidth: "1",
+            hoverBackgroundColor: "#A8F2C5",
+            hoverBorderColor: "#A8F2C5",
             data: [
               this.revenuejan,
               this.revenuefeb,
@@ -1179,8 +1264,12 @@ export class DashbroadPage implements OnInit {
           },
           {
             label: "รายจ่าย",
-            backgroundColor: "#5B2C6F ",
-            borderColor: "#5B2C6F ",
+            backgroundColor: "#FDEDED ",
+            borderColor: "#f04141 ",
+            borderWidth: "1",
+            hoverBackgroundColor: "#F9B9B9",
+            hoverBorderColor: "#F9B9B9",
+
             data: [
               this.expenditurejan,
               this.expenditurefeb,
@@ -1197,8 +1286,13 @@ export class DashbroadPage implements OnInit {
           },
           {
             label: "กำไรสุทธิ",
-            backgroundColor: "#873600 ",
-            borderColor: "#873600 ",
+
+            backgroundColor: "#F0F9FD ",
+            borderColor: "#5BC0EB ",
+            borderWidth: "1",
+            hoverBackgroundColor: "#C3E8F7",
+            hoverBorderColor: "#C3E8F7",
+
             data: [
               this.revenuejan - this.expenditurejan,
               this.revenuefeb - this.expenditurefeb,

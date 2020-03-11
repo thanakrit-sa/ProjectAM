@@ -51,7 +51,14 @@ export class StorePage implements OnInit {
   sumProductNumber : number;
   
   
-  constructor(private menu: MenuController,public api: ProductService, public alertController: AlertController, public activate: ActivatedRoute, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder) {
+  constructor(private menu: MenuController,
+    public api: ProductService,
+     public alertController: AlertController,
+      public activate: ActivatedRoute,
+       public storeApi: StoreService,
+        public route: Router,
+         public navCtrl: NavController,
+          public formbuilder: FormBuilder,) {
     this.dataStore = this.formbuilder.group({
       'idStore': [null, Validators.required],
       'idProduct': [null, Validators.required],

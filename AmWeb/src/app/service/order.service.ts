@@ -49,17 +49,14 @@ export class OrderService {
   public GetReceiptById(Id: string) {
     return this.http.get<receipt>(OrderService.host + 'Order/GetReceiptById/' + Id);
   }
-<<<<<<< HEAD
   public getReceiptlistbydateyear(data: string, data2: string) {
     return this.http.get<receipt>(OrderService.host + 'Order/GetReceiptdatebyfindallbyyrearandmonth/' + data + '/' + data2);
   }
   public getReceiptallyear(data) {
     return this.http.get<receipt>(OrderService.host + 'Order/GetReceiptdatebyfindallbyyear/' + data);
   }
-=======
   public DeleteReceipt(Id: string) {
     return this.http.delete<receipt>(OrderService.host + 'Order/DeleteReceipt/' + Id);
   }  
->>>>>>> 59e228bbff1e70d18f1b2545269456fdad6726e1
 }
 
