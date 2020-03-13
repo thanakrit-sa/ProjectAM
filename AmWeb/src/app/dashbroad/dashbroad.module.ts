@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { DashbroadPage } from './dashbroad.page';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 
 
 const routes: Routes = [
@@ -20,6 +22,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    NgxSpinnerModule,
     RouterModule.forChild(routes),
   ],
   declarations: [DashbroadPage]

@@ -12,6 +12,8 @@ import { receipt } from 'src/Models/order';
 import { store } from 'src/Models/stroe';
 import { asapScheduler } from 'rxjs';
 import { CallApiService } from '../service/call-api.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 @Component({
   selector: 'app-dashbroad',
@@ -57,7 +59,7 @@ export class DashbroadPage implements OnInit {
   public chartDataProductInStore: number[] = [];
   public chartDataProductSellInStore: number[] = [];
   public chartDataProductTotalInStore: number[] = [];
-  a: any =0;
+  a: any = 0;
   datenow: Date
   getDataAll: Order[] = [];
   showClose: boolean = false;
@@ -68,13 +70,15 @@ export class DashbroadPage implements OnInit {
     public productApi: ProductService,
     public storeApi: StoreService,
     public UserApi: UserService,
-    private menu: MenuController,
-    public loadingCtrl: LoadingController) {
-      //this.Loading();
+    public menu: MenuController,
+    public loadingCtrl: LoadingController,
+    private spinner: NgxSpinnerService,
+  ) {
+    //this.Loading();
 
-     // this.loading2();
+    // this.loading2();
+    this.showSpinner();
 
-   
   }
 
 
@@ -88,37 +92,8 @@ export class DashbroadPage implements OnInit {
   dataorder2: Order
   dataorder3: number = 0
   /////////////////////////////////
-  
+
   Loading() {
-
-
-    this.loadingCtrl.create({
-
-      backdropDismiss:false,
-      message: ' <div class="sk-cube-grid"><div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div><div class="sk-cube sk-cube3"></div><div class="sk-cube sk-cube4"></div><div class="sk-cube sk-cube5"></div><div class="sk-cube sk-cube6"></div><div class="sk-cube sk-cube7"></div><div class="sk-cube sk-cube8"></div><div class="sk-cube sk-cube9"></div></div>',
-     // spinner: "bubbles",
-      showBackdrop:true,
-      spinner: null,
-      
-      cssClass:'sk-cube-grid .sk-cube-grid .sk-cube sk-cube-grid .sk-cube1',
-       translucent: true,
-
-
-
-    }).then((overlay) => {
-      this.loading = overlay;
-      this.loading.present(); 
-
-    });
-
-    setTimeout(() => {
-
-      this.loading.dismiss();
-       this.ngOnInit();
-       this.ionViewWillEnter();
-     
-
-    }, 5000);
 
   }
 
@@ -173,18 +148,29 @@ export class DashbroadPage implements OnInit {
     this.totalstockinmonth();
     this.sumrevenue();
     this.netprofit();
+    //this.loading2();
 
-    
-     //this.loading2();
-    
+
 
   }
-  
+  showSpinner() {
+    this.spinner.show();
+    this.menu.close('main');
+    setTimeout(() => {
+      this.spinner.hide();
+     // this.menu.open('main');
+      this.ngOnInit();
+      this.ionViewWillEnter();
 
-  loading2(){
+    }, 3000);
+  }
+
+
+
+  loading2() {
     window.addEventListener('load', function load() {
       const loader = document.getElementById('sk-cube-grid');
-      setTimeout(function() {
+      setTimeout(function () {
         loader.classList.add('fadeOut');
       }, 300);
     });
@@ -204,9 +190,9 @@ export class DashbroadPage implements OnInit {
     this.netprofit();
 
     this.menu.enable(true);
-    
-    
-   
+
+
+
   }
 
   closeTab() {

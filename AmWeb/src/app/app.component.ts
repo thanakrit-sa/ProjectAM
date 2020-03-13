@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserService } from 'src/app/service/user.service';
 import { MenuController } from '@ionic/angular';
 import { ProductService } from "src/app/service/product.service";
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -54,7 +55,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     public userApi:UserService,
     private statusBar: StatusBar,
-    private menu: MenuController,
+    public menu: MenuController,
     public api:ProductService
   ) {
       // this.loading2()
@@ -69,9 +70,15 @@ export class AppComponent {
       
     });
   }
- 
-
+  openFirst() {
+    this.menu.enable(true, 'main');
+    this.menu.open('main');
+  }
+  openEnd() {
+    this.menu.open('end');
+  }
   loading3(){
+   
     window.addEventListener('load', function load() {
       const loader = document.getElementById('loader');
       setTimeout(function() {

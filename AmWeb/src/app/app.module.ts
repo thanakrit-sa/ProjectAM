@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -10,8 +10,11 @@ import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { JwPaginationComponent } from 'jw-angular-pagination';
 import { NgxPaginationModule } from 'ngx-pagination';
+ import { NgxSpinnerModule } from "ngx-spinner";
 
 import { DetailProductPageModule } from 'src/app/detail-product/detail-product.module';
+
+
 
 // import{ Ng2SearchPipeModule } from 'ng2-search-filter';
 
@@ -25,9 +28,10 @@ import { DetailProductPageModule } from 'src/app/detail-product/detail-product.m
     AppRoutingModule,
     HttpClientModule,
     NgxPaginationModule,
-    DetailProductPageModule   
+    DetailProductPageModule,
+     NgxSpinnerModule  
   ],
-
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     StatusBar,
     SplashScreen,
@@ -35,5 +39,6 @@ import { DetailProductPageModule } from 'src/app/detail-product/detail-product.m
     
   ],
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }
