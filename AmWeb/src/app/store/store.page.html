@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar text-center>
+    <ion-button slot="start" fill="clear">
+      <ion-menu-button></ion-menu-button>
+ </ion-button>
     <ion-grid >
       <ion-row>
 
@@ -14,11 +17,11 @@
         </ion-col>
         <ion-col size="2">
 
-          <ion-select placeholder="- เลือกรายการสินค้า -" (ionChange)="onChange(data)" [(ngModel)]="data"
+          <!-- <ion-select placeholder="- เลือกรายการสินค้า -" (ionChange)="onChange(data)" [(ngModel)]="data"
             interface="popover">
             <ion-select-option value="ทั้งหมด">ทั้งหมด</ion-select-option>
             <ion-select-option *ngFor="let p of datasss" value="{{ p.idProduct }}">{{p.nameProduct}}</ion-select-option>
-          </ion-select>
+          </ion-select> -->
         </ion-col>
       </ion-row>
     </ion-grid>

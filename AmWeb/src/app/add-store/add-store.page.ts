@@ -30,17 +30,17 @@ export class AddStorePage implements OnInit {
   dataProductAll: product;
   nameproduct: string;
   dataIdProduct: any
-  datacostProduct :any;
+  datacostProduct: any;
   // num: number = 9;
 
   public dataStoreAll: store;
   // isShowBtn:boolean=true;
   isShowValidate: boolean = false;
   isShowValidateTotal: boolean = false;
-  isShowCloseTab:boolean = true;
-  isShowOpenTab:boolean = true;
-  
-  constructor(private menu: MenuController,public alertController: AlertController, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder, public productApi: ProductService, public activate: ActivatedRoute) {
+  isShowCloseTab: boolean = true;
+  isShowOpenTab: boolean = true;
+
+  constructor(private menu: MenuController, public alertController: AlertController, public storeApi: StoreService, public route: Router, public navCtrl: NavController, public formbuilder: FormBuilder, public productApi: ProductService, public activate: ActivatedRoute) {
     this.dataStore = this.formbuilder.group({
       // 'idStore': [null, Validators.required],
       'idProduct': [null, Validators.required],
@@ -55,18 +55,18 @@ export class AddStorePage implements OnInit {
     //   this.getDataProduct =it;
     //   console.log(this.getDataProduct);
     // });
-  } 
+  }
 
   async ConfirmLogout() {
-    const alert = await this.alertController.create({      
+    const alert = await this.alertController.create({
       message: 'ต้องการออกจากระบบหรือไม่ ? ',
       buttons: [
         {
           text: 'ตกลง',
-          handler: () => {            
+          handler: () => {
             this.route.navigate(['/login'])
           }
-        },{
+        }, {
           text: 'ยกเลิก',
           role: 'cancel',
           cssClass: 'secondary',
@@ -80,17 +80,17 @@ export class AddStorePage implements OnInit {
     await alert.present();
   }
 
-  closeTab(){
+  closeTab() {
     this.menu.enable(false);
     this.isShowOpenTab = false;
     this.isShowCloseTab = false;
   }
-  openTab(){
+  openTab() {
     this.menu.enable(true);
     this.isShowOpenTab = true;
     this.isShowCloseTab = true;
   }
-  
+
   // ---------------------------------------------------------------------------- Validate
 
   public errorMessages = {
@@ -112,23 +112,23 @@ export class AddStorePage implements OnInit {
     if (this.dataStore.value.nameProduct == null && this.dataStore.value.totalProduct == null && this.dataStore.value.idProduct == null) {
       this.isShowValidate = true;
     }
-    else if(this.dataStore.value.nameProduct != null && this.dataStore.value.totalProduct == null && this.dataStore.value.idProduct == null){      
+    else if (this.dataStore.value.nameProduct != null && this.dataStore.value.totalProduct == null && this.dataStore.value.idProduct == null) {
       this.isShowValidate = true;
     }
-    else if(this.dataStore.value.nameProduct == null && this.dataStore.value.totalProduct != null && this.dataStore.value.idProduct == null){      
+    else if (this.dataStore.value.nameProduct == null && this.dataStore.value.totalProduct != null && this.dataStore.value.idProduct == null) {
       this.isShowValidate = true;
     }
-    else if(this.dataStore.value.nameProduct != null && this.dataStore.value.totalProduct != null && this.dataStore.value.idProduct == null){      
+    else if (this.dataStore.value.nameProduct != null && this.dataStore.value.totalProduct != null && this.dataStore.value.idProduct == null) {
       this.isShowValidate = false;
       this.ConfirmInsert();
-    }   
+    }
   }
 
 
   // -------------------------------------------------------------------------------------- Getshow
 
   ngOnInit() {
-    
+
     this.productApi.GetProductAll().subscribe((it) => {
       console.log(it);
       this.dataProductAll = it;
@@ -146,13 +146,13 @@ export class AddStorePage implements OnInit {
     // }
   }
 
-  data(data){
+  data(data) {
     console.log(data);
-    this.productApi.GetProductByid(data).subscribe(it =>{
+    this.productApi.GetProductByid(data).subscribe(it => {
       console.log(it);
       this.datacostProduct = it.costProduct
       console.log(this.datacostProduct);
-      
+
     })
   }
 
@@ -167,7 +167,7 @@ export class AddStorePage implements OnInit {
   //     console.log(it);
   //   });
   // }
-  
+
   // ------------------------------------------------------------------ Insert
 
   async ConfirmInsert() {
@@ -175,16 +175,19 @@ export class AddStorePage implements OnInit {
       message: 'ต้องการที่จะเพิ่มสินค้าหรือไม่ ?',
       buttons: [
         {
+          text: 'ยกเลิก',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+
+
           text: 'ตกลง',
           handler: () => {
             this.insert();
             console.log('Confirm Okay');
-          }
-        }, {
-          text: 'ยกเลิก',
-          role: 'cancel',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
           }
         }
       ]
@@ -202,12 +205,12 @@ export class AddStorePage implements OnInit {
     this.dataStore.value.costProduct = this.dataStore.value.totalProduct * this.datacostProduct
     this.storeApi.AddStore(this.dataStore.value).subscribe(it => {
       console.log(it);
-      
+
     });
     console.log(this.dataStore);
     this.productApi.EditAddTotalProduct(this.dataStore.value.idProduct, this.dataStore.value).subscribe(it => {
     });
-    
+
     this.route.navigate(['/clear-store']);
   }
 

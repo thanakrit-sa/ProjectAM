@@ -1,5 +1,8 @@
 <ion-header  style="padding-bottom: 6px;">
   <ion-toolbar text-center>
+    <ion-button slot="start" fill="clear">
+      <ion-menu-button></ion-menu-button>
+ </ion-button>
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -42,7 +45,7 @@
               <th>จัดการ</th>
             </thead>
             <div  *ngIf="isShowText == true">
-              <br>
+        
 
               <ion-label>
                 <h1><b>ไม่มีรายการสินค้า</b></h1>

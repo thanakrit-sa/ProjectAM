@@ -3,11 +3,17 @@
   padding-left: 5px;
   padding-right: 5px;
   padding-bottom: 5px;
+   // background: -webkit-linear-gradient(#3f90d3, #d43f8d);
+
+}
+ion-button{
+  --background:#3f90d3;
+
 }
 
 .h1{
     padding-left: 5px;
-    background: -webkit-linear-gradient(#3f90d3, #d43f8d);
+    background: -webkit-linear-gradient(#74787a, #d43f8d);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
    

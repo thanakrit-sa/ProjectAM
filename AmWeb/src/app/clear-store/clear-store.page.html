@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar text-center>
+    <ion-button slot="start" fill="clear">
+      <ion-menu-button></ion-menu-button>
+ </ion-button>
     <ion-grid>
       <ion-row>
 
@@ -132,7 +135,17 @@
                   <ion-icon size="large" name="create"></ion-icon>
                 </ion-button>
               </td>
+
               <td *ngIf="s.buttonCheck == 'check'">
+
+                <select class="select1" (ionChange)="dropdown(changeinput)" [(ngModel)]="changeinput">
+                
+                <option value="สินค้าครบ" >สินค้าครบ</option>
+                <option value="สินค้าตกหล่น" >สินค้าตกหล่น</option>
+                <option value="สินค้าเกิน" >สินค้าเกิน</option>
+              </select>
+    
+
                 <ion-select placeholder="{{s.statusProduct}}" (ionChange)="dropdown(changeinput)"
                   [(ngModel)]="changeinput">
                   <ion-select-option value="สินค้าครบ">สินค้าครบ</ion-select-option>

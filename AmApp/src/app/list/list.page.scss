@@ -145,7 +145,13 @@ ion-grid {
    font-size:3px;
   
  }
-
+.ccc{
+  --color: red;
+  --background :red;
+  button{
+    color: red;
+}
+}
  
 
 }

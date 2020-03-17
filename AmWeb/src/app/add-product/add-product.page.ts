@@ -153,17 +153,22 @@ export class AddProductPage implements OnInit {
       message: 'ต้องการที่จะเพิ่มสินค้าหรือไม่ ?',
       buttons: [
         {
+          text: 'ยกเลิก',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        },
+        {
+
           text: 'ตกลง',
           handler: () => {
             this.log();
             console.log('Confirm Okay');
           }
-        }, {
-          text: 'ยกเลิก',
-          role: 'cancel',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
+
+
         }
       ]
     });

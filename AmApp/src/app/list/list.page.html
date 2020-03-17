@@ -73,7 +73,7 @@
       <ion-row *ngFor="let a of this.showReceiptData |filter:search| paginate: { itemsPerPage: 5, currentPage: p }"
         text-center>
         <ion-item-sliding>
-          <ion-item lines="none" slot="none">
+          <ion-item lines="none" slot="none" (click)="gotoOrderdetail(a.idReceipt)">
             <ion-col size="3" class="colsize">
               <ion-label class="font"> {{a.idReceipt}}</ion-label>
             </ion-col>
@@ -85,8 +85,10 @@
             <ion-col size="3" text-center>
               <ion-label class="font">{{a.statusFile}}</ion-label>
             </ion-col>
+            <div *ngIf="a.status != 'ได้รับแล้ว'">
             <fa-icon [icon]="faAngleDoubleLeft"></fa-icon>
-            
+            </div>
+
             <ion-col size="4" text-center
               *ngIf="a.status != 'รับสั่งซื้อ' && a.status != 'ส่งสินค้า' && a.status != 'ได้รับแล้ว'  && a.status != 'ยกเลิก'">
               <ion-label class="font">{{a.status}} </ion-label>
@@ -110,21 +112,21 @@
             </ion-col>
 
           </ion-item>
-          <div *ngIf="a.status != 'null'">
+          <!-- <div *ngIf="a.status != 'ทำการรับสินค้าเสร็จสิ้น'">
             <ion-item-options side="end" #slidingItem>
-              <ion-item-option  (click)="gotoOrderdetail(a.idReceipt)" >
+              <ion-item-option  (click)="gotoOrderdetail(a.idReceipt)" >5555555555555555555
                 <ion-icon name="eye"></ion-icon>
               </ion-item-option>
             </ion-item-options>
-          </div>
-          <div *ngIf="a.status == 'สั่งซื้อ'">
+          </div> -->
+          <div *ngIf="a.status == 'สั่งซื้อ'" >
             <ion-item-options side="end">
               <ion-item-option color="danger" expandable (click)="cancelorder(a.idReceipt)">
                 ยกเลิกสินค้า
               </ion-item-option>
-              <ion-item-option (click)="gotoOrderdetail(a.idReceipt)">
+              <!-- <ion-item-option (click)="gotoOrderdetail(a.idReceipt)">
                 <ion-icon name="eye"></ion-icon>
-              </ion-item-option>
+              </ion-item-option> -->
             </ion-item-options>
           </div>
           <div *ngIf="a.status == 'รับสั่งซื้อ'">
@@ -133,9 +135,9 @@
               <ion-item-option color="danger" expandable (click)="cancelorder(a.idReceipt)">
                 ยกเลิกสินค้า
               </ion-item-option>
-              <ion-item-option (click)="gotoOrderdetail(a.idReceipt)">
+              <!-- <ion-item-option (click)="gotoOrderdetail(a.idReceipt)">
                 <ion-icon name="eye"></ion-icon>
-              </ion-item-option>
+              </ion-item-option> -->
             </ion-item-options>
           </div>
 
@@ -144,9 +146,9 @@
               <ion-item-option color="success" expandable (click)="sendorder(a.idReceipt)">
                 รับสินค้า
               </ion-item-option>
-              <ion-item-option (click)="gotoOrderdetail(a.idReceipt)">
+              <!-- <ion-item-option (click)="gotoOrderdetail(a.idReceipt)">
                 <ion-icon name="eye"></ion-icon>
-              </ion-item-option>
+              </ion-item-option> -->
             </ion-item-options>
           </div>
 

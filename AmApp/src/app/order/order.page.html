@@ -19,8 +19,8 @@
   <ion-card>
   <ion-item lines="none">
     <ion-label class="font">ชื่อสินค้า :</ion-label>
-    <ion-select formControlName="nameProduct" [(ngModel)]="data" placeholder="เลือกสินค้า" (ionChange)="onChange(data)" >
-      <ion-select-option *ngFor="let item of dataProduct" value="{{ item.nameProduct }}">{{item.nameProduct}}  </ion-select-option>
+    <ion-select formControlName="nameProduct" [(ngModel)]="data" placeholder="เลือกสินค้า" (ionChange)="onChange(data)"  interface="action-sheet">
+      <ion-select-option *ngFor="let item of dataProduct" value="{{ item.nameProduct }}" >{{item.nameProduct}}  </ion-select-option>
     </ion-select>
   </ion-item>
 </ion-card>
@@ -61,7 +61,7 @@
     <ion-label class="font">เบอร์โทร : </ion-label>
     <ion-input class="font" *ngIf="data != null && checkTotal == 0 && checkTotalProduct != '0'"  placeholder="เบอร์โทร" formControlName="telUser" [(ngModel)]="telNG" readonly></ion-input>
   </ion-item><br>
-  <ion-button *ngIf="amountp != null" type="submit" color="dark" class="button" expand="block">เพิ่มลงลิสต์รายการ</ion-button>
+  <ion-button *ngIf="amountp != null" type="submit"  class="button" expand="block">เพิ่มลงลิสต์รายการ</ion-button>
   <ion-button *ngIf="amountp == null" type="submit" color="dark" disabled class="button" expand="block">เพิ่มลงลิสต์รายการ</ion-button>
 </ion-card>
 <ion-card>
@@ -121,7 +121,7 @@
     </ion-row>
   </ion-card-content>
   <ion-button (click)="addReceipt()" *ngIf="lengthData == 0" disabled color="dark" class="button" expand="block">ยืนยันการเพิ่มรายการ</ion-button>
-  <ion-button (click)="addReceipt()" *ngIf="lengthData != 0" color="dark" class="button" expand="block">ยืนยันการเพิ่มรายการ</ion-button>
+  <ion-button (click)="addReceipt()" *ngIf="lengthData != 0"  class="button" expand="block">ยืนยันการเพิ่มรายการ</ion-button>
 </ion-card>
 
 

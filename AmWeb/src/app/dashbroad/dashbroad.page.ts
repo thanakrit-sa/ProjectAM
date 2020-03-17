@@ -1191,11 +1191,11 @@ export class DashbroadPage implements OnInit {
         }, {
           data: this.productApi.chartDataProductSellInStore,
           label: "จำนวนสินค้าที่ขาย",
-          borderColor: "#0cd1e8",
-          backgroundColor: "#E8FAFC",
+          borderColor: "#5BC0BE",
+          backgroundColor: "#C3E8E7",
           borderWidth: "1",
-          hoverBackgroundColor: "#A6EEF6",
-          hoverBorderColor: "#A6EEF6",
+          hoverBackgroundColor: "#4B9E9C",
+          hoverBorderColor: "#4B9E9C",
           // fill: false
         }, {
           data: this.productApi.chartDataProductTotalInStore,
